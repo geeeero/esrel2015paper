@@ -1,0 +1,165 @@
+%narms.tex, an example driver file for Balkema documents.
+
+%use the following for A4 paper:
+\documentclass[12pt,a4paper,twocolumn,fleqn]{narms}
+
+% packages needed
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{timesmt}
+
+% add here more packages based on the document format
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\usepackage[bookmarks]{hyperref}
+
+% setting math equation indent from left 0pts
+
+\mathindent=0pt%
+
+% use this for chicaco style reference
+% Author references
+% IMPORTANT: Author wants to format references in chicaco style Author must use BiBTex
+% IMPORTANT: Author wants to format numbered references remove chicaco style file and \bibliographystyle{chicaco}
+
+\usepackage{chicaco}
+
+%  \cite{key}
+%    which produces citations with full author list and year.
+%    eg. (Brown 1978; Jarke, Turner, Stohl, et al. 1985)
+
+%  \citeNP{key}
+%    which produces citations with full author list and year, but without
+%    enclosing parentheses:
+%    eg. Brown 1978; Jarke, Turner & Stohl 1985
+
+%  \citeA{key}
+%    which produces citations with only the full author list.
+%    eg. (Brown; Jarke, Turner & Stohl)
+
+%  \citeANP{key}
+%    which produces citations with only the full author list, without
+%    parentheses eg. Brown; Jarke, Turner & Stohl
+
+%  \citeN{key}
+%    which produces citations with the full author list and year, but
+%    can be used as nouns in a sentence; no parentheses appear around
+%    the author names, but only around the year.
+%      eg. Shneiderman (1978) states that......
+%    \citeN should only be used for a single citation.
+
+%  \shortcite{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteNP{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteA{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteANP{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteN{key}
+%    which produces the abbreviated author list and year, with only the
+%    year in parentheses. Use with only one citation.
+
+%  \citeyear{key}
+%    which produces the year information only, within parentheses.
+
+%  \citeyearNP{key}
+%    which produces the year information only.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  All this stuff is from modifying the article.cls for Balkema
+%%%  specifications.
+
+%\title{...}
+%\author{...}
+%use \aff for author affiliations
+% use \authornext for from second author
+% empty line space between multiple authors
+%\abstract{...}
+%\maketitle{}
+
+%%%%%%% Style for TABLES
+% insert tabular command inside \tabletext{} this will produce tables in 10pts
+
+\begin{document}
+\title{Robust Bayesian System Reliability Estimation\\ for Scarce and Surprising Data}
+
+\author{{Gero Walter} \\
+{\aff{School of Industrial Engineering}} \\
+{\aff{TU Eindhoven, Eindhoven, The Netherlands}} \\
+\\
+{\authornext{Frank P.A. Coolen \& Andrew Graham}}\\
+{\aff{Department of Mathematical Sciences}} \\
+{\aff{Durham University, Durham, United Kingdom.}}}
+
+\date{}% No date.
+
+\abstract{In reliability engineering, data about failure events is often scarce.
+To arrive at meaningful estimates for the reliability of a system,
+it is therfore often necessary to also include expert information in the analysis,
+which can be easily done in the Bayesian approach by using an informative prior distribution.
+
+A problem that then can arise is called prior-data conflict:
+from the viewpoint of the prior, the observed data seem very surprising,
+i.e., the information from data is in conflict with the prior assumptions.
+It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
+in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
+thus conveying a false sense of certainty by communicating that we know the reliability of a system quite precisely when in fact we do not.
+
+We present an approach to mitigate this issue, by considering sets of prior distributions,
+and making use of the recently introduced survival signature to characterise the system under study.
+Our approach can be seen as a robust Bayesian procedure or imprecise probability method
+that appropriately reflects surprising data in the posterior survival function or other posterior inferences.
+}
+
+
+\maketitle
+
+\section{INTRODUCTION}
+
+
+\section{SURVIVAL SIGNATURE}
+
+allows to separate system structure from individual component reliability (time aspect only in components),
+several type of components
+
+censored observations???
+
+
+\section{ROBUST BAYESIAN INFERENCE}
+
+prior on lifetime distribution parameters (also test data for components?),
+observed failures in system surprising,
+effect on reliability/survival function.
+
+prior-data conflict, sets of priors,
+generalized iLUCK models, 
+
+Andrew's results
+
+
+\section{CONCLUSION AND OUTLOOK}
+
+
+multiple type of components, nonparametric lifetime, other parameter set shapes 
+
+
+%\bibliographystyle{chicaco}
+%\bibliography{a4sample}
+
+\end{document}
+

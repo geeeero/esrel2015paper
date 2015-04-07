@@ -1,0 +1,687 @@
+%narms.tex, an example driver file for Balkema documents.
+
+%use the following for A4 paper:
+\documentclass[12pt,a4paper,twocolumn,fleqn]{narms}
+
+% packages needed
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{timesmt}
+
+% add here more packages based on the document format
+
+
+% setting math equation indent from left 0pts
+
+\mathindent=0pt%
+
+% use this for chicaco style reference
+% Author references
+% IMPORTANT: Author wants to format references in chicaco style Author must use BiBTex
+% IMPORTANT: Author wants to format numbered references remove chicaco style file and \bibliographystyle{chicaco}
+
+\usepackage{chicaco}
+
+%  \cite{key}
+%    which produces citations with full author list and year.
+%    eg. (Brown 1978; Jarke, Turner, Stohl, et al. 1985)
+
+%  \citeNP{key}
+%    which produces citations with full author list and year, but without
+%    enclosing parentheses:
+%    eg. Brown 1978; Jarke, Turner & Stohl 1985
+
+%  \citeA{key}
+%    which produces citations with only the full author list.
+%    eg. (Brown; Jarke, Turner & Stohl)
+
+%  \citeANP{key}
+%    which produces citations with only the full author list, without
+%    parentheses eg. Brown; Jarke, Turner & Stohl
+
+%  \citeN{key}
+%    which produces citations with the full author list and year, but
+%    can be used as nouns in a sentence; no parentheses appear around
+%    the author names, but only around the year.
+%      eg. Shneiderman (1978) states that......
+%    \citeN should only be used for a single citation.
+
+%  \shortcite{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteNP{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteA{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteANP{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteN{key}
+%    which produces the abbreviated author list and year, with only the
+%    year in parentheses. Use with only one citation.
+
+%  \citeyear{key}
+%    which produces the year information only, within parentheses.
+
+%  \citeyearNP{key}
+%    which produces the year information only.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  All this stuff is from modifying the article.cls for Balkema
+%%%  specifications.
+
+%\title{...}
+%\author{...}
+%use \aff for author affiliations
+% use \authornext for from second author
+% empty line space between multiple authors
+%\abstract{...}
+%\maketitle{}
+
+%%%%%%% Style for TABLES
+% insert tabular command inside \tabletext{} this will produce tables in 10pts
+
+
+\begin{document}
+\title{Weakly nonlinear dynamics of dunes}
+\author{{M. Colombini \& A. Stocchino} \\
+{\aff{Dipartimento di Ingegneria delle Costruzioni, dell'Ambiente e del Territorio}} \\
+{\aff{Universit\`a di Genova, Genova, Italy}} \\
+\\
+{\authornext{R. Schielen}}\\
+{\aff{Department of Water Engineering and Management}} \\
+{\aff{University of Twente, Enschede, The Netherlands.}}}
+
+\date{}% No date.
+
+\abstract{Weakly nonlinear analyses have proved their validity in
+the field of morphodynamic instability to describe the evolution
+of finite amplitude perturbations of the bed topography. In a
+recent study, Colombini and Stocchino (2008) analyzed
+theoretically the case of dunes and antidunes that develop, under
+suitable conditions, in an infinitely wide open channel with an
+erodible bottom composed by uniform sediments. By introducing a
+slow timescale in the analysis, they derived an amplitude equation
+of the Landau-Stuart (LS) type, which describes the nonlinear
+evolution of a linearly unstable perturbation in the neighbourhood
+of its marginal conditions. The analysis of the steady solutions
+of the amplitude equation shows that, for values of the ratio of
+the shear velocity to the depth-averaged velocity of practical
+interest, dune bifurcation is supercritical, whereas antidune
+bifurcation is subcritical.  Introducing also a slow spatial
+scale, an amplitude equation of the Ginzburg-Landau (GL) type is
+eventually derived, which describes the temporal as well as the
+spatial modulation of marginally unstable dunes. The weakly
+nonlinear dynamics of a narrow spectrum of unstable waves centered
+around the critical wavenumber is then analysed, whereby Landau
+theory is limited to the temporal evolution of the critical mode.
+Moreover, it is possible to study the stability of GL solutions
+against general perturbations in contrast to the LS theory where
+only the stability against perturbations with exactly the critical
+wavenumber can be analyzed. Periodic solutions of the GL amplitude
+equation can either be stable, which means that a periodically
+modulated pattern will emerge, or unstable. In fact, the group
+velocity of the unstable wavepacket depends on the wavenumber;
+therefore, local convergence and divergence of the perturbations
+occurs, possibly causing the periodic solution to become unstable.
+This depends on the coefficients of the Ginzburg-Landau equation,
+which in turn are related to the relevant flow and sediment
+parameters, namely the Froude number and the ratio of grain size
+over flow depth.}
+
+\maketitle
+
+\section{INTRODUCTION}
+
+\subsection{Type area}
+
+Dunes appear in the so-called lower flow regime corresponding to
+small values of the Froude number and are characterized by
+downstream propagation and by being almost out of phase with
+respect to water-surface gravity waves. On the contrary, antidunes
+occur in the upper flow regime, i.e. for values of the Froude
+number close to unity, and typically propagate upstream, being
+almost in phase with free surface oscillations. In both cases, the
+main geometrical mean flow depth. The idea that bedform formation
+in rivers can be interpreted in terms of an instability process of
+the system composed by the flow and the erodible bed dates back to
+the sixties, when the first seminal studies on this subject were
+published \cite{ke63,re65}. This research field is still quite
+active \cite{as02} and several morphodynamic patterns have been
+investigated making use of techniques imported from the field of
+hydrodynamic stability. Linear analyses allow for the definition
+of unstable regions in the parameter space where bedforms are
+expected to form \cite[among others]{en70,fr74,cf00} and to an
+indication on the wavelength and celerity of the most unstable
+disturbances. No information is gathered on bedform amplitude at a
+linear level, however. More recently, \shortciteN{pd07} used a
+parametrization of the separation streamline to avoid modelling
+the flow and sediment transport in the separation zone itself and
+successfully used this concept in a model to compute dynamic
+roughness due to dunes \shortcite{pd09}. Extending previous linear
+studies \cite{co04,cs05}, \citeN{cs08} presented a temporal weakly
+non linear analysis of dunes and antidunes.  In the former case,
+an equilibrium amplitude is obtained, which compares
+satisfactorily against experimental observations. In the present
+contribution, the work of \citeN{cs08} is extended to describe the
+spatial modulations of wave packets (which is a natural extension
+of the theory).
+
+\section{FORMULATION OF THE PROBLEM}
+\label{sec:exp}
+
+Let us consider a uniform turbulent free surface flow in a
+infinitely wide straight channel. The triplet composed by the
+fluid density $\rho$, the mean friction velocity $u_f^*$ and depth
+$D^*$ of the unperturbed uniform flow has been used for
+nondimensionalization. In the following, variables with a star
+superscript are to be intended as dimensional variables.
+
+Moreover, we define a nondimensional conductance coefficient $C$
+as the ratio between the unperturbed depth-averaged velocity
+$\overline{U}^*$ and the mean friction velocity $u^*_f$, which can
+be related to the flow depth and the sediment diameter $d^*_s$
+through the Keulegan equation \shortcite{as63} for fully rough
+turbulent flow: \begin{equation}
+C=\frac{\overline{U}^*}{u^*_f}=\frac{1}{\kappa}\ln{\left(\frac{11.09
+D^*}{2.5 d^*_s}\right)}, \label{keurough} \end{equation} where
+$\kappa$ is the Von K\'arm\'an constant, taken as 0.4, and the
+roughness height has been set equal to $2.5 d^*_s$ after
+\shortcite{eh67}.
+
+
+\begin{figure}
+\centerline{
+\includegraphics[width=8cm]{sketch.eps}
+}
+\caption{Sketch of flow configuration}
+\label{f:sketch1}
+\end{figure}
+
+A sketch of the coordinate system adopted is shown in
+figure~\ref{f:sketch1}, where the flow is bounded between the two
+lines $y=R(x,t)$ and $y=R(x,t)+D(x,t)$, with $D$ the local flow
+depth. The lower boundary is set at the reference level $R$, where the
+velocity is assumed to vanish.
+
+The differential system (\ref{reyn}) is associated with
+an appropriate set of kinematic and dynamic boundary conditions at the
+domain boundaries. The Reynolds stresses are modelled through a
+Boussinesq closure that implies the evaluation of an algebraic eddy
+viscosity ($\nu_t$), based on the mixing length approach.
+
+
+The function $\Phi$ is known to depend on a dimensionless form of
+the bed shear stress, namely the Shields stress $\theta_b$.
+Results are only moderately affected by the choice of a particular
+form for the function $\Phi$. In the following, the classical
+\citeN{mp48} formula: \begin{equation} \Phi = A_m (\theta_b -
+\theta_c)^{\frac{3}{2}} \qquad \theta_b \geq \theta_c, \label{mpm}
+\end{equation} has been employed, where $\theta_c$ is the critical Shields
+stress for incipient motion. The values of $\theta_c$ and $A_m$
+have been set equal to 0.0495 and 3.97, respectively, in
+accordance with the corrections proposed by \citeN{wp06} in their
+revisitation of the work of \citeN{mp48}. In addition, the effect
+of gravity on the grain motion is included by setting the critical
+Shields stress $\theta_c$ equal to: \begin{equation} \theta_c =
+0.0495 - \mu (S - R,_x), \label{effective} \end{equation} where
+$\mu$ is a dimensionless constant set equal to 0.1 after
+\cite{fr74}.
+
+Finally, the transformation $(x,y,t) \rightarrow (\xi,\eta,\tau)$ is
+introduced that maps the flow domain into a rectangular domain.
+
+
+\section{LINEAR THEORY}
+\label{ltheory}
+
+In this section we briefly summarize the essential steps of the linear
+theory, referring for a detailed description to \citeN{cs05}.  The
+analysis is performed in terms of normal modes, which implies that a
+generic function is expanded as:
+\begin{equation}
+G(\xi, \eta, \tau) = G_0(\eta) + \epsilon G_1(\xi, \eta, \tau),
+\end{equation}
+where $\epsilon$ is a small parameter.
+
+\subsection{Section 2}
+
+Moreover, we set where $A, k$ and $\omega$ are the amplitude,
+wavenumber and complex celerity of the bed perturbation,
+respectively and $c.c.$ stands for complex conjugate. Expanding
+each variable in the governing equations, boundary conditions and
+turbulent closure model and collecting terms at the same order, we
+are left at $O(\epsilon)$ with the following differential problem
+
+
+\subsubsection{Section 3}
+Thus, $\hbox{\bf Z}_{11}$ is expressed as a linear
+combination of two linearly independent solutions of the
+homogeneous initial value problem
+\begin{equation}
+\hbox{${\pcal L}$}{L}_{11} \hbox{\bf Z}_{11}^{(1,2)} = 0,
+\label{hom}
+\end{equation}
+which satisfy the boundary conditions at the lower boundary, plus
+particular solutions of the non-homogeneous differential systems:
+\begin{equation}
+\hbox{${\pcal L}$}{L}_{11} \hbox{\bf Z}_{11}^{(D)} = \hbox{\bf
+D}_{11}, \qquad \hbox{${\pcal L}$}{L}_{11} \hbox{\bf Z}_{11}^{(R)}
+= \hbox{\bf R}_{11},\label{reyn}
+\end{equation}
+again satisfying the lower boundary conditions. Without loss of
+generality, the constants  $c_{11}^{(1)}$ and $c_{11}^{(2)}$ are
+chosen so as to represent the amplitude of the perturbed
+tangential and normal stresses at the reference level, respectively.
+
+
+\begin{figure*}
+\centerline{\includegraphics[width=15cm]{zoom2.eps}}
+\caption{Regions of instability for dunes, antidunes and roll
+waves; $C=20$, $f=0.02$. The dashed lines in the close-up pictures
+correspond to the lines of maximum growth rate.}
+\label{f:fralfamap}
+\end{figure*}
+
+Three separate eigenvalues display unstable regions in the $(k-F)$
+space (see Figure~\ref{f:fralfamap}): two of them can be readily
+associated with the formation of dunes and antidunes, while the
+third describes the instability of fast sediment waves that appear
+at high Froude numbers (i.e.\  $F \geq 2$) associated with the
+presence of roll-waves. The antidune mode is characterized by a
+small negative celerity (upstream propagation) while the dune mode
+propagates downstream (positive celerity). The free surface and
+the bed oscillations are found to be approximately in phase for
+antidunes and out of phase for dunes, with a small lag coherent
+with the corresponding direction of migration.
+
+For each value of the coefficient $C$, two critical points can be
+identified in the stability plot, say $(k_{cd}, F_{cd})$ and $(k_{ca},
+F_{ca})$, which are circled in the close-up pictures of
+figure~\ref{f:fralfamap}. They identify the onset of instability for
+each mode, since, as the Froude number equals $F_{cd}$ ($F_{ca}$), the
+basic plane bed solution loses stability towards periodic perturbations
+characterized by wavenumber $k_{cd}$ ($k_{ca}$), which represent the
+bedform. The critical Froude number for roll-wave instability
+$F_{cr}$ is found in the long wave limit $k_{cr} \rightarrow 0 $.
+
+\section{WEAKLY NONLINEAR THEORY}
+\label{wnltheory}
+
+We intend to investigate the weakly nonlinear evolution of the
+perturbations of the flow-bed system in a neighbourhood of the points
+($k_{cd}, F_{cd}$) and ($k_{ca}, F_{ca}$) shown in
+figure~\ref{f:fralfamap}. We then define:
+\begin{equation}
+F=F_c (1 + \epsilon^2 F_2), \qquad k=k_c (1 + \epsilon k_1),
+\label{frweak}
+\end{equation}
+where the subscript $c$ indicates either of the critical points,
+whereas $F_2$ and $k_1$ are dummy parameters that define the extension
+of the neighbourhood in the $F$ and $k$ directions, respectively.
+
+In order to investigate the modulation of a basic critical wave with
+wavenumber $k_c$ and celerity $\omega_c$ we employ a multiscale
+perturbation technique and define a slow time scale $T$ and a slow
+spatial scale $X$ such that:
+\begin{equation}
+T = \epsilon^2 \tau, \qquad \qquad
+X = \epsilon (\xi - c_g \tau)
+\end{equation}
+where $c_g$ is the group velocity of the wave packet. Derivatives with
+respect to $\tau$ and $\xi$ become, respectively:
+\begin{equation}
+\frac{{\rm \partial} {}}{{\rm \partial} \tau} \rightarrow
+\frac{{\rm \partial} {}}{{\rm \partial} \tau} - \epsilon c_g
+\frac{{\rm \partial} {}}{{\rm \partial} T}  + \epsilon^2.
+\end{equation}
+\begin{equation}
+\frac{{\rm \partial} {}}{{\rm \partial} \xi} \rightarrow  +
+\epsilon \frac{{\rm \partial} {}}{{\rm
+\partial} X}
+\frac{{\rm
+\partial} {}}{{\rm \partial} \xi}
+\end{equation}
+
+We then expand the solution in the form:
+\begin{equation}
+G(\xi, \eta, \tau, X, T) = G_0 + \epsilon G_1 + \epsilon^2 G_2 +
+\epsilon^3 G_3,
+\label{expansion}
+\end{equation}
+and collect terms at the various order of approximation in $\epsilon$.
+
+\subsection{$O(\epsilon^1)$}
+
+At the linear level, the structure of the solution is analogous to
+(\ref{pert}):
+\begin{equation}
+G_1 = A(X,T) G_{11} E_1 + c.c.,\label{pert}
+\end{equation}
+where, in general:
+\begin{equation}
+E_n= \exp [ n i k_c (\xi - \omega_c \tau)],\label{diffsystem1}
+\end{equation}
+and the complex function $A(X,T)$ is now a slowly varying function (in time and space) to
+be determined. The differential system (\ref{diffsystem1}) is
+recovered, with $\omega = \omega_c$ and $k = k_c$. As expected no
+information is gathered on the amplitude $A$ at this level of
+approximation.
+
+\subsection{$O(\epsilon^2)$}
+
+The structure of the solution at second order reads:
+\begin{eqnarray}
+G_2 &=& \{ A^2 G_{22} E_2 + c.c.\} + |A|^2 G_{20} + F_2 G_{20F} +
+\nonumber \\
+&+& \{(A,_X G_{21X} +A_2 G_{11} ) E_1  + c.c.\}
+\label{f2exp}
+\end{eqnarray}
+
+
+Finally, note that in (\ref{f2exp}) a second, unknown amplitude
+function $A_2$ appears. The latter is introduced as a consequence of
+the non-uniqueness of the solution as provided by the solvability
+condition we used for the determination of the group velocity
+$c_g$. It should be noted that $A_2$ is unimportant for the subsequent
+analysis and can be left undetermined.
+
+\subsection{$O(\epsilon^3)$}
+
+At third order the spatial dependence of the fundamental is
+reproduced and therefore we can write:
+\begin{equation}
+G_3 = G_{31} E_1 + c.c..
+\end{equation}
+and the related differential system reads:
+\begin{eqnarray}
+\hbox{${\pcal L}$}{L}_{11} \hbox{\bf Z}_{31} &=& D_{31} \hbox{\bf
+D}_{11} + R_{31} \hbox{\bf R}_{11} +
+ \\
+&+& A,_T \hbox{\bf P}_{31}^{(1)} + |A|^2 A \hbox{\bf P}_{31}^{(3)}
++ A,_{XX} \hbox{\bf P}_{31}^{(4)} \nonumber \label{diffsystem31}
+\end{eqnarray}
+where the vectors $\hbox{\bf P}_{31}^{(1,3,4)}$ are functions of
+$\eta$ expressed in terms of products of basic, leading and second
+order components of the perturbations.
+
+Once the particular solutions $\hbox{\bf Z}_{31}^{(P1,P3,P4)}$ of
+the non-homogeneous differential systems:
+\begin{equation}
+\hbox{${\pcal L}$}{L}_{11} \hbox{\bf Z}_{31}^{(P1,P3,P4)} =
+\hbox{\bf P}^{(1,3,4)}_{31},\label{boundsystem21X}
+\end{equation}
+are obtained, the boundary conditions at the free surface and the
+Exner equation can be cast in a similar way as (\ref{boundsystem21X})
+to give:
+\begin{eqnarray}
+\hbox{\bf U}_{11}\cdot \hbox{\bf C}_{31} &=&
+ A F_2 \hbox{\bf U}_{31}^{(2)}
++ |A|^2A \hbox{\bf U}_{31}^{(3)} + \label{boundsystem31}
+\\
+&+& A,_T \hbox{\bf U}_{31}^{(1)} + A,_{XX} \hbox{\bf U}_{31}^{(4)}
+\nonumber
+\end{eqnarray}
+where the first term on the right-hand side is generated by the
+boundary conditions and by the Exner equation.
+
+As before, since the homogeneous part of the system
+(\ref{boundsystem31}) admits of a non-trivial solution, a solvability
+condition has to be imposed. Having set:
+\begin{equation}
+\delta_i = \det(\hbox{\bf U}^{(i)}_{11}),
+\end{equation}
+where the array $\hbox{\bf U}^{(i)}_{11}$ is  obtained by
+substituting the vector $\hbox{\bf U}^{(i)}_{31}$ into the last
+column of $\hbox{\bf U}_{11}$, we find:
+\begin{equation}
+\delta_1 A,_T + \delta_2 F_2 A + \delta_3  |A|^2A +
+\delta_4 A,_{XX} = 0,
+\end{equation}
+that, after some manipulations, takes the form of the complex
+Ginzburg-Landau equation (CGLE):
+\begin{equation}
+A,_T = \alpha_1 F_2 A + \alpha_2 |A|^2 A +\alpha_3 A,_{XX}.
+\label{cgle}
+\end{equation}
+
+\section{ANALYSIS OF GINZBURG-LANDAU EQUATION}
+\label{ancgle}
+
+Setting $\alpha_3=0$ in (\ref{cgle}), a Landau-Stuart equation is
+recovered, which has been extensively studied for the case of dunes
+and antidunes by \citeN{cs08}. We briefly summarize in the following
+their main results. If the real part of the cubic coefficient
+$\alpha_2$ is negative, the bifurcation is termed supercritical and an
+equilibrium amplitude is eventually attained as $T \rightarrow
+\infty$:
+\begin{equation}
+A_e=\sqrt{-\frac{\alpha_1^r F_2 }{\alpha_2^r}}.
+\label{equilibrium}
+\end{equation}
+For realistic values of the parameter, namely the nondimensional
+conductance coefficient $C$, dune instability is found to be
+supercritical, whereas antidunes are consistently subcritical. In the
+latter case, no information is gathered on the amplitude at the
+present level of approximation.
+
+We then limit our analysis of the CGLE to the case of dunes, and,
+firstly, bring (\ref{cgle}) into standard form by means of a suitable
+transormation. Substitution of
+\begin{equation}
+A=A_e \exp(i \frac{\alpha_1^i}{\alpha_1^r}T')A'(X',T')
+\end{equation}
+where
+\begin{equation}
+X'=\sqrt{\frac{\alpha_1^r F_2}{\alpha_3^r}} X \qquad\qquad
+T'=\alpha_1^r F_2 T
+\end{equation}
+yields the rescaled CGLE (primes are dropped for convenience)
+\begin{equation}
+A,_T = A + (1+ib) A,_{XX} - (1+ic) |A|^2 A.
+\label{cgler}
+\end{equation}
+with
+\begin{equation}
+b=\frac{\alpha_3^i}{\alpha_3^r} \qquad\qquad
+c=\frac{\alpha_2^i}{\alpha_2^r}
+\end{equation}
+Note that $b>0$ and $c<0$ in the whole range of conductance
+coefficients $C$ considered. This follows from an analysis of the
+coefficients $\alpha_i$ from equation (\ref{cgle}) where dune
+data from various experiments are used.
+
+We consider periodic plane-wave solutions of the form
+\begin{equation}
+A=P \exp ( i \Theta), \qquad
+\Theta= KX -\Omega T
+\label{persol}
+\end{equation}
+where $P(X,T)$, $\Theta(X,T) \in {R}$. By substituting
+(\ref{persol}) into (\ref{cgler}) and collecting the real and
+imaginary parts, we obtain
+\begin{equation}
+P^2 = 1 - K^2, \qquad
+\Theta = K X - (b K^2 + c P^2) T
+\label{order0}
+\end{equation}
+This gives for every choice of $K$ the amplitude and shift in phase
+(with respect to the critical wave) of the dunes. Due to the signs of
+$b$ and $c$, it turns out that the nonlinear dunes propagate slower
+when compared to the linear theory.
+
+
+
+\begin{table}
+\caption{Margin settings for A4 size paper and letter size paper.}
+\tabletext{
+\begin{tabular}{lllll}\hline
+&\multicolumn{2}{l}{A4 size
+paper}&\multicolumn{2}{l}{Letter size paper}\\[-6pt]
+&\multicolumn{2}{l}{\hrulefill}&\multicolumn{2}{l}{\hrulefill}\\
+Setting&cm&inches&cm&inches\\\hline
+Top&1.2&0.47"&0.32&0.13"\\
+Bottom&1.3&0.51"&0.42&0.17"\\
+Left&1.15&0.45"&1.45&0.57"\\
+Right&1.15&0.45"&1.45&0.57"\\
+All other&0.0&0.0"&0.0&0.0"\\
+Column width*&9.0&3.54"&9.0&3.54"\\
+Column spacing*&0.7&0.28"&0.7&0.28"\\\hline
+\end{tabular}}
+\end{table}
+
+
+
+
+\begin{table*} \caption{Margin settings for A4 size paper and
+letter size paper.}
+\begin{center}
+\tabletext{
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lllll@{}}\hline
+&\multicolumn{2}{l}{A4 size
+paper}&\multicolumn{2}{l}{Letter size paper}\\[-6pt]
+&\multicolumn{2}{l}{\hrulefill}&\multicolumn{2}{l}{\hrulefill}\\
+Setting&cm&inches&cm&inches\\\hline
+Top&1.2&0.47"&0.32&0.13"\\
+Bottom&1.3&0.51"&0.42&0.17"\\
+Left&1.15&0.45"&1.45&0.57"\\
+Right&1.15&0.45"&1.45&0.57"\\
+All other&0.0&0.0"&0.0&0.0"\\
+Column width*&9.0&3.54"&9.0&3.54"\\
+Column spacing*&0.7&0.28"&0.7&0.28"\\\hline
+\end{tabular*}}
+\end{center}
+\end{table*}
+
+
+Now, periodic solutions of the type (\ref{persol}) need not to be
+stable. The stability can be studied by considering perturbations
+of $P$ and $\Theta$:
+\begin{equation}
+A=[ P+\rho(X,T)] \exp [ i (\Theta+\theta(X,T))]
+\label{rspert}
+\end{equation}
+Substitution of (\ref{rspert}) into (\ref{persol}) leads after
+linearization to a system of partial differential equations for
+$\rho$ and $\theta$. We then set:
+\begin{eqnarray}
+\rho(X,T)&=& \varrho \exp [ i (l X - \lambda T) ], \\
+\theta(X,T)&=& \vartheta \exp [ i (l X - \lambda T) ],
+\end{eqnarray}
+and end up with the algebraic homogeneous system:
+\begin{equation}
+(M- i \lambda I)
+\left(
+\begin{array}{c}
+\varrho \\ P \vartheta
+\end{array}
+\right)
+= 0
+\end{equation}
+for some matrix M.
+Stability of (\ref{persol}) is then reduced to an eigenvalue analysis of $M$.
+This sets a condition on $K$ (the generalized Eckhaus criterion):
+\begin{equation}
+K^2 < \frac{1+bc}{3+2c^2+bc}
+\end{equation}
+as long as the Benjamin-Feir-Newell criterion
+\begin{equation}
+1+bc > 0
+\label{bfn}
+\end{equation}
+holds (for details on this stability analysis, see \shortciteN{sd93}). For the present case, the latter criterion is never satisfied
+in the whole range of parameters investigated. This means that none of
+the periodic solutions of the type (\ref{persol}) is stable, the
+Stokes wave $(K=0)$ being the last to become unstable.
+For the special case of the Stokes wave, it can be shown that for the eigenvalues of $M$ holds:
+\begin{equation}
+\lambda^2 + 2 i \lambda (1 + l^2) - (1 + b^2)l^4
+- 2  l^2 (1 + bc)  = 0,
+\end{equation}
+
+By imposing that the imaginary parts of both eigenvalues of $M$ for $K=0$ (i.e. the Stokes wave) are negative the
+following condition on the wavenumber $l$ is found:
+\begin{equation}
+l\geq l_c = \sqrt{\frac{-2(1+bc)}{1+b^2}}.
+\end{equation}
+which implies that longer perturbations of the Stokes wave are the
+most unstable \cite{sd78}.
+In this case however, the Stokes wave itself is also unstable.
+
+Considering a slowly modulated Stokes wave, a physical interpretation
+of this stability criterion (\ref{bfn}) can be found in
+\shortciteN{sd93}. Since $c<0$ for the present case, the dispersion
+relation (\ref{order0}) implies a negative nonlinear correction of the
+(positive) bedforms celerity that is maximum at the top of the
+envelope, so that the bedforms at either side of it propagate
+faster. Therefore the bedforms on the downstream side lengthen,
+whereas the waves at the upstream side are shortened. This is
+associated to a positive variation of the group velocity $c_g$ with
+the wavenumber $k$ that implies an accumulation of energy at the top
+of the envelop, a necessary condition for instability to occur.
+
+A natural question to ask is then what pattern of dunes will evolve in
+the case of an unstable Stokes wave? Due to the instability of the
+Stokes wave, the Ginzburg-Landau equation does not allow for a pure
+periodic pattern of dunes. Instead, it is more likely that a
+quasi-periodic pattern will occur. Solutions of the Ginzburg Landau
+then describe the {\it envelope} of the dune-evolution (because the
+amplitude equation depends on a slow time and spatial variable).  To
+see whether this indeed occurs, a spectral analysis of (\ref{cgler})
+can be performed. In \shortciteN{doe91}, it is shown that, depending
+on the values of the coefficients, chaotic solutions (for the
+envelope) are possible, through a classical scenario of period
+doublings.  This however, is not of particular importance for
+field-studies of dunes. Also quasi-periodic solutions for the envelope
+already give a very irregular sequence in the amplitude of dunes.
+\section{CONCLUSIONS}
+The linear analysis of dunes, leading to regions of instability as
+depicted in figure \ref{f:fralfamap} can be extended to a weakly
+nonlinear analysis in a straightforward way. For dunes, this leads
+after tedious calculations to a nonlinear amplitude equation of the
+Ginzburg Landau type. The bifurcation for dunes at $F_{cd}$ is
+supercritical. Hence, starting with a flat bed, for decreasing Froude
+number, dunes start to evolve, and their nonlinear evolution can
+adequately be described by the solutions of the Ginzburg-Landau
+equation. Simple periodic solutions turn out to be unstable,
+however. This suggests that more complicated behaviour of dunes will
+emerge: the moving dunes show an increase and decrease in amplitude as
+they evolve in time and space. Their migration speed is also slightly
+less than predicted by linear theory.
+
+Although not shown in this paper, a similar analysis can be done for
+anti-dunes. In that case, however, it turns out theat the bifurcation
+is subcritical. This means that the flat bed looses stability for
+$F>F_{ca}$, but the bifurcating solution is also unstable. In that
+case the perturbation analysis of section \ref{wnltheory} must be
+extended to fifth order, which eventually yields a quintic version of
+the CGLE.  Besides antidunes, there are other phenomena in nature that
+exhibit a similar behaviour (Plane Poiseuille flow and Taylor flow,
+for instance). \citeN{ei89} have studied the general case of
+degenerate modulation equations while \citeN{de91} have looked at
+periodic and quasi-periodic solutions. To find the quintic coefficient
+however, requires an even larger number of computations due to
+nonlinear interactions.
+
+The weakly nonlinear analysis of dunes presented herein follows
+closely the weakly nonlinear analysis of bars developed by
+\shortciteN{sd93}. This is slightly remarkable because a
+depth-averaged model is used in the latter, whereas depth plays an
+essential role in the dynamics of dune. However, in both cases, the
+main difficulty in the analysis is the determination of the nonlinear
+coefficient of CGLE. Once determined, the analysis of the
+Ginzburg-Landau equation itself follows rather straightforwardly.  The
+nonlinear corrections of the shape lead for dunes as well as for bars
+to steeper fronts and weaker slopes at the lee sides. Furthermore,
+both bedforms decelerate with respect to the linear theory.  A
+spectral analysis will reveal more dynamic behaviour in the evolution
+of the envelope and hence of the individual dunes.
+
+
+\bibliographystyle{chicaco}
+\bibliography{a4sample}
+
+\end{document}
