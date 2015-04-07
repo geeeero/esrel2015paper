@@ -6,6 +6,7 @@
 *.log
 *.out
 *.pp1
+*.spl
 *.tag
 *.toc
 *.pdf
