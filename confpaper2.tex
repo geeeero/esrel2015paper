@@ -131,26 +131,47 @@ that appropriately reflects surprising data in the posterior survival function o
 
 \section{INTRODUCTION}
 
-
-\section{SURVIVAL SIGNATURE}
-
-allows to separate system structure from individual component reliability (time aspect only in components),
-several type of components
-
-censored observations???
+Bayesian analysis when not enough data, add expert knowledge,
+specific choice of prior difficult to justify,
+sensitivity analysis, systematic: IP,
 
 
-\section{ROBUST BAYESIAN INFERENCE}
+\section{MODELS FOR SURPRISING DATA}
+
+Model for data, here lifetimes: Weibull with fixed shape,
+so need to learn about scale parameter $\lambda$.
+
+Prior on $\lambda$: convenient choice inverse Gamma,
+to fix prior, need to choose hyperparameters $\alpha$ and $\beta$.
+We use different parametrization $s_0$ and $t_0$, interpretation.
+
+Conjugacy ensures that posterior is inverse Gamma again
+with updated parameters $s_n$ and $t_n$,
+with simple update rule.
+
+show problem with prior-data conflict
+
+introduce sets of priors, generalized iLUCK models, i.e.,
+let $s_0$ and $t_0$ vary in rectangular set.
+
+Illustrate with a plot or so.
+
+\section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
 
 prior on lifetime distribution parameters (also test data for components?),
 observed failures in system surprising,
 effect on reliability/survival function.
 
-prior-data conflict, sets of priors,
-generalized iLUCK models, 
+treatment of censored observations
+
 
 Andrew's results
 
+
+\section{SURVIVAL SIGNATURE (?)}
+
+allows to separate system structure from individual component reliability (time aspect only in components),
+several type of components
 
 \section{CONCLUSION AND OUTLOOK}
 
