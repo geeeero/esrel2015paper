@@ -131,9 +131,40 @@ that appropriately reflects surprising data in the posterior survival function o
 
 \section{INTRODUCTION}
 
-Bayesian analysis when not enough data, add expert knowledge,
+In reliability engineering, the goal is often to describe the reliability of a complex system.
+This is usually done by determining the \emph{reliability function} $R(t)$,
+in other contexts also known as the \emph{survival function} $S(t)$,
+giving the probability that the system has not failed by time $t$:
+\begin{align}
+R(t) = S(t) = P(T_\text{sys} \geq t)\,,
+\end{align}
+where $T_\text{sys}$ is the random variable giving the failure time of the system. %
+%\footnote{}
+Based on the distribution of $T_\text{sys}$, which can also be expressed
+in terms of the cumulative distribution function $F(t) = 1 - R(t)$,
+the density $p(t)$ or the hazard rate $\lambda(t)$,
+decisions about, e.g., scheduling of maintenance work can be made.
+
+Often, there is no failure data for the system itself (i.e., if the system is new-built),
+but for the components the system is made of some data about failure times exists.
+Information on the failure distribution of the components can then be used to
+derive the distribution of $T_\text{sys}$.
+In this paper we will mostly look at a simple parallel system with one type of components only.
+In the last section, we will briefly describe
+how the approach can be generalized to arbitrary system structures
+with different types of components
+using the survival signature. ***citations***
+
+
+***Bayesian analysis when not enough data for component failures, add expert knowledge,
 specific choice of prior difficult to justify,
-sensitivity analysis, systematic: IP,
+sensitivity analysis or robust Bayes:
+\shortcite{1994:berger} \citeNP{2005:ruggeri} \cite{2000:rios}
+\cite{2000:bergerinsuaruggeri}
+
+focus different: robust Bayes looks more towards 
+
+systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
 
 
 \section{MODELS FOR SURPRISING DATA}
@@ -165,7 +196,7 @@ effect on reliability/survival function.
 treatment of censored observations
 
 
-Andrew's results
+(selection of) Andrew's results
 
 
 \section{SURVIVAL SIGNATURE (?)}
@@ -179,8 +210,8 @@ several type of components
 multiple type of components, nonparametric lifetime, other parameter set shapes 
 
 
-%\bibliographystyle{chicaco}
-%\bibliography{a4sample}
+\bibliographystyle{chicaco}
+\bibliography{esrel2015refs}
 
 \end{document}
 
