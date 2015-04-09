@@ -223,42 +223,34 @@ in case (s)he was able to conclude that quantities of interest are not `too sens
 Instead, our viewpoint is rooted in the theory of imprecise or interval probability \cite{1991:walley,2011:IESS-ip,itip},
 where sets of distributions are used to express the precision of probability statements themselves:
 the smaller the set, the more precise the probability statement.
-Indeed, the system reliability function  $R_\text{sys}(t)$ is such a probability statement,
+Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
 and a small set for $R_\text{sys}(t)$ will indicate that we know the reliability of a system quite precisely,
 while a large set will indicate that our knowledge about $T\text{sys}$ is rather shaky.
 \comments{Here or at end of intro? leave out?}
 
 In line with imprecise or interval probability methods, we will thus have, for each $t$,
-a lower reliability $\lRsys(t) = \ul{P}(T\text{sys} \geq t)$,
-and an upper reliability $\uRsys(t) = \ol{P}(T\text{sys} \geq t)$.
-We will explain in Section~\ref{sec:modforsurpr} how these bounds are obtained.
+a lower reliability $\lRsys(t) = \ul{P}(T_\text{sys} \geq t)$,
+and an upper reliability $\uRsys(t) = \ol{P}(T_\text{sys} \geq t)$.
+We will explain in Section~\ref{sec:modforsurpr} how these bounds are obtained
+based on a set of prior distributions on the parameter of the component lifetime distribution.
 
-A further advantage of our IP-based method is that 
+The central merit of our method is that it adequately reflects prior-data conflict
+(see, e.g., \citeNP{2006:evans}),
+i.e.\ the conflict that can arise between prior assumptions on component lifetimes
+and observed behaviour of components in the system under study.
+As we will show in Section~\ref{sec:modforsurpr}, when taking the standard choice of a conjugate prior,
+prior-data conflict is ignored, as the spread of the posterior distribution does not increase in case of such a conflict,
+ultimately conveying a false sense of certainty
+by communicating that we know the reliability of a system quite precisely when in fact we do not.
 
-we will focus on:
-by explicitely considering the situation of prior-data conflict. \cite{2006:evans,Walter2009a,diss}
+In contrast, our method will indicate prior-data conflict by wider reliability bounds.
+This behaviour is obtained by a specific choice for the set of priors \cite{Walter2009a,diss}
 
-from the viewpoint of the prior, the observed data seem very surprising,
-i.e., the information from data is in conflict with the prior assumptions.
-It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
-in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
-thus conveying a false sense of certainty by communicating that we know the reliability of a system quite precisely when in fact we do not.
+***systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
 
+***predictive distribution!
 
-we will show effect of pdc in \ref{sec:modforsurpr}, how ignored with precise prior
-
-
-focus different: robust Bayes looks more towards being robust, will conclude that there is a problem
-happy when answer doesn't change too much.
-IP expresses precision of probability statements (reliability function is such a statement)
-through magnitude of set or range of values / interval widths.
-
-systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
-
-
-In this paper, we 
-
-predictive distribution!
+This paper is organized as follows: *** 
 
 
 \section{MODELS FOR SURPRISING DATA}
@@ -275,19 +267,23 @@ Conjugacy ensures that posterior is inverse Gamma again
 with updated parameters $s_n$ and $t_n$,
 with simple update rule.
 
-show problem with prior-data conflict on weibull
+show problem with prior-data conflict on weibull,
+(general problem, see my papers and diss).
+
+Illustrate with a plot or so.
 
 introduce sets of priors, generalized iLUCK models, i.e.,
 let $s_0$ and $t_0$ vary in rectangular set.
 
-from set of priors set of posteriors via GBR, set of predictive distributions derived from it
+from set of priors set of posteriors via GBR,
+will lead to set of predictive distributions (derivation in Sec~\ref{sec:andrewsresults})
 
 
-Illustrate with a plot or so.
 
 \section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
+\label{sec:andrewsresults}
 
-prior on lifetime distribution parameters (also test data for components?),
+prior on lifetime distribution parameters (could include test data for components),
 observed failures in system surprising,
 effect on reliability/survival function.
 
