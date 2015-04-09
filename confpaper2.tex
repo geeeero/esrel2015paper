@@ -131,7 +131,7 @@ that appropriately reflects surprising data in the posterior survival function o
 
 \section{INTRODUCTION}
 
-In reliability engineering, the goal is often to describe the reliability of a complex system.
+In reliability engineering, a central task is to describe the reliability of a complex system.
 This is usually done by determining the \emph{reliability function} $R(t)$,
 in other contexts also known as the \emph{survival function} $S(t)$,
 giving the probability that the system has not failed by time $t$:
@@ -145,15 +145,21 @@ in terms of the cumulative distribution function $F(t) = 1 - R(t)$,
 the density $p(t)$ or the hazard rate $\lambda(t)$,
 decisions about, e.g., scheduling of maintenance work can be made.
 
-Often, there is no failure data for the system itself (i.e., if the system is new-built),
-but for the components the system is made of some data about failure times exists.
-Information on the failure distribution of the components can then be used to
-derive the distribution of $T_\text{sys}$.
+Often, there is no failure data for the system itself (e.g., if the system is a prototype),
+but some data about failure times exists for the components the system is made of.
+Information on the distribution of component failure times $T_i$,
+where $i = 1, \ldots, k$ if the system consists of $k$ components,
+can then be used to derive the distribution of $T_\text{sys}$.
 In this paper we will mostly look at a simple parallel system with one type of components only.
 In the last section, we will briefly describe
 how the approach can be generalized to arbitrary system structures
 with different types of components
-using the survival signature. ***citations***
+using the survival signature \cite{2012:survsign,2014:bayessurvsign}.
+
+We assume a parametric probability distribution for component lifetimes $T_i$.
+In the Bayesian approach described here, then 
+
+estimation of the component failure distributions
 
 
 ***Bayesian analysis when not enough data for component failures, add expert knowledge,
@@ -166,6 +172,7 @@ focus different: robust Bayes looks more towards
 
 systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
 
+In this paper, we 
 
 \section{MODELS FOR SURPRISING DATA}
 
