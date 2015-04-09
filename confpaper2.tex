@@ -21,6 +21,9 @@
 \usepackage{amsthm}
 \usepackage{bm}
 
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{url}
+
 \usepackage[bookmarks]{hyperref}
 
 % setting math equation indent from left 0pts
@@ -95,6 +98,40 @@
 %%%%%%% Style for TABLES
 % insert tabular command inside \tabletext{} this will produce tables in 10pts
 
+
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\posreals}{\reals_{>0}}
+\newcommand{\posrealszero}{\reals_{\ge 0}}
+\newcommand{\naturals}{\mathbb{N}}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\renewcommand{\vec}[1]{{\bm#1}}
+
+\newcommand{\uz}{^{(0)}} % upper zero
+\newcommand{\un}{^{(n)}} % upper n
+\newcommand{\ui}{^{(i)}} % upper i
+
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\lRsys}{\ul{R}_\text{sys}}
+\newcommand{\uRsys}{\ol{R}_\text{sys}}
+
+\newcommand{\lFsys}{\ul{F}_\text{sys}}
+\newcommand{\uFsys}{\ol{F}_\text{sys}}
+
+\newcommand{\ig}{\operatorname{IG}}   % Inverse Gamma Distribution
+
+
+
+
+
+\newcommand{\comments}[1]{{\small\color{gray} #1}}
+
+
 \begin{document}
 \title{Robust Bayesian System Reliability Estimation\\ for Scarce and Surprising Data}
 
@@ -136,45 +173,96 @@ This is usually done by determining the \emph{reliability function} $R(t)$,
 in other contexts also known as the \emph{survival function} $S(t)$,
 giving the probability that the system has not failed by time $t$:
 \begin{align}
-R(t) = S(t) = P(T_\text{sys} \geq t)\,,
+R_\text{sys}(t) = S_\text{sys}(t) = P(T_\text{sys} \geq t)\,,
 \end{align}
 where $T_\text{sys}$ is the random variable giving the failure time of the system. %
 %\footnote{}
 Based on the distribution of $T_\text{sys}$, which can also be expressed
-in terms of the cumulative distribution function $F(t) = 1 - R(t)$,
-the density $p(t)$ or the hazard rate $\lambda(t)$,
+in terms of the cumulative distribution function $F_\text{sys}(t) = 1 - R_\text{sys}(t)$,
+the density $p_\text{sys}(t)$ or the hazard rate $\lambda_\text{sys}(t)$,
 decisions about, e.g., scheduling of maintenance work can be made.
 
 Often, there is no failure data for the system itself (e.g., if the system is a prototype),
 but some data about failure times exists for the components the system is made of.
-Information on the distribution of component failure times $T_i$,
+Information on the distribution $p_i(t)$ of component failure times $T_i$,
 where $i = 1, \ldots, k$ if the system consists of $k$ components,
 can then be used to derive the distribution of $T_\text{sys}$.
-In this paper we will mostly look at a simple parallel system with one type of components only.
+In this paper, we will mostly consider a simple parallel system
+where all components are of the same type,
+and our observations consist solely of the failure times of the components in this system.
 In the last section, we will briefly describe
 how the approach can be generalized to arbitrary system structures
-with different types of components
-using the survival signature \cite{2012:survsign,2014:bayessurvsign}.
+using the survival signature \cite{2012:survsign},
+which allows for different types of components and
+the inclusion of data from component tests, as in \citeNP{2014:bayessurvsign}.
 
-We assume a parametric probability distribution for component lifetimes $T_i$.
-In the Bayesian approach described here, then 
+We assume a parametric probability distribution for component lifetimes $T_i$. 
+The Bayesian approach allows to base estimation of the component failure distributions
+on both data and further knowledge not given by the data,
+the latter usually in form of expert knowledge.
+This knowledge is encoded in form of a so-called prior distribution,
+a distribution on the parameter(s) of the component lifetime distribution.
+This expert knowledge is especially important when there is very few data on the components (like in our scenario),
+as only with its help meaningful estimates for the system reliability can be made.
 
-estimation of the component failure distributions
+However, the specific choice for the prior distribution to encode the given expert knowledge is often debatable,
+and a specific choice of prior is difficult to justify.
+A way to deal with this is to employ sensitivity analysis,
+i.e., studying the effect of different choices of prior on the quantities of interest
+(in our case, the reliability function, which, in Bayesian terms, is a predictive distribution).
+This idea has been explored in systematic sensitivity analysis, or robust Bayesian methods
+(for an overview on this approach, see, e.g.,
+\shortciteNP{1994:berger}, \citeNP{2005:ruggeri}, \citeNP{2000:rios}, or \citeNP{2000:bergerinsuaruggeri}).
+\comments{less citations? specific citation for robust Bayes in reliability???}
+
+The work we present here can be seen as belonging to the robust Bayesian approach,
+as our work uses sets of priors. However, our focus and interpretation is slightly different,
+as we consider the result of our procedure, sets of reliability functions, as the proper result,
+while a robust Bayesian would base his analyses on a single reliability function from the set
+in case (s)he was able to conclude that quantities of interest are not `too sensitive' to the choice of prior.
+Instead, our viewpoint is rooted in the theory of imprecise or interval probability \cite{1991:walley,2011:IESS-ip,itip},
+where sets of distributions are used to express the precision of probability statements themselves:
+the smaller the set, the more precise the probability statement.
+Indeed, the system reliability function  $R_\text{sys}(t)$ is such a probability statement,
+and a small set for $R_\text{sys}(t)$ will indicate that we know the reliability of a system quite precisely,
+while a large set will indicate that our knowledge about $T\text{sys}$ is rather shaky.
+\comments{Here or at end of intro? leave out?}
+
+In line with imprecise or interval probability methods, we will thus have, for each $t$,
+a lower reliability $\lRsys(t) = \ul{P}(T\text{sys} \geq t)$,
+and an upper reliability $\uRsys(t) = \ol{P}(T\text{sys} \geq t)$.
+We will explain in Section~\ref{sec:modforsurpr} how these bounds are obtained.
+
+A further advantage of our IP-based method is that 
+
+we will focus on:
+by explicitely considering the situation of prior-data conflict. \cite{2006:evans,Walter2009a,diss}
+
+from the viewpoint of the prior, the observed data seem very surprising,
+i.e., the information from data is in conflict with the prior assumptions.
+It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
+in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
+thus conveying a false sense of certainty by communicating that we know the reliability of a system quite precisely when in fact we do not.
 
 
-***Bayesian analysis when not enough data for component failures, add expert knowledge,
-specific choice of prior difficult to justify,
-sensitivity analysis or robust Bayes:
-\shortcite{1994:berger} \citeNP{2005:ruggeri} \cite{2000:rios}
-\cite{2000:bergerinsuaruggeri}
+we will show effect of pdc in \ref{sec:modforsurpr}, how ignored with precise prior
 
-focus different: robust Bayes looks more towards 
+
+focus different: robust Bayes looks more towards being robust, will conclude that there is a problem
+happy when answer doesn't change too much.
+IP expresses precision of probability statements (reliability function is such a statement)
+through magnitude of set or range of values / interval widths.
 
 systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
 
+
 In this paper, we 
 
+predictive distribution!
+
+
 \section{MODELS FOR SURPRISING DATA}
+\label{sec:modforsurpr}
 
 Model for data, here lifetimes: Weibull with fixed shape,
 so need to learn about scale parameter $\lambda$.
@@ -187,10 +275,13 @@ Conjugacy ensures that posterior is inverse Gamma again
 with updated parameters $s_n$ and $t_n$,
 with simple update rule.
 
-show problem with prior-data conflict
+show problem with prior-data conflict on weibull
 
 introduce sets of priors, generalized iLUCK models, i.e.,
 let $s_0$ and $t_0$ vary in rectangular set.
+
+from set of priors set of posteriors via GBR, set of predictive distributions derived from it
+
 
 Illustrate with a plot or so.
 
