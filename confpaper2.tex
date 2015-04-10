@@ -271,7 +271,7 @@ ultimately conveying a false sense of certainty
 by communicating that we know the reliability of a system quite precisely when in fact we do not.
 
 In contrast, our method will indicate prior-data conflict by wider reliability bounds.
-This behaviour is obtained by a specific choice for the set of priors \cite{Walter2009a,diss}
+This behaviour is obtained by a specific choice for the set of priors \cite{Walter2009a}
 
 ***systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
 
@@ -374,7 +374,10 @@ This absurd induction*** is illustrated in Figure~\ref{fig:weibull-pdc};
 the posterior is shifted halfway towards the values for $\lambda$
 that the two observations suggest,
 and is more pointed than the prior,
-thus conveying a false sense of certainty about $\lambda$.
+thus conveying a false sense of certainty about $\lambda$.%
+\footnote{This is a general problem in Bayesian analysis with canonical conjugate priors.
+For such priors, the same update formula \eqref{eq:ig-update} applies,
+and so conflict is averaged out, for details see \citeNP{Walter2009a} and \citeNP{diss}, \S 3.1.}
 
 \begin{figure}
 
@@ -384,12 +387,13 @@ with a more pointed posterior giving a false sense of certainty.}
 \label{fig:weibull-pdc}
 \end{figure}
 
-This is a general problem (general problem, see my papers and diss).
 
 
 
 \section{MODELS FOR SURPRISING DATA}
 \label{sec:modforsurpr}
+
+***still use tractability of conjugate priors, but mitigate absurd behaviour
 
 introduce sets of priors, generalized iLUCK models, i.e.,
 let $s_0$ and $t_0$ vary in rectangular set.
