@@ -123,10 +123,35 @@
 \newcommand{\lFsys}{\ul{F}_\text{sys}}
 \newcommand{\uFsys}{\ol{F}_\text{sys}}
 
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\V}{\operatorname{Var}}
 \newcommand{\ig}{\operatorname{IG}}   % Inverse Gamma Distribution
 
+\def\yz{y\uz}
+\def\yn{y\un}
+\def\yi{y\ui}
 
+\def\yzl{\ul{y}\uz}
+\def\yzu{\ol{y}\uz}
+\def\ynl{\ul{y}\un}
+\def\ynu{\ol{y}\un}
+\def\yil{\ul{y}\ui}
+\def\yiu{\ol{y}\ui}
 
+\def\nz{n\uz}
+\def\nn{n\un}
+\def\ni{n\ui}
+
+\def\nzl{\ul{n}\uz}
+\def\nzu{\ol{n}\uz}
+\def\nnl{\ul{n}\un}
+\def\nnu{\ol{n}\un}
+\def\nil{\ul{n}\ui}
+\def\niu{\ol{n}\ui}
+
+\def\taut{\tau(\vec{t})}
+\def\ttau{\tilde{\tau}}
+\def\ttaut{\ttau(\vec{t})}
 
 
 \newcommand{\comments}[1]{{\small\color{gray} #1}}
@@ -185,7 +210,7 @@ decisions about, e.g., scheduling of maintenance work can be made.
 Often, there is no failure data for the system itself (e.g., if the system is a prototype),
 but some data about failure times exists for the components the system is made of.
 Information on the distribution $p_i(t)$ of component failure times $T_i$,
-where $i = 1, \ldots, k$ if the system consists of $k$ components,
+where $i = 1, \ldots, l$ if the system consists of $l$ components,
 can then be used to derive the distribution of $T_\text{sys}$.
 In this paper, we will mostly consider a simple parallel system
 where all components are of the same type,
@@ -238,7 +263,7 @@ The central merit of our method is that it adequately reflects prior-data confli
 (see, e.g., \citeNP{2006:evans}),
 i.e.\ the conflict that can arise between prior assumptions on component lifetimes
 and observed behaviour of components in the system under study.
-As we will show in Section~\ref{sec:modforsurpr}, when taking the standard choice of a conjugate prior,
+As we will show in Section~\ref{sec:weibull}, when taking the standard choice of a conjugate prior,
 prior-data conflict is ignored, as the spread of the posterior distribution does not increase in case of such a conflict,
 ultimately conveying a false sense of certainty
 by communicating that we know the reliability of a system quite precisely when in fact we do not.
@@ -253,24 +278,90 @@ This behaviour is obtained by a specific choice for the set of priors \cite{Walt
 This paper is organized as follows: *** 
 
 
-\section{MODELS FOR SURPRISING DATA}
-\label{sec:modforsurpr}
+\section{BAYESIAN ANALYSIS OF WEIBULL LIFETIMES}
+\label{sec:weibull}
 
-Model for data, here lifetimes: Weibull with fixed shape,
-so need to learn about scale parameter $\lambda$.
+***first precise, then pdc illustration, then IP.\\
 
-Prior on $\lambda$: convenient choice inverse Gamma,
-to fix prior, need to choose hyperparameters $\alpha$ and $\beta$.
-We use different parametrization $s_0$ and $t_0$, interpretation.
+For each of the component lifetimes $T_i$, $i=1,\ldots,l$,
+we assume a Weibull distribution with fixed shape parameter $k > 0$, with density and cdf%
+\footnote{Our approach would be possible also for other parametric lifetime distributions
+that form a canonical exponential family
+(see, e.g., \citeNP[p.~202 and 272f]{2000:bernardosmith}, or \citeNP[p.~8]{diss}).}
+\begin{align}
+p_i(t \mid \lambda) &= \frac{k}{\lambda} t^{k-1} e^{-\frac{t^k}{\lambda}}\,, 
+&
+F_i(t \mid \lambda) &= 1 - e^{-\frac{t^k}{\lambda}} \,,
+\end{align}
+where $\lambda > 0$ and $t > 0$.%
+\footnote{The shape parameter $k$ determines whether the hazard rate is increasing ($k > 1$)
+or decreasing ($k < 1$) over time.
+For $k=1$, we obtain the Exponential distribution with constant hazard rate as a special case.
+The value for $k$ will thus often be clear from practical considerations.}
+The scale parameter $\lambda$ can be interpreted through the relation
+\begin{align}
+\E[T_i \mid \lambda] &= \lambda^{1/k}\, \Gamma(1 + 1/k)\,.
+\end{align}
+For encoding expert knowledge about the reliability of the components,
+we need to assign a prior distribution over the scale parameter $\lambda$.
+A convenient choice is to use the inverse Gamma distribution,
+commonly parametrized in terms of the hyperparameters $\alpha$ and $\beta$:
+\begin{align}
+p(\lambda \mid \alpha, \beta) &= \frac{\beta^\alpha}{\Gamma(\alpha)} \lambda^{-(\alpha + 1)} e^{-\beta/\lambda} \,,
+\end{align}
+in short, $\lambda \mid \alpha, \beta \sim \ig(\alpha, \beta)$.
+The inverse Gamma is convenient because it is a conjugate prior,
+i.e., the posterior obtained by Bayes' rule is again inverse Gamma and thus easily tractable.
 
-Conjugacy ensures that posterior is inverse Gamma again
-with updated parameters $s_n$ and $t_n$,
-with simple update rule.
+In the standard Bayesian approach, 
+one has to fix a prior by choosing values for $\alpha$ and $\beta$
+to encode specific prior information about component lifetimes.
+In our imprecise approach, we allow instead these parameters
+to vary in a set, this is advantageous also
+because expert knowledge is often vague,
+and it is difficult for the expert(s) to pin down precise hyperparameter values.
+For the definition of the hyperparameter set,
+we use however a parametrization in terms of $\nz$ and $\yz$ instead of $\alpha$ and $\beta$,
+\begin{align}
+\nz &= \alpha - 1\,,
+&
+\yz &= \beta / \nz \,,
+\end{align}
+where $\yz$ can be interpreted as the prior guess for the scale parameter $\lambda$,
+as $\E[\lambda\mid\nz,\yz] = \yz$.
+This parametrization also makes the nature of the combination
+of prior information and data through Bayes' rule more clear:
+After observing $n$ component lifetimes $\vec{t} = (t_1, \ldots, t_n)$,
+the updated parameters are
+\begin{align}
+\nn &= \nz + n\,, 
+&
+\yz &=  \frac{\nz \yz + \taut}{\nz + n}\,,
+\label{eq:ig-update}
+\end{align}
+where $\taut = \sum_{i=1}^n t_i^k$.%
+\footnote{We thus have
+$\lambda \mid \nz, \yz, \vec{t} \sim \ig(\nz + n + 1, \nz \yz + \taut)$.}
+From the simple update rule \eqref{eq:ig-update}, we see that
+$\yn$ is a weighted average of the prior parameter $\yz$ and the data-based quantity $\taut/n$,
+with weights $\nz$ and $n$, respectively.
+$\nz$ can thus be interpreted as a prior strength or pseudocount,
+indicating how much our prior guess should weigh against the $n$ observations.
+
+However, the weighted average structure for $\yn$
+is behind the problematic behaviour in case of prior-data conflict
+
+
+***$\V[\lambda\mid\nz,\yz] = $
 
 show problem with prior-data conflict on weibull,
 (general problem, see my papers and diss).
 
 Illustrate with a plot or so.
+
+
+\section{MODELS FOR SURPRISING DATA}
+\label{sec:modforsurpr}
 
 introduce sets of priors, generalized iLUCK models, i.e.,
 let $s_0$ and $t_0$ vary in rectangular set.
@@ -301,7 +392,7 @@ several type of components
 \section{CONCLUSION AND OUTLOOK}
 
 
-multiple type of components, nonparametric lifetime, other parameter set shapes 
+multiple type of components, nonparametric lifetime as in \citeNP{2014:bayessurvsign}, other parameter set shapes 
 
 
 \bibliographystyle{chicaco}
