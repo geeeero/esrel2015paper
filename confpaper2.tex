@@ -129,7 +129,8 @@
 
 \def\yz{y\uz}
 \def\yn{y\un}
-\def\yi{y\ui}
+%\def\yi{y\ui}
+\newcommand{\yfun}[1]{y^{({#1})}}
 
 \def\yzl{\ul{y}\uz}
 \def\yzu{\ol{y}\uz}
@@ -140,7 +141,8 @@
 
 \def\nz{n\uz}
 \def\nn{n\un}
-\def\ni{n\ui}
+%\def\ni{n\ui}
+\newcommand{\nfun}[1]{n^{({#1})}}
 
 \def\nzl{\ul{n}\uz}
 \def\nzu{\ol{n}\uz}
@@ -301,6 +303,7 @@ The value for $k$ will thus often be clear from practical considerations.}
 The scale parameter $\lambda$ can be interpreted through the relation
 \begin{align}
 \E[T_i \mid \lambda] &= \lambda^{1/k}\, \Gamma(1 + 1/k)\,.
+\label{eq:lambdainterpret}
 \end{align}
 For encoding expert knowledge about the reliability of the components,
 we need to assign a prior distribution over the scale parameter $\lambda$.
@@ -348,16 +351,41 @@ with weights $\nz$ and $n$, respectively.
 $\nz$ can thus be interpreted as a prior strength or pseudocount,
 indicating how much our prior guess should weigh against the $n$ observations.
 
-However, the weighted average structure for $\yn$
-is behind the problematic behaviour in case of prior-data conflict
-
-
 ***$\V[\lambda\mid\nz,\yz] = $
 
-show problem with prior-data conflict on weibull,
-(general problem, see my papers and diss).
+However, the weighted average structure for $\yn$
+is behind the problematic behaviour in case of prior-data conflict.
+Assume that from expert knowledge we expect
+to have a mean component lifetime of 9 weeks.
+Using \eqref{eq:lambdainterpret}, with $k=2$ we obtain $\yz = 103.13$.
+We choose $\nz = 2$, so our prior guess for the mean component lifetime
+counts like having two observations with this mean.
+If we now have a sample of two observations
+with surprisingly early failure times $t_1 = 1$ and $t_2 = 2$,
+using \eqref{eq:ig-update} we get $\nfun{2} = 4$
+and $\yfun{2} = \frac{1}{4}(2 \cdot 103.13 + 1^2 + 2^2) = 52.82$,
+so our posterior expectation for the scale parameter $\lambda$ is $52.82$,
+equivalent to a mean component lifetime of $6.44$ weeks.
+The posterior variance for $\lambda$ is ***.
+Compared to the prior variance of ***,
+the posterior expresses now more confidence that mean lifetimes are around $\yfun{2} = 52.82$
+than the prior had about $\yz = 103.13$.
+This absurd induction*** is illustrated in Figure~\ref{fig:weibull-pdc};
+the posterior is shifted halfway towards the values for $\lambda$
+that the two observations suggest,
+and is more pointed than the prior,
+thus conveying a false sense of certainty about $\lambda$.
 
-Illustrate with a plot or so.
+\begin{figure}
+
+\caption{Prior and posterior for $\lambda$ given surprising observations;
+the conflict between prior assumptions and data is averaged out,
+with a more pointed posterior giving a false sense of certainty.}
+\label{fig:weibull-pdc}
+\end{figure}
+
+This is a general problem (general problem, see my papers and diss).
+
 
 
 \section{MODELS FOR SURPRISING DATA}
