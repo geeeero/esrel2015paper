@@ -357,8 +357,9 @@ $\yn$ is a weighted average of the prior parameter $\yz$ and the data-based quan
 with weights $\nz$ and $n$, respectively.
 $\nz$ can thus be interpreted as a prior strength or pseudocount,
 indicating how much our prior guess should weigh against the $n$ observations.
-
-***$\V[\lambda\mid\nz,\yz] = $
+Furthermore, $\V[\lambda\mid\nz,\yz] = (\yz)^2 / (1 - 1/\nz)$,
+so for fixed $\yz$, the higher $\nz$,
+the more probability mass is concentrated around $\yz$. %$p(\lambda\mid\nz,\yz)$ 
 
 However, the weighted average structure for $\yn$
 is behind the problematic behaviour in case of prior-data conflict.
@@ -373,11 +374,11 @@ using \eqref{eq:ig-update} we get $\nfun{2} = 4$
 and $\yfun{2} = \frac{1}{4}(2 \cdot 103.13 + 1^2 + 2^2) = 52.82$,
 so our posterior expectation for the scale parameter $\lambda$ is $52.82$,
 equivalent to a mean component lifetime of $6.44$ weeks.
-The posterior variance for $\lambda$ is ***.
-Compared to the prior variance of ***,
+The posterior variance for $\lambda$ is $3719$.
+Compared to the prior variance of $21273$,
 the posterior expresses now more confidence that mean lifetimes are around $\yfun{2} = 52.82$
 than the prior had about $\yz = 103.13$.
-This absurd induction*** is illustrated in Figure~\ref{fig:weibull-pdc};
+This absurd conclusion is illustrated in Figure~\ref{fig:weibull-pdc};
 the posterior is shifted halfway towards the values for $\lambda$
 that the two observations suggest,
 and is more pointed than the prior,
@@ -387,7 +388,7 @@ For such priors, the same update formula \eqref{eq:ig-update} applies,
 and so conflict is averaged out, for details see \citeNP{Walter2009a} and \citeNP{diss}, \S 3.1.}
 
 \begin{figure}
-
+\includegraphics[width=0.48\textwidth]{fig1}
 \caption{Prior and posterior for $\lambda$ given surprising observations;
 the conflict between prior assumptions and data is averaged out,
 with a more pointed posterior giving a false sense of certainty.}
@@ -446,7 +447,9 @@ Compare now the set of posteriors obtained from observing
 $t_1 = 1$, $t_2 = 2$ (as before), see Figure ***,
 and $t_1 = 10$, $t_2 = 11$, see Figure ***.
 In Figure ***, $\MN$ is much larger than in Figure ***,
+leading to less precise probability statements.
 
+\comments{Do we need these figures? We will have figures for $T_\text{sys}$ later.}
 
 As each posterior in $\MN$ corresponds to a predictive distribution for $T_\text{sys}$,
 we will have a set of reliability functions $R_\text{sys}(t)$.
