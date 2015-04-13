@@ -182,18 +182,21 @@
 To arrive at meaningful estimates for the reliability of a system,
 it is therfore often necessary to also include expert information in the analysis,
 which can be easily done in the Bayesian approach by using an informative prior distribution.
-
+%
 A problem that then can arise is called prior-data conflict:
 from the viewpoint of the prior, the observed data seem very surprising,
 i.e., the information from data is in conflict with the prior assumptions.
 It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
 in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
 thus conveying a false sense of certainty by communicating that we know the reliability of a system quite precisely when in fact we do not.
-
-We present an approach to mitigate this issue, by considering sets of prior distributions,
-and making use of the recently introduced survival signature to characterise the system under study.
+%
+We present an approach to mitigate this issue, by considering sets of prior distributions
+to model vague knowledge on component lifetimes,
+and study how surprisingly early or late component failures
+affect the prediction of the reliability of a parallel system.
+%and making use of the recently introduced survival signature to characterise the system under study.
 Our approach can be seen as a robust Bayesian procedure or imprecise probability method
-that appropriately reflects surprising data in the posterior survival function or other posterior inferences.
+that appropriately reflects surprising data in the posterior system survival function or other posterior inferences.
 }
 
 
@@ -220,15 +223,15 @@ but some data about failure times exists for the components the system is made o
 Information on the distribution $p_i(t)$ of component failure times $T_i$,
 where $i = 1, \ldots, l$ if the system consists of $l$ components,
 can then be used to derive the distribution of $T_\text{sys}$.
-In this paper, we will mostly consider a simple parallel system
+In this paper, we consider a simple parallel system
 where all components are of the same type,
 and our observations consist solely of the failure times of the components in this system.
-In the last section, we will briefly describe
-how the approach can be generalized to arbitrary system structures
-using the survival signature \cite{2012:survsign},
-which allows for different types of components and
-the inclusion of data from component tests, as in \citeNP{2014:bayessurvsign}.
-
+%In the last section, we will briefly describe
+%how the approach can be generalized to arbitrary system structures
+%using the survival signature \cite{2012:survsign},
+%which allows for different types of components and
+%the inclusion of data from component tests, as in \citeNP{2014:bayessurvsign}.
+%
 We assume a parametric probability distribution for component lifetimes $T_i$. 
 The Bayesian approach allows to base estimation of the component failure distributions
 on both data and further knowledge not given by the data,
@@ -258,7 +261,7 @@ where sets of distributions are used to express the precision of probability sta
 the smaller the set, the more precise the probability statement.
 Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
 and a small set for $R_\text{sys}(t)$ will indicate that we know the reliability of a system quite precisely,
-while a large set will indicate that our knowledge about $T\text{sys}$ is rather shaky.
+while a large set will indicate that our knowledge about $T_\text{sys}$ is rather shaky.
 \comments{Here or at end of intro? leave out?}
 
 In line with imprecise or interval probability methods, we will thus have, for each $t$,
@@ -431,7 +434,7 @@ is seen as self-evident in the robust Bayesian literature,
 but can be formally justified as being \emph{coherent}
 (a self-consistency property)
 in the framework of imprecise probability, where it is known as
-\emph{Generalized Bayes' Rule} (\citeNP{1991:walley} \S 6.4).
+\emph{Generalized Bayes' Rule} (\citeNP{1991:walley}, \S 6.4).
 
 Technically, it is crucial to consider a range of pseudocounts $[\nzl, \nzu]$
 along with the range of prior guesses $[\yzl, \yzu]$,
@@ -472,16 +475,13 @@ treatment of censored observations
 (selection of) Andrew's results
 
 
-\section{SURVIVAL SIGNATURE (?)}
-
-allows to separate system structure from individual component reliability (time aspect only in components),
-several type of components
-
 
 \section{CONCLUSION AND OUTLOOK}
 
-
-multiple type of components, nonparametric lifetime as in \citeNP{2014:bayessurvsign}, other parameter set shapes 
+survival signature \cite{2012:survsign} (allows to separate system structure from individual component reliability,
+time aspect only in components, multiple type of components),
+nonparametric lifetime as in \citeNP{2014:bayessurvsign},
+other parameter set shapes \cite{Walter2011a}, \cite{diss} \S A.2
 
 
 \bibliographystyle{chicaco}
