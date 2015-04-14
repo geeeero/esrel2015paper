@@ -4,6 +4,9 @@
 
 library(luck)
 
+# provides dinvgamma(x, shape, scale) where shape = alpha and scale = beta
+library(actuar)
+
 # translate lambda parameter of weibull to expected failure time
 # lambda - scale parameter of weibull
 # k      - shape parameter of weibull
@@ -36,9 +39,6 @@ invgammavar <- function(n0, y0)
   y0^2/(1-1/n0)
 
 invgammavar(n2, y2)
-
-# provides dinvgamma(x, shape, scale) where shape = alpha and scale = beta
-library(actuar)
 
 # inverse gamma pdf and cdf with canonical parameters n0 and y0
 cdinvgamma <- function(x, n0, y0, ...)
