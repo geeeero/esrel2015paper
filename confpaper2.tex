@@ -262,7 +262,7 @@ the smaller the set, the more precise the probability statement.
 Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
 and a small set for $R_\text{sys}(t)$ will indicate that we know the reliability of a system quite precisely,
 while a large set will indicate that our knowledge about $T_\text{sys}$ is rather shaky.
-\comments{Here or at end of intro? leave out?}
+%\comments{Here or at end of intro? leave out?}
 
 In line with imprecise or interval probability methods, we will thus have, for each $t$,
 a lower reliability $\lRsys(t) = \ul{P}(T_\text{sys} \geq t)$,
@@ -349,14 +349,14 @@ the updated parameters are
 \begin{align}
 \nn &= \nz + n\,, 
 &
-\yz &=  \frac{\nz \yz + \taut}{\nz + n}\,,
+\yn &=  \frac{\nz \yz + \taut}{\nz + n}\,,
 \label{eq:ig-update}
 \end{align}
 where $\taut = \sum_{i=1}^n t_i^k$.%
 \footnote{We thus have
 $\lambda \mid \nz, \yz, \vec{t} \sim \ig(\nz + n + 1, \nz \yz + \taut)$.}
 From the simple update rule \eqref{eq:ig-update}, we see that
-$\yn$ is a weighted average of the prior parameter $\yz$ and the data-based quantity $\taut/n$,
+$\yn$ is a weighted average of the prior parameter $\yz$ and the Maximum Likelihood estimator $\taut/n$,
 with weights $\nz$ and $n$, respectively.
 $\nz$ can thus be interpreted as a prior strength or pseudocount,
 indicating how much our prior guess should weigh against the $n$ observations.
@@ -383,8 +383,9 @@ the posterior expresses now more confidence that mean lifetimes are around $\yfu
 than the prior had about $\yz = 103.13$.
 This absurd conclusion is illustrated in Figure~\ref{fig:weibull-pdc};
 the posterior is shifted halfway towards the values for $\lambda$
-that the two observations suggest,
-and is more pointed than the prior,
+that the two observations suggest
+(the ML estimator for $\lambda$ would be $2.5$),
+and is steeper than the prior (so the pdf is more pointed),
 thus conveying a false sense of certainty about $\lambda$.%
 \footnote{This is a general problem in Bayesian analysis with canonical conjugate priors.
 For such priors, the same update formula \eqref{eq:ig-update} applies,
@@ -478,9 +479,13 @@ treatment of censored observations
 
 \section{CONCLUSION AND OUTLOOK}
 
+replacement of components: influence on $R_\text{sys}(t) = P(T_\text{sys} \geq t \mid \ldots)$ 
+
 survival signature \cite{2012:survsign} (allows to separate system structure from individual component reliability,
 time aspect only in components, multiple type of components),
+
 nonparametric lifetime as in \citeNP{2014:bayessurvsign},
+
 other parameter set shapes \cite{Walter2011a}, \cite{diss} \S A.2
 
 
