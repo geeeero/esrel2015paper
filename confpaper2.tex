@@ -221,7 +221,7 @@ decisions about, e.g., scheduling of maintenance work can be made.
 Often, there is no failure data for the system itself (e.g., if the system is a prototype),
 but some data about failure times exists for the components the system is made of.
 Information on the distribution $p_i(t)$ of component failure times $T_i$,
-where $i = 1, \ldots, l$ if the system consists of $l$ components,
+where $i = 1, \ldots, \ell$ if the system consists of $\ell$ components,
 can then be used to derive the distribution of $T_\text{sys}$.
 In this paper, we consider a simple parallel system
 where all components are of the same type,
@@ -278,23 +278,17 @@ As we will show in Section~\ref{sec:weibull}, when taking the standard choice of
 prior-data conflict is ignored, as the spread of the posterior distribution does not increase in case of such a conflict,
 ultimately conveying a false sense of certainty
 by communicating that we know the reliability of a system quite precisely when in fact we do not.
-
+%
 In contrast, our method will indicate prior-data conflict by wider reliability bounds.
 This behaviour is obtained by a specific choice for the set of priors \cite{Walter2009a}
 
-***systematic approach: IP, see, e.g, \citeNP{1991:pericchi}
-
-***predictive distribution!
-
-This paper is organized as follows: *** 
+The paper is organized as follows: *** 
 
 
 \section{BAYESIAN ANALYSIS OF WEIBULL LIFETIMES}
 \label{sec:weibull}
 
-***first precise, then pdc illustration, then IP.\\
-
-For each of the component lifetimes $T_i$, $i=1,\ldots,l$,
+For each of the component lifetimes $T_i$, $i=1,\ldots,\ell$,
 we assume a Weibull distribution with fixed shape parameter $k > 0$, with density and cdf%
 \footnote{Our approach would be possible also for other parametric lifetime distributions
 that form a canonical exponential family
@@ -455,32 +449,39 @@ leading to less precise probability statements.
 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{fig2}
-\caption{Set of posterior cdfs for $\lambda$ given surprising observations. *** add credibility interval?}
+\caption{Set of posterior cdfs for $\lambda$ given surprising observations.}
 \label{fig:setofpost-pdc}
 \end{figure}
 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{fig3}
-\caption{Set of posterior cdfs for $\lambda$ given unsurprising observations. *** add credibility interval?}
+\caption{Set of posterior cdfs for $\lambda$ given unsurprising observations.}
 \label{fig:setofpost-nopdc}
 \end{figure}
+
+\comments{More details for Fig 2 and 3 example? Also prior set?}
 
 As each posterior in $\MN$ corresponds to a predictive distribution for $T_\text{sys}$,
 we will have a set of reliability functions $R_\text{sys}(t)$.
 The derivation of $R_\text{sys}(t)$ for a parallel system with $l$ components
 will be given in Section~\ref{sec:andrewsresults} below.
-This will include, in contrast to previous studies using sets of priors
+This will include, in contrast to previous studies using sets of priors of type 
 \eqref{eq:setofpriors}, the treatment of censored observations.
 
 
 \section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
 \label{sec:andrewsresults}
 
+Right-censoring is very common in reliability studies.
+
+
+treatment of censored observations \cite{2003:lawless} \S 2.2
+
+
 prior on lifetime distribution parameters (could include test data for components),
 observed failures in system surprising,
 effect on reliability/survival function.
 
-treatment of censored observations \cite{2003:lawless} \S 2.2
 
 
 (selection of) Andrew's results
@@ -496,6 +497,7 @@ time aspect only in components, multiple type of components),
 
 nonparametric lifetime as in \citeNP{2014:bayessurvsign},
 
+choice of set of priors is important \cite{1991:pericchi},
 other parameter set shapes \cite{Walter2011a}, \cite{diss} \S A.2
 
 
