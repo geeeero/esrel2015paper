@@ -41,15 +41,21 @@ lines(xseq, cpinvgamma(xseq, 4.5, forfig23$y0[2]), col = 6)
 lines(xseq, cpinvgamma(xseq, forfig23$n0[2], forfig23$y0[2]), col = 7)
 legend("topleft", legend = seq(2,5,by=0.5), lty=1, col=1:7)
 
+# cpinvgamma(x, n0, y0)
 # ny = c(n0, y0)
 pigforoptim <- function(ny, t, ...)
   cpinvgamma(t, ny[1], ny[2], ...)
 
+library(luck)
+library(actuar)
+source("00-06_cdfplotLuckModel.r")
+source("03-01_WeibullData.r")
+source("03-02_Weibull.r")
 
-
-
-# cpinvgamma(x, n0, y0)
-
+fig2luck <- WeibullLuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)),
+                             data = WeibullData(1:2))
+fig3luck <- WeibullLuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)),
+                             data = WeibullData(10:11))
 
 setEPS()
 postscript("fig2.eps",width=5,height=3)

@@ -63,7 +63,7 @@ postscript("fig1.eps",width=5,height=3)
 par(mar=c(3,3,1,1)+0.1)
 plot(xseq, cpinvgamma(xseq, n2, y2), type="l", xlab="", ylab="")
 mtext(expression(lambda), 1, 2)
-mtext(expression(p(lambda)), 2, 2)
+mtext(expression(F(lambda)), 2, 2)
 lines(xseq, cpinvgamma(xseq, n0, y0), lty=2)
 legend("bottomright", legend = c("prior", "posterior"), lty = c(2,1),
        inset = 0.02)
