@@ -317,7 +317,7 @@ The scale parameter $\lambda$ can be interpreted through the relation
 For encoding expert knowledge about the reliability of the components,
 we need to assign a prior distribution over the scale parameter $\lambda$.
 A convenient choice is to use the inverse Gamma distribution,
-commonly parametrized in terms of the hyperparameters $\alpha$ and $\beta$:
+commonly parametrized in terms of the hyperparameters $\alpha > 0$ and $\beta > 0$:
 \begin{align}
 p(\lambda \mid \alpha, \beta) &= \frac{\beta^\alpha}{\Gamma(\alpha)} \lambda^{-(\alpha + 1)} e^{-\beta/\lambda} \,,
 \end{align}
@@ -334,7 +334,7 @@ to vary in a set, this is advantageous also
 because expert knowledge is often vague,
 and it is difficult for the expert(s) to pin down precise hyperparameter values.
 For the definition of the hyperparameter set,
-we use however a parametrization in terms of $\nz$ and $\yz$ instead of $\alpha$ and $\beta$,
+we use however a parametrization in terms of $\nz > 1$ and $\yz > 0$ instead of $\alpha$ and $\beta$,
 \begin{align}
 \nz &= \alpha - 1\,,
 &
@@ -470,7 +470,7 @@ prior on lifetime distribution parameters (could include test data for component
 observed failures in system surprising,
 effect on reliability/survival function.
 
-treatment of censored observations
+treatment of censored observations \cite{2003:lawless} \S 2.2
 
 
 (selection of) Andrew's results
