@@ -60,7 +60,16 @@ fig3luck <- WeibullLuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failureto
 setEPS()
 postscript("fig2.eps",width=5,height=3)
 par(mar=c(3,3,1,1)+0.1)
-
+cdfplot(fig2luck, xvec = seq(0, 300, length.out = 301), control = controlList(posterior = TRUE))
+mtext(expression(lambda), 1, 2)
+mtext(expression(F(lambda)), 2, 2)
 dev.off()
 
+setEPS()
+postscript("fig3.eps",width=5,height=3)
+par(mar=c(3,3,1,1)+0.1)
+cdfplot(fig3luck, xvec = seq(0, 300, length.out = 301), control = controlList(posterior = TRUE))
+mtext(expression(lambda), 1, 2)
+mtext(expression(F(lambda)), 2, 2)
+dev.off()
 #

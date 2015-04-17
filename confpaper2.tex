@@ -448,12 +448,22 @@ this corresponds to $[\yzl,\yzu] = [103.13, 154.06]$.
 We also choose $[\nzl,\nzu] =[2, 5]$,
 so we count or prior information equivalent to having seen two to five observations.
 Compare now the set of posteriors obtained from observing
-$t_1 = 1$, $t_2 = 2$ (as before), see Figure ***,
-and $t_1 = 10$, $t_2 = 11$, see Figure ***.
-In Figure ***, $\MN$ is much larger than in Figure ***,
+$t_1 = 1$, $t_2 = 2$ (as before), see Figure~\ref{fig:setofpost-pdc},
+and $t_1 = 10$, $t_2 = 11$, see Figure~\ref{fig:setofpost-nopdc}.
+In Figure~\ref{fig:setofpost-pdc}, $\MN$ is much larger than in Figure~\ref{fig:setofpost-nopdc},
 leading to less precise probability statements.
 
-\comments{Do we need these figures? We will have figures for $T_\text{sys}$ later.}
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{fig2}
+\caption{Set of posterior cdfs for $\lambda$ given surprising observations. *** add credibility interval?}
+\label{fig:setofpost-pdc}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{fig3}
+\caption{Set of posterior cdfs for $\lambda$ given unsurprising observations. *** add credibility interval?}
+\label{fig:setofpost-nopdc}
+\end{figure}
 
 As each posterior in $\MN$ corresponds to a predictive distribution for $T_\text{sys}$,
 we will have a set of reliability functions $R_\text{sys}(t)$.
