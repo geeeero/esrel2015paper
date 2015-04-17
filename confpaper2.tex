@@ -472,19 +472,36 @@ This will include, in contrast to previous studies using sets of priors of type
 \section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
 \label{sec:andrewsresults}
 
-Right-censoring is very common in reliability studies.
+We consider a parallel system with $\ell$ exchangeable components,
+so the system functions when at least one of the $\ell$ components functions.
+Exchangeability means that the components are of the same type
+and that any permutation of the component labels would not change any results.
+From the components in the system that have already failed by a certain time $t_\text{now}$,
+we can thus learn about the failure distribution of the remaining components.
+But also the fact that these remaining components have not failed yet
+contains information on the lifetime distribution $p_i(t\mid \lambda)$.
+Such observations for which the failure event has not happened yet are called \emph{right-censored}.
+Right-censoring is very common in reliability studies,
+and data including right-censored observations is often encoded
+in pairs $(t_i, \delta_i)$, where $\delta_i$ indicates whether
+a failure was observed at time $t_i$ for item $i$ ($\delta_i = 1$)
+or the item $i$ was lost for follow-up at time $t_i$ ($\delta_i = 0$).
+Often, censored observations are alternatively marked as $t_i^+$, in contrast to observed failures $t_i$.
+The posterior for a parameter $\lambda$ based on $n$ possibly censored observations
+$(t_i, \delta_i)$, $i=1,\ldots,n$,
+can be written as (see, e.g., \citeNP{2003:lawless}, \S 2.2)
+\begin{align}
+p(\lambda \mid \{(t_i, \delta_i)\}^n) \propto p(\lambda) \prod_{i=1}^n p(t_i)^{\delta_i} (1-F(t_i))^{1-\delta_i}\,.
+\end{align}
 
 
-treatment of censored observations \cite{2003:lawless} \S 2.2
+***prior on lifetime distribution parameters could also include test data for components,
 
+***(selection of) Andrew's results
 
-prior on lifetime distribution parameters (could include test data for components),
-observed failures in system surprising,
-effect on reliability/survival function.
-
-
-
-(selection of) Andrew's results
+***first simpler example, then general formula (4.11) for
+event $D_{Gen}=(t_1,...,t_m,t_*^+,...,t_*^+)$ where we have $m$ failure observations and $n-m$ right censored observations,
+or direct to general formula???
 
 
 
