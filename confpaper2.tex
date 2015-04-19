@@ -180,7 +180,7 @@
 
 \abstract{In reliability engineering, data about failure events is often scarce.
 To arrive at meaningful estimates for the reliability of a system,
-it is therfore often necessary to also include expert information in the analysis,
+it is therefore often necessary to also include expert information in the analysis,
 which can be easily done in the Bayesian approach by using an informative prior distribution.
 %
 A problem that then can arise is called prior-data conflict:
@@ -209,7 +209,7 @@ This is usually done by determining the \emph{reliability function} $R(t)$,
 in other contexts also known as the \emph{survival function} $S(t)$,
 giving the probability that the system has not failed by time $t$:
 \begin{align}
-R_\text{sys}(t) = S_\text{sys}(t) = P(T_\text{sys} \geq t)\,,
+R_\text{sys}(t) = P(T_\text{sys} \geq t)\,,
 \end{align}
 where $T_\text{sys}$ is the random variable giving the failure time of the system. %
 %\footnote{}
@@ -218,14 +218,15 @@ in terms of the cumulative distribution function $F_\text{sys}(t) = 1 - R_\text{
 the density $p_\text{sys}(t)$ or the hazard rate $\lambda_\text{sys}(t)$,
 decisions about, e.g., scheduling of maintenance work can be made.
 
-Often, there is no failure data for the system itself (e.g., if the system is a prototype),
-but some data about failure times exists for the components the system is made of.
-Information on the distribution $p_i(t)$ of component failure times $T_i$,
+Often, there is no failure data for the system itself
+(e.g., if the system is a prototype, or the system is used under unique circumstances),
+but some data about failure times exist for the components the system is made of.
+Information on the distribution of component failure times $T_i$,
 where $i = 1, \ldots, \ell$ if the system consists of $\ell$ components,
 can then be used to derive the distribution of $T_\text{sys}$.
 In this paper, we consider a simple parallel system
 where all components are of the same type,
-and our observations consist solely of the failure times of the components in this system.
+and our observations consist solely of the failure times of one or more components in this system.
 %In the last section, we will briefly describe
 %how the approach can be generalized to arbitrary system structures
 %using the survival signature \cite{2012:survsign},
@@ -235,7 +236,7 @@ and our observations consist solely of the failure times of the components in th
 We assume a parametric probability distribution for component lifetimes $T_i$. 
 The Bayesian approach allows to base estimation of the component failure distributions
 on both data and further knowledge not given by the data,
-the latter usually in form of expert knowledge.
+the latter usually provided in the form of expert knowledge.
 This knowledge is encoded in form of a so-called prior distribution,
 a distribution on the parameter(s) of the component lifetime distribution.
 This expert knowledge is especially important when there is very few data on the components (like in our scenario),
@@ -244,30 +245,30 @@ as only with its help meaningful estimates for the system reliability can be mad
 However, the specific choice for the prior distribution to encode the given expert knowledge is often debatable,
 and a specific choice of prior is difficult to justify.
 A way to deal with this is to employ sensitivity analysis,
-i.e., studying the effect of different choices of prior on the quantities of interest
-(in our case, the reliability function, which, in Bayesian terms, is a predictive distribution).
+i.e., studying the effect of different choices of prior distribution on the quantities of interest
+(in our case, the system*** reliability function, which, in Bayesian terms, is a predictive distribution).
 This idea has been explored in systematic sensitivity analysis, or robust Bayesian methods
 (for an overview on this approach, see, e.g.,
 \shortciteNP{1994:berger}, \citeNP{2005:ruggeri}, \citeNP{2000:rios}, or \citeNP{2000:bergerinsuaruggeri}).
-\comments{less citations? specific citation for robust Bayes in reliability???}
+\comments{one or two citations only, look for specific citation for robust Bayes in reliability***}
 
 The work we present here can be seen as belonging to the robust Bayesian approach,
 as our work uses sets of priors. However, our focus and interpretation is slightly different,
 as we consider the result of our procedure, sets of reliability functions, as the proper result,
 while a robust Bayesian would base his analyses on a single reliability function from the set
 in case (s)he was able to conclude that quantities of interest are not `too sensitive' to the choice of prior.
-Instead, our viewpoint is rooted in the theory of imprecise or interval probability \cite{1991:walley,2011:IESS-ip,itip},
+In contrast, our viewpoint is rooted in the theory of imprecise or interval probability \cite{1991:walley,itip},
 where sets of distributions are used to express the precision of probability statements themselves:
 the smaller the set, the more precise the probability statement.
 Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
-and a small set for $R_\text{sys}(t)$ will indicate that we know the reliability of a system quite precisely,
+and a small set for $R_\text{sys}(t)$ will indicate that we can quantify the reliability of a system quite precisely,
 while a large set will indicate that our knowledge about $T_\text{sys}$ is rather shaky.
-%\comments{Here or at end of intro? leave out?}
+\comments{Frank: 'reliability at time $t$' where?}
 
 In line with imprecise or interval probability methods, we will thus have, for each $t$,
 a lower reliability $\lRsys(t) = \ul{P}(T_\text{sys} \geq t)$,
 and an upper reliability $\uRsys(t) = \ol{P}(T_\text{sys} \geq t)$.
-We will explain in Section~\ref{sec:modforsurpr} how these bounds are obtained
+We will explain in Sections~\ref{sec:modforsurpr} and \ref{sec:andrewsresults} how these bounds are obtained
 based on a set of prior distributions on the parameter of the component lifetime distribution.
 
 The central merit of our method is that it adequately reflects prior-data conflict
@@ -277,10 +278,12 @@ and observed behaviour of components in the system under study.
 As we will show in Section~\ref{sec:weibull}, when taking the standard choice of a conjugate prior,
 prior-data conflict is ignored, as the spread of the posterior distribution does not increase in case of such a conflict,
 ultimately conveying a false sense of certainty
-by communicating that we know the reliability of a system quite precisely when in fact we do not.
+by communicating that we can quantify the reliability of a system quite precisely when in fact we can not.
 %
-In contrast, our method will indicate prior-data conflict by wider reliability bounds.
-This behaviour is obtained by a specific choice for the set of priors \cite{Walter2009a}
+In contrast, our method will indicate prior-data conflict by wider bounds for $R_\text{sys}(t)$.
+This behaviour is obtained by a specific choice for the set of priors (see \citeNP{Walter2009a} and \citeNP{diss} \S 3.1.4)
+which leads to larger sets of posterior distributions when prior knowledge and data are in conflict
+(see Section~\ref{sec:modforsurpr} for more details).
 
 The paper is organized as follows: *** 
 
