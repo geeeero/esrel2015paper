@@ -374,11 +374,11 @@ using \eqref{eq:ig-update} we get $\nfun{2} = 4$
 and $\yfun{2} = \frac{1}{4}(2 \cdot 103.13 + 1^2 + 2^2) = 52.82$,
 so our posterior expectation for the scale parameter $\lambda$ is $52.82$,
 equivalent to a mean component lifetime of $6.44$ weeks.
-The posterior variance for $\lambda$ is $3719$.
-Compared to the prior variance of $21273$,
+The posterior standard deviation (sd) for $\lambda$ is $60.99$.
+Compared to the prior standard deviation of $145.85$,
 the posterior expresses now more confidence that mean lifetimes are around $\yfun{2} = 52.82$
 than the prior had about $\yz = 103.13$.
-This absurd conclusion is illustrated in Figure~\ref{fig:weibull-pdc};
+This irritating conclusion is illustrated in Figure~\ref{fig:weibull-pdc};
 the posterior cdf is shifted halfway towards the values for $\lambda$
 that the two observations suggest
 (the ML estimator for $\lambda$ would be $2.5$),
@@ -386,7 +386,12 @@ and is steeper than the prior (so the pdf is more pointed),
 thus conveying a false sense of certainty about $\lambda$.%
 \footnote{This is a general problem in Bayesian analysis with canonical conjugate priors.
 For such priors, the same update formula \eqref{eq:ig-update} applies,
-and so conflict is averaged out, for details see \citeNP{Walter2009a} and \citeNP{diss}, \S 3.1.}
+and so conflict is averaged out, for details see \citeNP{Walter2009a} and \citeNP{diss}, \S\S 3.1.4 and A.1.2.}
+We would obtain almost the same %values of $\nfun{2}$ and $\yfun{2}$, and so the same 
+posterior distribution
+if we had assumed the mean component lifetime to be 7 weeks (so $\yz = 62.39$),
+and observed lifetimes $t_1 = 6$, $t_2 = 7$ in line with our expectations.
+It seems unreasonable to make the same probability statements on component lifetimes in these two fundamentally different scenarios.
 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{fig1}
@@ -397,7 +402,7 @@ with a more pointed posterior giving a false sense of certainty.}
 \end{figure}
 
 
-\section{MODELS FOR SURPRISING DATA}
+\section{MODELS REFLECTING SURPRISING DATA}
 \label{sec:modforsurpr}
 
 Despite this issue of ignoring prior-data conflict,
@@ -437,36 +442,45 @@ in the framework of imprecise probability, where it is known as
 Technically, it is crucial to consider a range of pseudocounts $[\nzl, \nzu]$
 along with the range of prior guesses $[\yzl, \yzu]$,
 as only then $\taut/n \not\in [\yzl, \yzu]$
-leads to the set of posteriors being larger.
+leads to the set of posteriors being larger
+and hence reflecting prior-data conflict.
 
 Continuing the example from Section~\ref{sec:weibull} and Figure~\ref{fig:weibull-pdc},
 assume now for the mean component lifetimes the range 9 to 11 weeks,
 this corresponds to $[\yzl,\yzu] = [103.13, 154.06]$.
 We also choose $[\nzl,\nzu] =[2, 5]$,
-so we count or prior information equivalent to having seen two to five observations.
+so we value or prior information as equivalent to having seen two to five observations.
 Compare now the set of posteriors obtained from observing
 $t_1 = 1$, $t_2 = 2$ (as before), see Figure~\ref{fig:setofpost-pdc},
 and $t_1 = 10$, $t_2 = 11$, see Figure~\ref{fig:setofpost-nopdc}.
-In Figure~\ref{fig:setofpost-pdc}, $\MN$ is much larger than in Figure~\ref{fig:setofpost-nopdc},
-leading to less precise probability statements.
+We now have a clear difference between the two scenarios of
+observations in line with expectations (Figure~\ref{fig:setofpost-nopdc})
+and observations in conflict (Figure~\ref{fig:setofpost-pdc}).
+In Figure~\ref{fig:setofpost-pdc}, the set of posteriors (blue)
+is shifted towards the left, but has about the same size as the set of priors (red),
+and so posterior quantification of reliability has the same precision,
+despite having seen two observations.
+Instead, in Figure~\ref{fig:setofpost-nopdc}, the set of posteriors
+is smaller than the set of priors,
+such that the two observations have increased the precision of probability statements.
 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{fig2}
-\caption{Set of posterior cdfs for $\lambda$ given surprising observations.}
+\caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two surprising observations $t_1 = 1$, $t_2 = 2$.}
 \label{fig:setofpost-pdc}
 \end{figure}
 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{fig3}
-\caption{Set of posterior cdfs for $\lambda$ given unsurprising observations.}
+\caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two unsurprising observations $t_1 = 10$, $t_2 = 11$.}
 \label{fig:setofpost-nopdc}
 \end{figure}
 
-\comments{More details for Fig 2 and 3 example? Also prior set?}
-
+%\comments{More details for Fig 2 and 3 example? Also prior set?}
+%
 As each posterior in $\MN$ corresponds to a predictive distribution for $T_\text{sys}$,
 we will have a set of reliability functions $R_\text{sys}(t)$.
-The derivation of $R_\text{sys}(t)$ for a parallel system with $l$ components
+The derivation of $R_\text{sys}(t)$ for a parallel system with $\ell$ components
 will be given in Section~\ref{sec:andrewsresults} below.
 This will include, in contrast to previous studies using sets of priors of type 
 \eqref{eq:setofpriors}, the treatment of censored observations.

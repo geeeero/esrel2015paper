@@ -25,7 +25,7 @@
 if(!isGeneric("cdfplot"))
  setGeneric("cdfplot", function(object, ...) standardGeneric("cdfplot"))
 
-setMethod("cdfplot", "LuckModel", function(object, xvec = 100, epsilon = 1e-5, #
+setMethod("cdfplot", "LuckModel", function(object, xvec = 100, epsilon = 1e-5, add = FALSE, #
                                            control = controlList(), ylim = c(0,1), vertdist = TRUE, ...) {
  # check of class of object
  if (class(object) == "LuckModel")
@@ -108,9 +108,10 @@ setMethod("cdfplot", "LuckModel", function(object, xvec = 100, epsilon = 1e-5, #
                            .x = xvecrev[i],              #  (besides first argument)
                            .posterior = control$posterior)$value # /
  }
- # make an empty plot, because polygon() is not a first-level plot function
- plot(x = xvec, y = rep(0, times = .xveclength), #
-      type = "n", xlab = "", ylab = "", col = 1, ylim = ylim, ...)
+ # if add = F, make an empty plot, because polygon() is not a first-level plot function
+ if(!add)
+  plot(x = xvec, y = rep(0, times = .xveclength), #
+       type = "n", xlab = "", ylab = "", col = 1, ylim = ylim, ...)
  # plot the shaded area
  polygon (c(xvec,  xvecrev,  xvec[1]),  # x coordinates
           c(.yvec, .yvecrev, .yvec[1]), # y coordinates
@@ -118,19 +119,19 @@ setMethod("cdfplot", "LuckModel", function(object, xvec = 100, epsilon = 1e-5, #
           density = control$density, angle = control$angle, ...)
  if(vertdist){
   if (!control$posterior) { # prior
-   lines(xvec, singleCdf(object = object, n = .n0l, y = .y0l, x = xvec))
-   lines(xvec, singleCdf(object = object, n = .n0u, y = .y0l, x = xvec))
-   lines(xvec, singleCdf(object = object, n = .n0l, y = .y0u, x = xvec))
-   lines(xvec, singleCdf(object = object, n = .n0u, y = .y0u, x = xvec))
+   lines(xvec, singleCdf(object = object, n = .n0l, y = .y0l, x = xvec), col = rgb(0,0,0,0.3))
+   lines(xvec, singleCdf(object = object, n = .n0u, y = .y0l, x = xvec), col = rgb(0,0,0,0.3))
+   lines(xvec, singleCdf(object = object, n = .n0l, y = .y0u, x = xvec), col = rgb(0,0,0,0.3))
+   lines(xvec, singleCdf(object = object, n = .n0u, y = .y0u, x = xvec), col = rgb(0,0,0,0.3))
   } else { # posterior
    lines(xvec, singleCdf(object = object, n = updateLuckN(.n0l, .n), #
-                                          y = updateLuckY(.n0l, .y0l, .tau, .n), x = xvec))
+                                          y = updateLuckY(.n0l, .y0l, .tau, .n), x = xvec), col = rgb(0,0,0,0.5))
    lines(xvec, singleCdf(object = object, n = updateLuckN(.n0u, .n), #
-                                          y = updateLuckY(.n0u, .y0l, .tau, .n), x = xvec))
+                                          y = updateLuckY(.n0u, .y0l, .tau, .n), x = xvec), col = rgb(0,0,0,0.5))
    lines(xvec, singleCdf(object = object, n = updateLuckN(.n0l, .n), #
-                                          y = updateLuckY(.n0l, .y0u, .tau, .n), x = xvec))
+                                          y = updateLuckY(.n0l, .y0u, .tau, .n), x = xvec), col = rgb(0,0,0,0.5))
    lines(xvec, singleCdf(object = object, n = updateLuckN(.n0u, .n), #
-                                          y = updateLuckY(.n0u, .y0u, .tau, .n), x = xvec))
+                                          y = updateLuckY(.n0u, .y0u, .tau, .n), x = xvec), col = rgb(0,0,0,0.5))
   }
  }
  # TODO:
