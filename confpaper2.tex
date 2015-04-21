@@ -164,6 +164,8 @@
 
 \newcommand{\comments}[1]{{\small\color{gray} #1}}
 
+\newtheorem{example}{Example}
+
 \allowdisplaybreaks
 
 \begin{document}
@@ -351,9 +353,13 @@ the updated parameters are
 \yn &=  \frac{\nz \yz + \taut}{\nz + n}\,,
 \label{eq:ig-update}
 \end{align}
-where $\taut = \sum_{i=1}^n t_i^k$.%
-\footnote{We thus have
-$\lambda \mid \nz, \yz, \vec{t} \sim \ig(\nz + n + 1, \nz \yz + \taut)$.}
+where $\taut = \sum_{i=1}^n t_i^k$. %
+%\footnote{
+We thus have
+\begin{align}
+\lambda \mid \nz, \yz, \vec{t} \sim \ig(\nz + n + 1, \nz \yz + \taut). %}
+\label{eq:ig-update-alpha}
+\end{align}
 From the simple update rule \eqref{eq:ig-update}, we see that
 $\yn$ is a weighted average of the prior parameter $\yz$ and the Maximum Likelihood estimator $\taut/n$,
 with weights $\nz$ and $n$, respectively.
@@ -546,8 +552,13 @@ Choosing $\lambda \sim \ig(\alpha,\beta)$ and writing the posterior in terms of 
            \lambda^{-(\nz+1)-1}   e^{-\frac{1}{\lambda}(\nz \yz)} \\
 	&\propto \lambda^{-(\nz+m+1)-1} e^{-\frac{1}{\lambda}((\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k))} \,.
 \end{align}
-This forms the core of an inverse Gamma distribution, and thus we have
+This forms the core of an inverse gamma distribution, and thus we have
 $\lambda \mid \nz, \yz, \vec{t}_m^\ell \sim \ig\left(\nz + m + 1, \nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m}t_j^k \right)$.
+Also for data including right-censored observations,
+the posterior is again inverse gamma and posterior inference remains tractable.
+Comparing with \eqref{eq:ig-update-alpha},
+we see that $\alpha$ is now incremented only by the observed failure events,
+while $\beta$ is updated using also the censoring times $t_\text{now}$.
 
 For $R_\text{sys}(t \mid \vec{t}_m^\ell)$, first note that we know that the system has functioned until $t_\text{now}$,
 so $R_\text{sys}(t \mid \vec{t}_m^\ell) = 1$ $\forall t \leq t_\text{now}$.
@@ -561,7 +572,7 @@ that the system fails before $t$ given data $\vec{t}_m^\ell$ and $\lambda$,
  &= \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}\,,
 \end{align}
 where we used the definition of conditional probability
-and Eq.~\ref{eq:weibull-pdf-cdf} in the last step.
+and Eq.~\eqref{eq:weibull-pdf-cdf} in the last step.
 %
 Then, the predictive probability
 $P(T_\text{sys} \geq t \mid \vec{t}_m^\ell) = 1 - R_\text{sys}(t \mid \vec{t}_m^\ell)$ is
@@ -601,29 +612,42 @@ allowing us to solve the integral using the corresponding normalization constant
 %
 Substituting all back in, we thus obtain
 \begin{align}
+\label{eq:generalformula}
 \lefteqn{%
 R_\text{sys}(t \mid \vec{t}_m^\ell)
   = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, \times } & \\
  & %\qquad
    \left(\!\! \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
                    {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \!\!\right)^{\!\!\!\nz + m + 1}.
-\label{eq:generalformula}
 \end{align}
-We can see that for $m$ increasing, i.e., the more failures we observe among the $\ell$ components, we lose terms in our sum.
-We also see that each failure adds an extra power to the fraction.
-The censored observations come into play in the fraction, and their effect decreases in each term as $i$ increases. 
-Besides the $\nz$ in the exponent, the prior parameters $\nz$ and $\yz$ appear only in form of their product $\nz\yz$.
+%We can see that for $m$ increasing, i.e., the more failures we observe among the $\ell$ components, we lose terms in our sum.
+%We also see that each failure adds an extra power to the fraction.
+%The censored observations come into play in the fraction, and their effect decreases in each term as $i$ increases. 
+%Besides the $\nz$ in the exponent, the prior parameters $\nz$ and $\yz$ appear only in form of their product $\nz\yz$.
+%
+As described in Section~\ref{sec:modforsurpr},
+we can now choose bounds $[\nzl, \nzu]$ and $[\yzl, \yzu]$
+to reflect our prior knowledge about component lifetimes.
+The bounds $\lRsys(t \mid \vec{t}_m^\ell)$ and $\uRsys(t \mid \vec{t}_m^\ell)$ for the reliability function,
+which are obtained by minimizing and maximizing \eqref{eq:generalformula}
+over $[\nzl, \nzu] \times [\yzl, \yzu]$ for each $t > t_\text{now}$,
+will adequately reflect our knowledge about the reliability quantification of the system,
+based on both the prior knowledge and the behaviour of the components in the system until $t_\text{now}$.
+Specifically, we illustrate the quantification in case of prior-data conflict through two examples,
+where we consider a parallel system with 3 components
+for which we observe surprising component behaviour.
 
-***Consider set of priors,
-let $\nz$ and $\yz$ vary in intervals like in \eqref{eq:setofpriors}.
+For both examples, we continue to use the prior assumptions from Section~\ref{sec:modforsurpr},
+where we chose $[\nzl, \nzu] = [2,5]$ and $[\yzl, \yzu] = [103.13, 154.06]$,
+expecting the mean component lifetimes to be in the range of 9 to 11 weeks.
 
-***Lower and upper reliability bounds by minimizing and maximizing \eqref{eq:generalformula}
-over $[\nzl, \nzu] \times [\yzl, \yzu]$ for each $t > t_\text{now}$.
+\begin{example}
+no failures by week 15.
+\end{example}
 
-
-***selection of Andrew's examples
-
-
+\begin{example}
+two early failures.
+\end{example}
 
 
 \section{CONCLUSION AND OUTLOOK}
