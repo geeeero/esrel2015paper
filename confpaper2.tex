@@ -169,7 +169,7 @@
 \allowdisplaybreaks
 
 \begin{document}
-\title{Robust Bayesian System Reliability Estimation\\ for Scarce and Surprising Data}
+\title{Robust Bayesian Estimation of System Reliability\\ for Scarce and Surprising Data}
 
 \author{{Gero Walter} \\
 {\aff{School of Industrial Engineering}} \\
@@ -575,9 +575,9 @@ where we used the definition of conditional probability
 and Eq.~\eqref{eq:weibull-pdf-cdf} in the last step.
 %
 Then, the predictive probability
-$P(T_\text{sys} \geq t \mid \vec{t}_m^\ell) = 1 - R_\text{sys}(t \mid \vec{t}_m^\ell)$ is
+$P(T_\text{sys} \leq t \mid \vec{t}_m^\ell) = 1 - R_\text{sys}(t \mid \vec{t}_m^\ell)$ is
 \begin{align}
-\lefteqn{P(T_\text{sys} \geq t \mid \vec{t}_m^\ell)} \\
+\lefteqn{P(T_\text{sys} \leq t \mid \vec{t}_m^\ell)} \\
 % &= \int_0^\infty P(T_{m+1}\leq t \cap \ldots \cap T_\ell \leq t \mid \vec{t}_m^\ell, \lambda)
 %    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
 % &= \int_0^\infty \big( P(T_{m+1} \leq t \mid \vec{t}_m^\ell, \lambda) \big)^{\ell-m}
