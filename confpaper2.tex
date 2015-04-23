@@ -288,6 +288,20 @@ This behaviour is obtained by a specific choice for the set of priors (see \cite
 which leads to larger sets of posterior distributions when prior knowledge and data are in conflict
 (see Section~\ref{sec:modforsurpr} for more details).
 
+As a first step towards more realistic models, we apply this method
+to a simplified parallel system with exchangeable components,
+where component failures follow independent and identical Weibull distributions irrespective of their load.
+We exemplarily consider the problem of predicting the reliability of a currently running one of a kind system,
+where we have vague prior information on the lifetimes of the components the system is made of,
+and the only available data consists of observed behaviour of the system components so far,
+that is, the failure times of the components that have already failed,
+and the fact the remaining components still function,
+whose failure time is thus right-censored.
+We study the effect of surprisingly early or late component failures,
+%on the system reliability prediction,
+showing that observations in conflict to prior assumptions
+indeed lead to more cautious system reliability predictions.
+
 ***simplified parallel system, what is scarce data
 
 The paper is organized as follows: *** 
@@ -501,7 +515,7 @@ where the censoring process is independent of the failure process.}
 \section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
 \label{sec:andrewsresults}
 
-We consider a parallel system with $\ell$ exchangeable components,
+We consider a simplified parallel system with $\ell$ exchangeable components,
 so the system functions when at least one of the $\ell$ components functions.
 Exchangeability means that the components are of the same type
 and that any permutation of the component labels would not change any results.
