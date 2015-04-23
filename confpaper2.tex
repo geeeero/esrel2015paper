@@ -173,7 +173,7 @@
 
 \author{{Gero Walter} \\
 {\aff{School of Industrial Engineering}} \\
-{\aff{TU Eindhoven, Eindhoven, The Netherlands}} \\
+{\aff{Eindhoven University of Technology, Eindhoven, The Netherlands}} \\
 \\
 {\authornext{Andrew Graham \& Frank P.A. Coolen}}\\
 {\aff{Department of Mathematical Sciences}} \\
@@ -191,7 +191,7 @@ from the viewpoint of the prior, the observed data seem very surprising,
 i.e., the information from data is in conflict with the prior assumptions.
 It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
 in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
-thus conveying a false sense of certainty by communicating that we know the reliability of a system quite precisely when in fact we do not.
+thus conveying a false sense of certainty by communicating that we can quantify the reliability of a system quite precisely when in fact we cannot.
 %
 We present an approach to mitigate this issue, by considering sets of prior distributions
 to model vague knowledge on component lifetimes,
@@ -264,7 +264,7 @@ In contrast, our viewpoint is rooted in the theory of imprecise or interval prob
 where sets of distributions are used to express the precision of probability statements themselves:
 the smaller the set, the more precise the probability statement.
 Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
-and a small set for $R_\text{sys}(t)$ will indicate that we can quantify the reliability of a system quite precisely,
+and a small set for $R_\text{sys}(t)$ will indicate that we can quantify the reliability of the system quite precisely,
 while a large set will indicate that our knowledge about $T_\text{sys}$ is rather shaky.
 \comments{Frank: 'reliability at time $t$' where?}
 
@@ -287,6 +287,8 @@ In contrast, our method will indicate prior-data conflict by wider bounds for $R
 This behaviour is obtained by a specific choice for the set of priors (see \citeNP{Walter2009a} and \citeNP{diss} \S 3.1.4)
 which leads to larger sets of posterior distributions when prior knowledge and data are in conflict
 (see Section~\ref{sec:modforsurpr} for more details).
+
+***simplified parallel system, what is scarce data
 
 The paper is organized as follows: *** 
 
