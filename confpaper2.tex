@@ -519,6 +519,11 @@ We consider a simplified parallel system with $\ell$ exchangeable components,
 so the system functions when at least one of the $\ell$ components functions.
 Exchangeability means that the components are of the same type
 and that any permutation of the component labels would not change any results.
+We therefore assume that component load does not influence the failure distribution.%
+\footnote{The system can thus be seen as either a standby parallel with perfect switch
+where components degrade irrespective of load,
+or as an active parallel system where again load is not relevant for the failure distribution.
+We plan to extend our model to cover the influence of load, see our comments in Section~\ref{sec:conclusion}.}
 We observe the system until a certain time point $t_\text{now}$
 and wish to calculate $R_\text{sys}(t)$ for $t > t_\text{now}$.
 
@@ -545,7 +550,7 @@ based on $\ell$ observations $\vec{t}_m^\ell := (t_1,\ldots,t_m,t^+_\text{now},\
 (so we have $m$ observed failure times $t_1,\ldots,t_m$
 and $\ell-m$ right-censored observations $t^+_\text{now}$
 for the $\ell-m$ components that have not failed as of current time $t_\text{now}$)
-can be written as (see, e.g., \citeNP{2003:lawless}, \S 2.2)
+can be written as (see, e.g., \citeNP{2003:lawless}, \S 2.2 for the derivation of the likelihood in case of right-censored observations)
 \begin{align}
 p(\lambda \mid \vec{t}_m^\ell) \propto p(\lambda) \prod_{j=1}^m p_c(t_j) \big(1-F_c(t_\text{now})\big)^{\ell-m}\,,
 \end{align}
@@ -615,8 +620,8 @@ Substituting in the posterior, we obtain for the integral
     \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)} %
     p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda } \\
  &= \frac{\left(\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k \right)^{\nz + m + 1}}{\Gamma(\nz + m + 1)}\times \\
- &  \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)} \lambda^{\nz + m + 1}
-    e^{-\frac{1}{\lambda}(\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^m t_j^k)} \dd\lambda\,.
+ &  \int_0^\infty\!\! e^{-\frac{i(t^k - t_\text{now}^k)}{\lambda}} \lambda^{\nz + m + 1}
+    e^{-\frac{\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^m t_j^k}{\lambda}}\! \dd\lambda\,.
 \end{align}
 The terms remaining below the integral form the core of an inverse Gamma distribution
 with parameters
@@ -678,6 +683,7 @@ two early failures. Post2FPlot.pdf
 \end{figure}
 
 \section{CONCLUSION AND OUTLOOK}
+\label{sec:conclusion}
 
 replacement of components: influence on $R_\text{sys}(t) = P(T_\text{sys} \geq t \mid \ldots)$ 
 
