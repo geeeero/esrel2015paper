@@ -663,11 +663,27 @@ where we chose $[\nzl, \nzu] = [2,5]$ and $[\yzl, \yzu] = [103.13, 154.06]$,
 expecting the mean component lifetimes to be in the range of 9 to 11 weeks.
 
 \begin{example}
-no failures by week 15. PostPredGS.pdf
+***two failures as expected. Ask Andrew for new plot?
+
+Assume that we observe the system until $t_\text{now} = 15$
+and that we have seen failures for two of the three components
+at $t_1=10$ and $t_2=11$, which are thus in line with our expectations.
+We thus have $\vec{t}_2^3 = (10, 11, 15^+)$.
+(Our set of posteriors for the Weibull scale parameter is thus like in Figure~\ref{fig:setofpost-nopdc}.)
+The prior bounds $\lRsys(t)$ and $\uRsys(t)$ (red),
+and the resulting posterior bounds $\lRsys(t \mid \vec{t}_2^3)$ and $\uRsys(t \mid \vec{t}_2^3)$ (blue),  
+are depicted in Figure~***.
+This tells us that, e.g., $P(T_\text{sys} > 20 \mid \vec{t}_2^3) = [***, ***]$.
 \end{example}
 
 \begin{example}
-two early failures. Post2FPlot.pdf
+***no failures by week 15. PostPredGS.pdf
+
+change maintenance scheduled for $t=20$
+\end{example}
+
+\begin{example}
+***two early failures. Post2FPlot.pdf
 \end{example}
 
 \begin{figure}
@@ -684,6 +700,24 @@ two early failures. Post2FPlot.pdf
 
 \section{CONCLUSION AND OUTLOOK}
 \label{sec:conclusion}
+
+***What did we do
+
+***An obvious conclusion is that
+the standard robust Bayes setting provides many opportunities, not yet explored, for modelling
+in a manner that explicitly shows reaction to aspects such as prior-data conflict, and that this
+is important for the method to show this, for which we think that (increased) imprecision is an
+appropriate tool. Therefore it is also a remaining challenge to explore such opportunities more,
+where you can mention the possibility to also explicitly get the effect of very strong agreement
+between prior and data reflected - just say that this is something currently under investigation
+without giving details.
+
+***We may need to emphasize again, as we discussed before, that it may
+mainly be a tool to make people aware of `conflict' between multiple information sources,
+moving away a bit from the Bayesian dogma that the posterior distribution MUST
+be used for the consequential inferences.
+
+***Outlook
 
 replacement of components: influence on $R_\text{sys}(t) = P(T_\text{sys} \geq t \mid \ldots)$ 
 
