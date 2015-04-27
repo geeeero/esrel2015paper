@@ -670,23 +670,24 @@ For easy comparison between the examples, all three plots depict the range $0 \l
 \label{ex:1}
 ***two failures as expected. Ask Andrew for another plot?
 
-Assume that we observe the system until $t_\text{now} = 15$ ***or 11?***
+Assume that we observe the system until $t_\text{now} = 11$
 and that we have seen failures for two of the three components
 at $t_1=10$ and $t_2=11$, which are thus in line with our expectations.
-We thus have $\vec{t}_2^3 = (10, 11, 15^+)$.
-(Our set of posteriors for the Weibull scale parameter $\lambda$ is thus like in Figure~\ref{fig:setofpost-nopdc}.)
+We thus have $\vec{t}_2^3 = (10, 11, 11^+)$.
+(Our set of posteriors for the Weibull scale parameter $\lambda$ would thus be like in Figure~\ref{fig:setofpost-nopdc}
+were it not for the dditional censored observation $11^+$.)
 The prior bounds $\lFsys(t)$ and $\uFsys(t)$ (red),
 and the resulting posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$ (blue),  
 are depicted in Figure~\ref{fig:exampletwofailuresinline}.
 Notice that for all posterior cdfs between the bounds
-it holds that $\Fsys(t \mid \vec{t}_2^3) > 0$ only for $t > t_\text{now} = 15$,
-as the system has not failed by $t_\text{now} = 15$.
+it holds that $\Fsys(t \mid \vec{t}_2^3) > 0$ only for $t > t_\text{now} = 11$,
+as the system has not failed by $t_\text{now} = 11$.
 We can see that based only on prior assumptions (so at time $0$),
-we predict, e.g., $\Rsys(20) = P(T_\text{sys} > 20) = [***, ***]$.
-After observing $\vec{t}_2^3$, i.e.\ at current time $15$,
-we have instead $\Rsys(20 \mid \vec{t}_2^3) = P(T_\text{sys} > 20 \mid \vec{t}_2^3) = [***, ***]$.
+we predict, e.g., $\Fsys(15) = P(T_\text{sys} \leq 15) = [***, ***]$.
+After observing $\vec{t}_2^3$, i.e.\ at current time $11$,
+we have instead $\Fsys(15 \mid \vec{t}_2^3) = P(T_\text{sys} \leq 15 \mid \vec{t}_2^3) = [***, ***]$.
 As component failures were in line with our expectations,
-bounds for $\Rsys(20)$, and in fact for the whole reliability curve, 
+bounds for $\Fsys(15)$, and in fact for the whole range of $t$, 
 have become narrower,
 such that we can quantify the system reliability now more precisely.
 \end{example}
@@ -707,12 +708,12 @@ Assume that we observe now instead two surprisingly early failures at times $t_1
 The posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$
 for $\vec{t}_2^3 = (1, 2, 2^+)$ 
 are depicted in Figure~\ref{fig:exampletwoearlyfailures} (blue).
-Now, the prediction for the system to fail before 20 weeks
-is $[\lFsys(20 \mid \vec{t}_2^3), \uFsys(20 \mid \vec{t}_2^3)] = [***,***]$.
+Now, the prediction for the system to fail before 15 weeks
+is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.86***, 0.97***]$.
 This interval contains not only higher values,
 but its length has not reduced as much as was the case in Example~\ref{ex:1}.
 Also, the posterior predicted survival probability until $t=10$
-is $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [***,***]$,
+is $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.16***,0.39***]$,
 similarly cautions as the prior interval $[***,***]$
 despite two observed failure events. 
 \end{example}
