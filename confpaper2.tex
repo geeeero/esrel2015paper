@@ -728,12 +728,12 @@ Assume now that we do not observe any failures until week $15$,
 such that we have $\vec{t}_0^3 = (15^+, 15^+, 15^+)$.
 Prior and posterior bounds for $\Fsys$ are depicted in Figure~\ref{fig:examplenofailures}.
 The posterior set of pdfs is shifted to the right, but also larger than the prior set,
-so clearly indicating prior-data conflict through wider probability bounds.
+so clearly indicating prior-data conflict through wide probability bounds.
 E.g., before the start of the system, the predicted probability for the system to have failed by time $20$
-was $\Fsys(20) = [0.***, 0.***]$, whereas now it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
-Had we scheduled maintenace work for week 20
+was $\Fsys(20) = [0.794, 0.914]$, whereas now it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
+Had we scheduled maintenance work for week 20
 based on the probability for system failure being between 55\% and 75\%,
-we could now rescedule it to, e.g, week 29,
+we could now reschedule it to, e.g, week 29,
 for which we predict $\Fsys(29 \mid \vec{t}_0^3) = [0.523,0.793]$.
 \end{example}
 
