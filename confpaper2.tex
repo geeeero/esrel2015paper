@@ -186,7 +186,7 @@
 \abstract{In reliability engineering, data about failure events is often scarce.
 To arrive at meaningful estimates for the reliability of a system,
 it is therefore often necessary to also include expert information in the analysis,
-which can be easily done in the Bayesian approach by using an informative prior distribution.
+which is straightforward in the Bayesian approach by using an informative prior distribution.
 %
 A problem that then can arise is called prior-data conflict:
 from the viewpoint of the prior, the observed data seem very surprising,
@@ -247,11 +247,11 @@ a distribution on the parameter(s) of the component lifetime distribution.
 This expert knowledge is especially important when there is very few data on the components (like in our scenario),
 as only with its help meaningful estimates for the system reliability can be made.
 
-However, the specific choice for the prior distribution to encode the given expert knowledge is often debatable,
+However, the choice for the prior distribution to encode the given expert knowledge is often debatable,
 and a specific choice of prior is difficult to justify.
 A way to deal with this is to employ sensitivity analysis,
 i.e., studying the effect of different choices of prior distribution on the quantities of interest
-(in our case, the system*** reliability function, which, in Bayesian terms, is a predictive distribution).
+(in our case, the system reliability function, which, in Bayesian terms, is a predictive distribution).
 This idea has been explored in systematic sensitivity analysis, or robust Bayesian methods
 (for an overview on this approach, see, e.g.,
 \shortciteNP{1994:berger}, \citeNP{2005:ruggeri}, \citeNP{2000:rios}, or \citeNP{2000:bergerinsuaruggeri}).
@@ -295,18 +295,24 @@ to a simplified parallel system with exchangeable components,
 where component failures follow independent and identical Weibull distributions irrespective of their load.
 We exemplarily consider the problem of predicting the reliability of a currently running one of a kind system,
 where we have vague prior information on the lifetimes of the components the system is made of,
-and the only available data consists of observed behaviour of the system components so far,
+and the only available data consist of observed behaviour of the system components so far,
 that is, the failure times of the components that have already failed,
-and the fact the remaining components still function,
+and the fact that the remaining components still function,
 whose failure time is thus right-censored.
 We study the effect of surprisingly early or late component failures,
 %on the system reliability prediction,
 showing that observations in conflict to prior assumptions
 indeed lead to more cautious system reliability predictions.
 
-***simplified parallel system, what is scarce data
-
-The paper is organized as follows: *** 
+The paper is organized as follows.
+In Section~\ref{sec:weibull}, we describe a Bayesian analysis for Weibull component lifetimes
+and illustrate the issue of prior-data conflict.
+Section~\ref{sec:modforsurpr} then details the use of sets of priors
+for the scale parameter $\lambda$ of the Weibull distribution,
+showing how this mitigates the prior-data conflict issue for $\lambda$.
+In Section~\ref{sec:andrewsresults}, we present our results for the reliability estimation for a parallel system,
+along with three examples that illustrate the desired behaviour.
+Section~\ref{sec:conclusion} concludes the paper by summarizing the achievements and discussing avenues for further research.
 
 
 \section{BAYESIAN ANALYSIS OF WEIBULL LIFETIMES}
