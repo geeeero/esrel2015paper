@@ -668,14 +668,13 @@ For easy comparison between the examples, all three plots depict the range $0 \l
 
 \begin{example}
 \label{ex:1}
-***two failures as expected. Ask Andrew for another plot?
-
+% two failures in line with expectation. Post2Finline.pdf 
 Assume that we observe the system until $t_\text{now} = 11$
 and that we have seen failures for two of the three components
 at $t_1=10$ and $t_2=11$, which are thus in line with our expectations.
-We thus have $\vec{t}_2^3 = (10, 11, 11^+)$.
+We therefore have $\vec{t}_2^3 = (10, 11, 11^+)$.
 (Our set of posteriors for the Weibull scale parameter $\lambda$ would thus be like in Figure~\ref{fig:setofpost-nopdc}
-were it not for the dditional censored observation $11^+$.)
+were it not for the additional censored observation $11^+$.)
 The prior bounds $\lFsys(t)$ and $\uFsys(t)$ (red),
 and the resulting posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$ (blue),  
 are depicted in Figure~\ref{fig:exampletwofailuresinline}.
@@ -683,9 +682,9 @@ Notice that for all posterior cdfs between the bounds
 it holds that $\Fsys(t \mid \vec{t}_2^3) > 0$ only for $t > t_\text{now} = 11$,
 as the system has not failed by $t_\text{now} = 11$.
 We can see that based only on prior assumptions (so at time $0$),
-we predict, e.g., $\Fsys(15) = P(T_\text{sys} \leq 15) = [***, ***]$.
+we predict, e.g., $\Fsys(15) = P(T_\text{sys} \leq 15) = [0.522, 0.752]$.
 After observing $\vec{t}_2^3$, i.e.\ at current time $11$,
-we have instead $\Fsys(15 \mid \vec{t}_2^3) = P(T_\text{sys} \leq 15 \mid \vec{t}_2^3) = [***, ***]$.
+we have instead $\Fsys(15 \mid \vec{t}_2^3) = P(T_\text{sys} \leq 15 \mid \vec{t}_2^3) = [0.511, 0.600]$.
 As component failures were in line with our expectations,
 bounds for $\Fsys(15)$, and in fact for the whole range of $t$, 
 have become narrower,
@@ -693,28 +692,26 @@ such that we can quantify the system reliability now more precisely.
 \end{example}
 
 \begin{figure}
-%\includegraphics[width=0.48\textwidth]{}
-\includegraphics[width=0.48\textwidth]{Post2FPlotpaper}
+\includegraphics[width=0.48\textwidth]{Post2Finline}
 \caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ for two failures $t_1 = 10$, $t_2 = 11$ in line with expectations.}
 \label{fig:exampletwofailuresinline}
 \end{figure}
 
 \begin{example}
 \label{ex:2}
-***two early failures. Post2FPlot.pdf
-
+%***two early failures. Post2FPlot.pdf
 Assume that we observe now instead two surprisingly early failures at times $t_1 = 1$ and $t_2 = 2$
 (just like we assumed for the posterior on $\lambda$ in Figure~\ref{fig:setofpost-pdc}).
 The posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$
 for $\vec{t}_2^3 = (1, 2, 2^+)$ 
 are depicted in Figure~\ref{fig:exampletwoearlyfailures} (blue).
 Now, the prediction for the system to fail before 15 weeks
-is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.86***, 0.97***]$.
+is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.864, 0.971]$.
 This interval contains not only higher values,
 but its length has not reduced as much as was the case in Example~\ref{ex:1}.
 Also, the posterior predicted survival probability until $t=10$
-is $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.16***,0.39***]$,
-similarly cautions as the prior interval $[***,***]$
+is $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.158,0.395]$,
+similarly cautious as the prior interval $[0.591,0.830]$
 despite two observed failure events. 
 \end{example}
 
@@ -726,17 +723,16 @@ despite two observed failure events.
 
 \begin{example}
 \label{ex:3}
-***no failures by week 15. PostPredGS.pdf
-
+%***no failures by week 15. PostPredGS.pdf
 Assume now that we do not observe any failures until week $15$,
 such that we have $\vec{t}_0^3 = (15^+, 15^+, 15^+)$.
 Prior and posterior bounds for $\Fsys$ are depicted in Figure~\ref{fig:examplenofailures}.
 The posterior set of pdfs is shifted to the right, but also larger than the prior set,
 so clearly indicating prior-data conflict through wider probability bounds.
-E.g., before the start of the system, the predicted probability for the system to fail by time $20$
-was $\Fsys(20) = [0.552, 0.752]$, whereas now it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.219]$.
+E.g., before the start of the system, the predicted probability for the system to have failed by time $20$
+was $\Fsys(20) = [0.***, 0.***]$, whereas now it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
 Had we scheduled maintenace work for week 20
-based on the upper probability for system failure being between 55\% and 75\%,
+based on the probability for system failure being between 55\% and 75\%,
 we could now rescedule it to, e.g, week 29,
 for which we predict $\Fsys(29 \mid \vec{t}_0^3) = [0.523,0.793]$.
 \end{example}
