@@ -1,0 +1,166 @@
+%narms.tex, an example driver file for Balkema documents.
+
+%use the following for A4 paper:
+\documentclass[12pt,a4paper,twocolumn,fleqn]{narmsabs}
+
+% packages needed
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{timesmt}
+
+% add here more packages based on the document format
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{url}
+
+\usepackage[bookmarks]{hyperref}
+
+% setting math equation indent from left 0pts
+
+\mathindent=0pt%
+
+% use this for chicaco style reference
+% Author references
+% IMPORTANT: Author wants to format references in chicaco style Author must use BiBTex
+% IMPORTANT: Author wants to format numbered references remove chicaco style file and \bibliographystyle{chicaco}
+
+\usepackage{chicaco}
+
+%  \cite{key}
+%    which produces citations with full author list and year.
+%    eg. (Brown 1978; Jarke, Turner, Stohl, et al. 1985)
+
+%  \citeNP{key}
+%    which produces citations with full author list and year, but without
+%    enclosing parentheses:
+%    eg. Brown 1978; Jarke, Turner & Stohl 1985
+
+%  \citeA{key}
+%    which produces citations with only the full author list.
+%    eg. (Brown; Jarke, Turner & Stohl)
+
+%  \citeANP{key}
+%    which produces citations with only the full author list, without
+%    parentheses eg. Brown; Jarke, Turner & Stohl
+
+%  \citeN{key}
+%    which produces citations with the full author list and year, but
+%    can be used as nouns in a sentence; no parentheses appear around
+%    the author names, but only around the year.
+%      eg. Shneiderman (1978) states that......
+%    \citeN should only be used for a single citation.
+
+%  \shortcite{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteNP{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteA{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteANP{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteN{key}
+%    which produces the abbreviated author list and year, with only the
+%    year in parentheses. Use with only one citation.
+
+%  \citeyear{key}
+%    which produces the year information only, within parentheses.
+
+%  \citeyearNP{key}
+%    which produces the year information only.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  All this stuff is from modifying the article.cls for Balkema
+%%%  specifications.
+
+%\title{...}
+%\author{...}
+%use \aff for author affiliations
+% use \authornext for from second author
+% empty line space between multiple authors
+%\abstract{...}
+%\maketitle{}
+
+%%%%%%% Style for TABLES
+% insert tabular command inside \tabletext{} this will produce tables in 10pts
+
+\begin{document}
+\title{Robust Bayesian Estimation of System Reliability\\ for Scarce and Surprising Data}
+\author{{Gero Walter} \\
+{\aff{School of Industrial Engineering}} \\
+{\aff{Eindhoven University of Technology, Eindhoven, The Netherlands}} \\
+\\
+{\authornext{Andrew Graham \& Frank P.A. Coolen}}\\
+{\aff{Department of Mathematical Sciences}} \\
+{\aff{Durham University, Durham, United Kingdom.}}}
+\maketitle
+
+
+\section*{Abstract}
+
+In reliability engineering, data about failure events is often scarce.
+To arrive at meaningful estimates for the reliability of a system,
+it is therefore often necessary to also include expert information in the analysis,
+which is straightforward in the Bayesian approach by using an informative prior distribution.
+
+A problem that then can arise is called prior-data conflict (see, e.g., \citeNP{2006:evans}):
+from the viewpoint of the prior, the observed data seem very surprising,
+i.e., the information from data is in conflict with the prior assumptions.
+It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
+in the sense that the spread of the posterior distribution does not increase in case of such a conflict
+(see, e.g., \citeNP[\S A.1.2]{diss} for two examples),
+thus conveying a false sense of certainty by communicating that we can quantify the reliability of a system quite precisely
+when in fact we cannot.
+
+As was shown by \citeN{Walter2009a}, models using sets of conjugate priors %$\MZ$
+(generated through sets of canonical parameters) can mitigate this issue.
+In this approach, which can be seen as a robust Bayesian procedure or imprecise probability method,
+uncertainty quantifications like, e.g., the reliability at time $t$,
+are expressed through intervals or ranges instead of single numbers,
+such that the shorter the intervals, the more precise the corresponding probability statements.
+(See \citeNP[\S 3.1 and \S 3.2]{diss} for the general framework and its comparison with other models based on sets of priors.)
+
+We use this approach to estimate the reliability of a simplified parallel system.
+We exemplarily consider the problem of forecasting the reliability of a currently running new or one of a kind system,
+where we have vague prior information on the lifetimes of the components the system is made of,
+and the only available data consist of observed behaviour of the system components so far,
+that is, the failure times of the components that have already failed,
+and the fact the remaining components still function,
+whose failure time is thus right-censored.
+
+We model vague prior knowledge on component lifetimes through a set of prior distributions,
+and study how surprisingly early or late component failures
+affect the prediction of the reliability of the system.
+We show that we get indeed more cautious probability statements in case of prior-data conflict,
+while obtaining more precise reliability bounds when prior and data are in agreement,
+such that the posterior system survival function (or other posterior inferences)
+adequately reflect the state of affairs.
+
+The parameters through which prior information is encoded have a clear interpretation
+and are thus easily elicited;
+calculation of lower and upper predictive reliability bounds is tractable,
+requiring only a simple two-dimensional box-constrained optimization.
+
+%***They lead to wider sets of posteriors, %$\MN$,
+%and thus to more cautious uncertainty quantifications, in case of prior-data conflict,
+%while giving more precise quantifications when prior and data are in agreement.
+
+\bibliographystyle{chicaco}
+\bibliography{esrel2015refs}
+
+\end{document}
