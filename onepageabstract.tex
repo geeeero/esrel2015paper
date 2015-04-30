@@ -35,7 +35,7 @@
 % IMPORTANT: Author wants to format references in chicaco style Author must use BiBTex
 % IMPORTANT: Author wants to format numbered references remove chicaco style file and \bibliographystyle{chicaco}
 
-\usepackage{chicaco}
+%\usepackage{chicaco}
 
 %  \cite{key}
 %    which produces citations with full author list and year.
@@ -118,22 +118,26 @@ To arrive at meaningful estimates for the reliability of a system,
 it is therefore often necessary to also include expert information in the analysis,
 which is straightforward in the Bayesian approach by using an informative prior distribution.
 
-A problem that then can arise is called prior-data conflict (see, e.g., \citeNP{2006:evans}):
+%A problem that then can arise is called prior-data conflict (see, e.g., \citeNP{2006:evans}):
+A problem that then can arise is called prior-data conflict (see, e.g., \cite{2006:evans}):
 from the viewpoint of the prior, the observed data seem very surprising,
 i.e., the information from data is in conflict with the prior assumptions.
 It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
 in the sense that the spread of the posterior distribution does not increase in case of such a conflict
-(see, e.g., \citeNP[\S A.1.2]{diss} for two examples),
+%(see, e.g., \citeNP[\S A.1.2]{diss} for two examples),
+(see, e.g., \cite[\S A.1.2]{diss} for two examples),
 thus conveying a false sense of certainty by communicating that we can quantify the reliability of a system quite precisely
 when in fact we cannot.
 
-As was shown by \citeN{Walter2009a}, models using sets of conjugate priors %$\MZ$
+%As was shown by \citeN{Walter2009a}, models using sets of conjugate priors %$\MZ$
+As was shown by \cite{Walter2009a}, models using sets of conjugate priors %$\MZ$
 (generated through sets of canonical parameters) can mitigate this issue.
 In this approach, which can be seen as a robust Bayesian procedure or imprecise probability method,
 uncertainty quantifications like, e.g., the reliability at time $t$,
 are expressed through intervals or ranges instead of single numbers,
 such that the shorter the intervals, the more precise the corresponding probability statements.
-(See \citeNP[\S 3.1 and \S 3.2]{diss} for the general framework and its comparison with other models based on sets of priors.)
+%(See \citeNP[\S 3.1 and \S 3.2]{diss} for the general framework and its comparison with other models based on sets of priors.)
+(See \cite[\S 3.1 and \S 3.2]{diss} for the general framework and its comparison with other models based on sets of priors.)
 
 We use this approach to estimate the reliability of a simplified parallel system.
 We exemplarily consider the problem of forecasting the reliability of a currently running new or one of a kind system,
@@ -164,20 +168,24 @@ requiring only a simple two-dimensional box-constrained optimization.
 %\bibliography{esrel2015refs}
 
 \begin{thebibliography}{9}
-\bibitem[\protect\citeauthoryear{Evans \& Moshonov}{Evans and
-  Moshonov}{2006}]{2006:evans}
+%\bibitem[\protect\citeauthoryear{Evans \& Moshonov}{Evans and
+%  Moshonov}{2006}]{2006:evans}
+\bibitem{2006:evans}
 Evans, M. \& H.~Moshonov (2006).
 \newblock Checking for prior-data conflict.
 \newblock {\em Bayesian Analysis\/}~{\em 1}, 893--914.
 
-\bibitem[\protect\citeauthoryear{Walter}{Walter}{2013}]{diss}
+%\bibitem[\protect\citeauthoryear{Walter}{Walter}{2013}]{diss}
+\bibitem{diss}
 Walter, G. (2013).
 \newblock {\em Generalized {B}ayesian Inference under Prior-Data Conflict}.
-\newblock Ph.\ D. thesis, Department of Statistics, LMU Munich.
-\newblock \url{http://edoc.ub.uni-muenchen.de/17059/}.
+\newblock Ph.\ D. thesis, Department of Statistics, LMU Munich.\\
+%\newblock \url{http://edoc.ub.uni-muenchen.de/17059/}.
+\url{http://edoc.ub.uni-muenchen.de/17059/}.
 
-\bibitem[\protect\citeauthoryear{Walter \& Augustin}{Walter and
-  Augustin}{2009}]{Walter2009a}
+%\bibitem[\protect\citeauthoryear{Walter \& Augustin}{Walter and
+%  Augustin}{2009}]{Walter2009a}
+\bibitem{Walter2009a}
 Walter, G. \& T.~Augustin (2009).
 \newblock Imprecision and prior-data conflict in generalized {B}ayesian
   inference.
