@@ -573,13 +573,13 @@ but we leave this possibility out here to keep the notation simple.}
 Choosing $\lambda \sim \ig(\alpha,\beta)$ and writing the posterior in terms of $\nz$ and $\yz$, we get
 \begin{align}
 \lefteqn{p(\lambda \mid \nz, \yz, \vec{t}_m^\ell)} \\
-	&\propto \prod_{j=1}^{m} p_c(t_j \mid \lambda) \big(1 - F_c(t_\text{now})\big)^{\ell-m} p(\lambda\mid \nz, \yz) \\
+	&\propto \prod_{j=1}^{m} p_c(t_j \mid \lambda) \big(1 - F_c(t_\text{now})\big)^{\ell-m} p(\lambda\mid \nz, \yz) \nonumber \\
 %	&\propto \frac{k^m}{\lambda^m} \bigg(\prod_{j=1}^{m} t_j^k \bigg)
 %             e^{-\frac{1}{\lambda}\sum_{j=1}^{m} t_j^k}
 %             e^{-\frac{1}{\lambda}(\ell-m) t_\text{now}^k} p_c(\lambda\mid \nz, \yz) \\
 	&\propto \lambda^{-m} e^{-\frac{1}{\lambda}(\sum_{j=1}^{m} t_j^k + (\ell-m) t_\text{now}^k)}
-           \lambda^{-(\nz+1)-1}   e^{-\frac{1}{\lambda}(\nz \yz)} \\
-	&\propto \lambda^{-(\nz+m+1)-1} e^{-\frac{1}{\lambda}((\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k))} \,.
+           \lambda^{-(\nz+1)-1}   e^{-\frac{1}{\lambda}(\nz \yz)} \nonumber \\
+	&\propto \lambda^{-(\nz+m+1)-1} e^{-\frac{1}{\lambda}((\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k))} \,. \nonumber
 \end{align}
 This forms the core of an inverse gamma distribution, and thus we have
 $\lambda \mid \nz, \yz, \vec{t}_m^\ell \sim \ig\left(\nz + m + 1, \nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m}t_j^k \right)$.
@@ -595,10 +595,10 @@ For $t > t_\text{now}$, let us consider the probability
 that the system fails before $t$ given data $\vec{t}_m^\ell$ and $\lambda$,
 \begin{align}
 \lefteqn{P(T_\text{sys} \leq t \mid \vec{t}_m^\ell, \lambda)} \\ 
- &= P(T_{m+1}\leq t \cap \ldots \cap T_\ell \leq t \mid \vec{t}_m^\ell, \lambda) \\
- &= \big( P(T_{m+1} \leq t \mid \vec{t}_m^\ell, \lambda) \big)^{\ell-m} \\
- &= \big( P(T_{m+1} \leq t \mid T_{m+1} > t_\text{now}, \lambda) \big)^{\ell-m} \\
- &= \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}\,,
+ &= P(T_{m+1}\leq t \cap \ldots \cap T_\ell \leq t \mid \vec{t}_m^\ell, \lambda) \nonumber \\
+ &= \big( P(T_{m+1} \leq t \mid \vec{t}_m^\ell, \lambda) \big)^{\ell-m} \nonumber \\
+ &= \big( P(T_{m+1} \leq t \mid T_{m+1} > t_\text{now}, \lambda) \big)^{\ell-m} \nonumber \\
+ &= \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}\,, \nonumber
 \end{align}
 where we used the definition of conditional probability
 and Eq.~\eqref{eq:weibull-pdf-cdf} in the last step.
@@ -614,22 +614,22 @@ $P(T_\text{sys} \leq t \mid \vec{t}_m^\ell) = 1 - R_\text{sys}(t \mid \vec{t}_m^
 % &= \int_0^\infty \big( P(T_{m+1} \leq t \mid T_{m+1} \leq t_\text{now}, \lambda) \big)^{\ell-m}
 %    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
  &= \int_0^\infty P(T_\text{sys} \leq t \mid \vec{t}_m^\ell, \lambda)
-    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \nonumber \\
  &= \int_0^\infty \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}
-    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
- &=\sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \times \\ 
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \nonumber \\
+ &=\sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \times \nonumber \\ 
  & \qquad
     \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)}
-    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \,.
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \,. \nonumber
 \end{align}
 Substituting in the posterior, we obtain for the integral
 \begin{align}
 \lefteqn{%
     \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)} %
     p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda } \\
- &= \frac{\left(\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k \right)^{\nz + m + 1}}{\Gamma(\nz + m + 1)}\times \\
+ &= \frac{\left(\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k \right)^{\nz + m + 1}}{\Gamma(\nz + m + 1)}\times \nonumber \\
  &  \int_0^\infty\!\! e^{-\frac{i(t^k - t_\text{now}^k)}{\lambda}} \lambda^{\nz + m + 1}
-    e^{-\frac{\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^m t_j^k}{\lambda}}\! \dd\lambda\,.
+    e^{-\frac{\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^m t_j^k}{\lambda}}\! \dd\lambda\,. \nonumber
 \end{align}
 The terms remaining below the integral form the core of an inverse Gamma distribution
 with parameters
