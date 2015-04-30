@@ -10,5 +10,6 @@
 *.tag
 *.toc
 *.pdf
+*.ps
 *.zip
 .Rproj.user

@@ -425,7 +425,7 @@ and observed lifetimes $t_1 = 6$, $t_2 = 7$ in line with our expectations.
 It seems unreasonable to make the same probability statements on component lifetimes in these two fundamentally different scenarios.
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{fig1}
+\includegraphics[width=0.48\textwidth]{fig1font}
 \caption{Prior and posterior cdf for $\lambda$ given surprising observations;
 the conflict between prior assumptions and data is averaged out,
 with a more pointed posterior giving a false sense of certainty.}
@@ -496,13 +496,13 @@ is smaller than the set of priors,
 such that the two observations have increased the precision of probability statements.
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{fig2}
+\includegraphics[width=0.48\textwidth]{fig2font}
 \caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two surprising observations $t_1 = 1$, $t_2 = 2$.}
 \label{fig:setofpost-pdc}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{fig3}
+\includegraphics[width=0.48\textwidth]{fig3font}
 \caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two unsurprising observations $t_1 = 10$, $t_2 = 11$.}
 \label{fig:setofpost-nopdc}
 \end{figure}
@@ -698,7 +698,7 @@ such that we can quantify the system reliability now more precisely.
 \end{example}
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{Post2Finline}
+\includegraphics[width=0.48\textwidth]{Post2Finlinefont}
 \caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ for two failures $t_1 = 10$, $t_2 = 11$ in line with expectations.}
 \label{fig:exampletwofailuresinline}
 \end{figure}
@@ -706,23 +706,24 @@ such that we can quantify the system reliability now more precisely.
 \begin{example}
 \label{ex:2}
 %***two early failures. Post2FPlot.pdf
-Assume that we observe now instead two surprisingly early failures at times $t_1 = 1$ and $t_2 = 2$
+Assume that we observe instead two surprisingly early failures at times $t_1 = 1$ and $t_2 = 2$
 (just like we assumed for the posterior on $\lambda$ in Figure~\ref{fig:setofpost-pdc}).
 The posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$
-for $\vec{t}_2^3 = (1, 2, 2^+)$ 
+for $\vec{t}_2^3 = (1, 2, 2^+)$ calculated at time $2$
 are depicted in Figure~\ref{fig:exampletwoearlyfailures} (blue).
 Now, the prediction for the system to fail before 15 weeks
-is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.864, 0.971]$.
+is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.864, 0.971]$
+instead of $[0.522, 0.752]$ at time $0$.
 This interval contains not only higher values,
 but its length has not reduced as much as was the case in Example~\ref{ex:1}.
 Also, the posterior predicted survival probability until $t=10$
-is $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.158,0.395]$,
-similarly cautious as the prior interval $[0.591,0.830]$
-despite two observed failure events. 
+is now, at time $2$, $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.158,0.395]$,
+similarly cautious as the prior interval $[0.591,0.830]$ at time $0$,
+despite two observed failure events and a shorter time horizon for the prediction. 
 \end{example}
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{Post2FPlotpaper}
+\includegraphics[width=0.48\textwidth]{Post2FPlotpaperfont}
 \caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ for two surprisingly early failures $t_1 = 1$, $t_2 = 2$.}
 \label{fig:exampletwoearlyfailures}
 \end{figure}
@@ -732,19 +733,20 @@ despite two observed failure events.
 %***no failures by week 15. PostPredGS.pdf
 Assume now that we do not observe any failures until week $15$,
 such that we have $\vec{t}_0^3 = (15^+, 15^+, 15^+)$.
-Prior and posterior bounds for $\Fsys$ are depicted in Figure~\ref{fig:examplenofailures}.
-The posterior set of pdfs is shifted to the right, but also larger than the prior set,
-so clearly indicating prior-data conflict through wide probability bounds.
-E.g., before the start of the system, the predicted probability for the system to have failed by time $20$
-was $\Fsys(20) = [0.794, 0.914]$, whereas now it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
+Prior and posterior bounds for $\Fsys$ at time $15$ are depicted in Figure~\ref{fig:examplenofailures}.
+The posterior bounds for $\Fsys$ are shifted to the right, and are also wider than the prior bounds,
+so clearly indicating prior-data conflict through cautious probability statements.
+E.g., before the start of the system at time $0$, the predicted probability for the system to have failed by time $20$
+was $\Fsys(20) = [0.794, 0.914]$, whereas now, at time $15$, it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
 Had we scheduled maintenance work for week 20
-based on the probability for system failure being between 55\% and 75\%,
-we could now reschedule it to, e.g, week 29,
-for which we predict $\Fsys(29 \mid \vec{t}_0^3) = [0.523,0.793]$.
+based on the probability for the system surviving at least until time $20$ being between 25\% and 45\%,
+we could now reschedule it to, e.g, time 29,
+for which we predict $\Fsys(29 \mid \vec{t}_0^3) = [0.523,0.793]$,
+i.e., a similar survival probability range of 21\% to 48\%.
 \end{example}
 
 \begin{figure}
-\includegraphics[width=0.48\textwidth]{PostPredGSpaper}
+\includegraphics[width=0.48\textwidth]{PostPredGSpaperfont}
 \caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ given no failures observed by week 15.}
 \label{fig:examplenofailures}
 \end{figure}
