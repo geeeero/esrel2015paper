@@ -1,0 +1,832 @@
+%narms.tex, an example driver file for Balkema documents.
+
+%use the following for A4 paper:
+\documentclass[12pt,a4paper,twocolumn,fleqn]{narms}
+
+% packages needed
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{timesmt}
+
+% add here more packages based on the document format
+
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{url}
+
+\usepackage[bookmarks]{hyperref}
+
+% setting math equation indent from left 0pts
+
+\mathindent=0pt%
+
+% use this for chicaco style reference
+% Author references
+% IMPORTANT: Author wants to format references in chicaco style Author must use BiBTex
+% IMPORTANT: Author wants to format numbered references remove chicaco style file and \bibliographystyle{chicaco}
+
+\usepackage{chicaco}
+
+%  \cite{key}
+%    which produces citations with full author list and year.
+%    eg. (Brown 1978; Jarke, Turner, Stohl, et al. 1985)
+
+%  \citeNP{key}
+%    which produces citations with full author list and year, but without
+%    enclosing parentheses:
+%    eg. Brown 1978; Jarke, Turner & Stohl 1985
+
+%  \citeA{key}
+%    which produces citations with only the full author list.
+%    eg. (Brown; Jarke, Turner & Stohl)
+
+%  \citeANP{key}
+%    which produces citations with only the full author list, without
+%    parentheses eg. Brown; Jarke, Turner & Stohl
+
+%  \citeN{key}
+%    which produces citations with the full author list and year, but
+%    can be used as nouns in a sentence; no parentheses appear around
+%    the author names, but only around the year.
+%      eg. Shneiderman (1978) states that......
+%    \citeN should only be used for a single citation.
+
+%  \shortcite{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteNP{key}
+%    which produces citations with abbreviated author list and year.
+
+%  \shortciteA{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteANP{key}
+%    which produces only the abbreviated author list.
+
+%  \shortciteN{key}
+%    which produces the abbreviated author list and year, with only the
+%    year in parentheses. Use with only one citation.
+
+%  \citeyear{key}
+%    which produces the year information only, within parentheses.
+
+%  \citeyearNP{key}
+%    which produces the year information only.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  All this stuff is from modifying the article.cls for Balkema
+%%%  specifications.
+
+%\title{...}
+%\author{...}
+%use \aff for author affiliations
+% use \authornext for from second author
+% empty line space between multiple authors
+%\abstract{...}
+%\maketitle{}
+
+%%%%%%% Style for TABLES
+% insert tabular command inside \tabletext{} this will produce tables in 10pts
+
+
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\posreals}{\reals_{>0}}
+\newcommand{\posrealszero}{\reals_{\ge 0}}
+\newcommand{\naturals}{\mathbb{N}}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\renewcommand{\vec}[1]{{\bm#1}}
+
+\newcommand{\uz}{^{(0)}} % upper zero
+\newcommand{\un}{^{(n)}} % upper n
+\newcommand{\ui}{^{(i)}} % upper i
+
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\Rsys}{R_\text{sys}}
+\newcommand{\lRsys}{\ul{R}_\text{sys}}
+\newcommand{\uRsys}{\ol{R}_\text{sys}}
+
+\newcommand{\Fsys}{F_\text{sys}}
+\newcommand{\lFsys}{\ul{F}_\text{sys}}
+\newcommand{\uFsys}{\ol{F}_\text{sys}}
+
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\V}{\operatorname{Var}}
+\newcommand{\ig}{\operatorname{IG}}   % Inverse Gamma Distribution
+
+\def\yz{y\uz}
+\def\yn{y\un}
+%\def\yi{y\ui}
+\newcommand{\yfun}[1]{y^{({#1})}}
+\newcommand{\yfunl}[1]{\ul{y}^{({#1})}}
+\newcommand{\yfunu}[1]{\ol{y}^{({#1})}}
+
+\def\yzl{\ul{y}\uz}
+\def\yzu{\ol{y}\uz}
+\def\ynl{\ul{y}\un}
+\def\ynu{\ol{y}\un}
+\def\yil{\ul{y}\ui}
+\def\yiu{\ol{y}\ui}
+
+\def\nz{n\uz}
+\def\nn{n\un}
+%\def\ni{n\ui}
+\newcommand{\nfun}[1]{n^{({#1})}}
+\newcommand{\nfunl}[1]{\ul{n}^{({#1})}}
+\newcommand{\nfunu}[1]{\ol{n}^{({#1})}}
+
+\def\nzl{\ul{n}\uz}
+\def\nzu{\ol{n}\uz}
+\def\nnl{\ul{n}\un}
+\def\nnu{\ol{n}\un}
+\def\nil{\ul{n}\ui}
+\def\niu{\ol{n}\ui}
+
+\def\taut{\tau(\vec{t})}
+\def\ttau{\tilde{\tau}}
+\def\ttaut{\ttau(\vec{t})}
+
+\def\MZ{\mathcal{M}\uz}
+\def\MN{\mathcal{M}\un}
+
+\newcommand{\comments}[1]{{\small\color{gray} #1}}
+
+\newtheorem{example}{Example}
+
+\allowdisplaybreaks
+
+\begin{document}
+\title{Robust Bayesian Estimation of System Reliability\\ for Scarce and Surprising Data}
+
+\author{{Gero Walter} \\
+{\aff{School of Industrial Engineering}} \\
+{\aff{Eindhoven University of Technology, Eindhoven, The Netherlands}} \\
+\\
+{\authornext{Andrew Graham \& Frank P.A. Coolen}}\\
+{\aff{Department of Mathematical Sciences}} \\
+{\aff{Durham University, Durham, United Kingdom.}}}
+
+\date{}% No date.
+
+\abstract{In reliability engineering, data about failure events is often scarce.
+To arrive at meaningful estimates for the reliability of a system,
+it is therefore often necessary to also include expert information in the analysis,
+which is straightforward in the Bayesian approach by using an informative prior distribution.
+%
+A problem that then can arise is called prior-data conflict:
+from the viewpoint of the prior, the observed data seem very surprising,
+i.e., the information from data is in conflict with the prior assumptions.
+It has been recognised that models based on conjugate priors can be insensitive to prior-data conflict,
+in the sense that the spread of the posterior distribution does not increase in case of such a conflict,
+thus conveying a false sense of certainty by communicating that we can quantify the reliability of a system quite precisely when in fact we cannot.
+%
+We present an approach to mitigate this issue, by considering sets of prior distributions
+to model vague knowledge on component lifetimes,
+and study how surprisingly early or late component failures
+affect the prediction of the reliability of a simplified parallel system.
+%and making use of the recently introduced survival signature to characterise the system under study.
+Our approach can be seen as a robust Bayesian procedure or imprecise probability method
+that appropriately reflects surprising data in the posterior system survival function or other posterior inferences.
+}
+
+
+\maketitle
+
+\section{INTRODUCTION}
+
+In reliability engineering, a central task is to describe the reliability of a complex system.
+This is usually done by determining the \emph{reliability function} $R(t)$,
+in other contexts also known as the \emph{survival function} $S(t)$,
+giving the probability that the system has not failed by time $t$:
+\begin{align}
+R_\text{sys}(t) = P(T_\text{sys} \geq t)\,,
+\end{align}
+where $T_\text{sys}$ is the random variable giving the failure time of the system. %
+%\footnote{}
+Based on the distribution of $T_\text{sys}$, which can also be expressed
+in terms of the cumulative distribution function $F_\text{sys}(t) = 1 - R_\text{sys}(t)$,
+the density $p_\text{sys}(t)$ or the hazard rate $\lambda_\text{sys}(t)$,
+decisions about, e.g., scheduling of maintenance work can be made.
+
+Often, there is no failure data for the system itself
+(e.g., if the system is a prototype, or the system is used under unique circumstances),
+but some data about failure times exist for the components the system is made of.
+Information on the distribution of component failure times $T_i$,
+where $i = 1, \ldots, \ell$ if the system consists of $\ell$ components,
+can then be used to derive the distribution of $T_\text{sys}$.
+In this paper, we consider a simple parallel system
+where all components are of the same type,
+and our observations consist solely of the failure times of one or more components in this system.
+%In the last section, we will briefly describe
+%how the approach can be generalized to arbitrary system structures
+%using the survival signature \cite{2012:survsign},
+%which allows for different types of components and
+%the inclusion of data from component tests, as in \citeNP{2014:bayessurvsign}.
+%
+We assume a parametric probability distribution for component lifetimes $T_i$. 
+The Bayesian approach allows to base estimation of the component failure distributions
+on both data and further knowledge not given by the data,
+the latter usually provided in the form of expert knowledge.
+This knowledge is encoded in form of a so-called prior distribution,
+a distribution on the parameter(s) of the component lifetime distribution.
+This expert knowledge is especially important when there is very few data on the components (like in our scenario),
+as only with its help meaningful estimates for the system reliability can be made.
+
+However, the choice for the prior distribution to encode the given expert knowledge is often debatable,
+and a specific choice of prior is difficult to justify.
+A way to deal with this is to employ sensitivity analysis,
+i.e., studying the effect of different choices of prior distribution on the quantities of interest
+(in our case, the system reliability function, which, in Bayesian terms, is a predictive distribution).
+This idea has been explored in systematic sensitivity analysis, or robust Bayesian methods
+(for an overview on this approach, see, e.g.,
+\shortciteNP{1994:berger} or \citeNP{2000:rios}). %\citeNP{2005:ruggeri}, \citeNP{2000:bergerinsuaruggeri}
+
+The work we present here can be seen as belonging to the robust Bayesian approach,
+as our work uses sets of priors. However, our focus and interpretation is slightly different,
+as we consider the result of our procedure, sets of reliability functions, as the proper result,
+while a robust Bayesian would base his analyses on a single reliability function from the set
+in case (s)he was able to conclude that quantities of interest are not `too sensitive' to the choice of prior.
+In contrast, our viewpoint is rooted in the theory of imprecise or interval probability \cite{1991:walley,itip},
+where sets of distributions are used to express the precision of probability statements themselves:
+the smaller the set, the more precise the probability statement.
+Indeed, the system reliability function $R_\text{sys}(t)$ is a collection of probability statements,
+and a small set for $R_\text{sys}(t)$ will indicate that we can quantify the reliability of the system quite precisely,
+while a large set will indicate that our knowledge about $T_\text{sys}$ is rather shaky.
+%\comments{Frank: 'reliability at time $t$' where?}
+
+In line with imprecise or interval probability methods, we will thus have, for each $t$,
+a lower reliability $\lRsys(t) = \ul{P}(T_\text{sys} \geq t)$,
+and an upper reliability $\uRsys(t) = \ol{P}(T_\text{sys} \geq t)$.
+We will explain in Sections~\ref{sec:modforsurpr} and \ref{sec:andrewsresults} how these bounds are obtained
+based on a set of prior distributions on the parameter of the component lifetime distribution.
+
+The central merit of our method is that it adequately reflects prior-data conflict
+(see, e.g., \citeNP{2006:evans}),
+i.e.\ the conflict that can arise between prior assumptions on component lifetimes
+and observed behaviour of components in the system under study.
+As we will show in Section~\ref{sec:weibull}, when taking the standard choice of a conjugate prior,
+prior-data conflict is ignored, as the spread of the posterior distribution does not increase in case of such a conflict,
+ultimately conveying a false sense of certainty
+by communicating that we can quantify the reliability of a system quite precisely when in fact we can not.
+%
+In contrast, our method will indicate prior-data conflict by wider bounds for $R_\text{sys}(t)$.
+This behaviour is obtained by a specific choice for the set of priors (see \citeNP{Walter2009a} and \citeNP{diss} \S 3.1.4)
+which leads to larger sets of posterior distributions when prior knowledge and data are in conflict
+(see Section~\ref{sec:modforsurpr} for more details).
+
+As a first step towards more realistic models, we apply this method
+to a simplified parallel system with exchangeable components,
+where component failures follow independent and identical Weibull distributions irrespective of their load.
+We exemplarily consider the problem of predicting the reliability of a currently running one of a kind system,
+where we have vague prior information on the lifetimes of the components the system is made of,
+and the only available data consist of observed behaviour of the system components so far,
+that is, the failure times of the components that have already failed,
+and the fact that the remaining components still function,
+whose failure time is thus right-censored.
+We study the effect of surprisingly early or late component failures,
+%on the system reliability prediction,
+showing that observations in conflict to prior assumptions
+indeed lead to more cautious system reliability predictions.
+
+The paper is organized as follows.
+In Section~\ref{sec:weibull}, we describe a Bayesian analysis for Weibull component lifetimes
+and illustrate the issue of prior-data conflict.
+Section~\ref{sec:modforsurpr} then details the use of sets of priors
+for the scale parameter $\lambda$ of the Weibull distribution,
+showing how this mitigates the prior-data conflict issue for $\lambda$.
+In Section~\ref{sec:andrewsresults}, we present our results for the reliability estimation for a parallel system,
+along with three examples that illustrate the desired behaviour.
+Section~\ref{sec:conclusion} concludes the paper by summarizing the achievements and discussing avenues for further research.
+
+
+\section{BAYESIAN ANALYSIS OF WEIBULL LIFETIMES}
+\label{sec:weibull}
+
+For each of the component lifetimes $T_i$, $i=1,\ldots,\ell$,
+we assume a Weibull distribution with fixed shape parameter $k > 0$, with density and cdf%
+\footnote{Our approach would be possible also for other parametric lifetime distributions
+that form a canonical exponential family
+(see, e.g., \citeNP[p.~202 and 272f]{2000:bernardosmith}, or \citeNP[p.~8]{diss}).}
+\begin{align}
+p_c(t \mid \lambda) &= \frac{k}{\lambda} t^{k-1} e^{-\frac{t^k}{\lambda}}\,, 
+&
+F_c(t \mid \lambda) &= 1 - e^{-\frac{t^k}{\lambda}} \,,
+\label{eq:weibull-pdf-cdf}
+\end{align}
+where $\lambda > 0$ and $t > 0$.%
+\footnote{The shape parameter $k$ determines whether the hazard rate is increasing ($k > 1$)
+or decreasing ($k < 1$) over time.
+For $k=1$, we obtain the Exponential distribution with constant hazard rate as a special case.
+The value for $k$ will thus often be clear from practical considerations.}
+The scale parameter $\lambda$ can be interpreted through the relation
+\begin{align}
+\E[T_i \mid \lambda] &= \lambda^{1/k}\, \Gamma(1 + 1/k)\,.
+\label{eq:lambdainterpret}
+\end{align}
+For encoding expert knowledge about the reliability of the components,
+we need to assign a prior distribution over the scale parameter $\lambda$.
+A convenient choice is to use the inverse Gamma distribution,
+commonly parametrized in terms of the hyperparameters $\alpha > 0$ and $\beta > 0$:
+\begin{align}
+p(\lambda \mid \alpha, \beta) &= \frac{\beta^\alpha}{\Gamma(\alpha)} \lambda^{-(\alpha + 1)} e^{-\beta/\lambda} \,,
+\end{align}
+in short, $\lambda \mid \alpha, \beta \sim \ig(\alpha, \beta)$.
+The inverse Gamma is convenient because it is a conjugate prior,
+i.e., the posterior obtained by Bayes' rule is again inverse Gamma and thus easily tractable;
+the prior parameters only need to be updated to obtain the posterior parameters.
+
+In the standard Bayesian approach, 
+one has to fix a prior by choosing values for $\alpha$ and $\beta$
+to encode specific prior information about component lifetimes.
+In our imprecise approach, we allow instead these parameters
+to vary in a set, this is advantageous also
+because expert knowledge is often vague,
+and it is difficult for the expert(s) to pin down precise hyperparameter values.
+For the definition of the hyperparameter set,
+we use however a parametrization in terms of $\nz > 1$ and $\yz > 0$ instead of $\alpha$ and $\beta$,
+\begin{align}
+\nz &= \alpha - 1\,,
+&
+\yz &= \beta / \nz \,,
+\end{align}
+where $\yz$ can be interpreted as the prior guess for the scale parameter $\lambda$,
+as $\E[\lambda\mid\nz,\yz] = \yz$.
+This parametrization also makes the nature of the combination
+of prior information and data through Bayes' rule more clear:
+After observing $n$ component lifetimes $\vec{t} = (t_1, \ldots, t_n)$,
+the updated parameters are
+\begin{align}
+\nn &= \nz + n\,, 
+&
+\yn &=  \frac{\nz \yz + \taut}{\nz + n}\,,
+\label{eq:ig-update}
+\end{align}
+where $\taut = \sum_{i=1}^n t_i^k$. %
+%\footnote{
+We thus have
+\begin{align}
+\lambda \mid \nz, \yz, \vec{t} \sim \ig(\nz + n + 1, \nz \yz + \taut). %}
+\label{eq:ig-update-alpha}
+\end{align}
+From the simple update rule \eqref{eq:ig-update}, we see that
+$\yn$ is a weighted average of the prior parameter $\yz$ and the Maximum Likelihood estimator $\taut/n$,
+with weights $\nz$ and $n$, respectively.
+$\nz$ can thus be interpreted as a prior strength or pseudocount,
+indicating how much our prior guess should weigh against the $n$ observations.
+Furthermore, $\V[\lambda\mid\nz,\yz] = (\yz)^2 / (1 - 1/\nz)$,
+so for fixed $\yz$, the higher $\nz$,
+the more probability mass is concentrated around $\yz$. %$p(\lambda\mid\nz,\yz)$ 
+
+However, the weighted average structure for $\yn$
+is behind the problematic behaviour in case of prior-data conflict.
+Assume that from expert knowledge we expect
+to have a mean component lifetime of 9 weeks.
+Using \eqref{eq:lambdainterpret}, with $k=2$ we obtain $\yz = 103.13$.
+We choose $\nz = 2$, so our prior guess for the mean component lifetime
+counts like having two observations with this mean.
+If we now have a sample of two observations
+with surprisingly early failure times $t_1 = 1$ and $t_2 = 2$,
+using \eqref{eq:ig-update} we get $\nfun{2} = 4$
+and $\yfun{2} = \frac{1}{4}(2 \cdot 103.13 + 1^2 + 2^2) = 52.82$,
+so our posterior expectation for the scale parameter $\lambda$ is $52.82$,
+equivalent to a mean component lifetime of $6.44$ weeks.
+The posterior standard deviation (sd) for $\lambda$ is $60.99$.
+Compared to the prior standard deviation of $145.85$,
+the posterior expresses now more confidence that mean lifetimes are around $\yfun{2} = 52.82$
+than the prior had about $\yz = 103.13$.
+This irritating conclusion is illustrated in Figure~\ref{fig:weibull-pdc};
+the posterior cdf is shifted halfway towards the values for $\lambda$
+that the two observations suggest
+(the ML estimator for $\lambda$ would be $2.5$),
+and is steeper than the prior (so the pdf is more pointed),
+thus conveying a false sense of certainty about $\lambda$.%
+\footnote{This is a general problem in Bayesian analysis with canonical conjugate priors.
+For such priors, the same update formula \eqref{eq:ig-update} applies,
+and so conflict is averaged out, for details see \citeN{Walter2009a} and \citeN[\S 3.1.4 and \S A.1.2]{diss}.}
+We would obtain almost the same %values of $\nfun{2}$ and $\yfun{2}$, and so the same 
+posterior distribution
+if we had assumed the mean component lifetime to be 7 weeks (so $\yz = 62.39$),
+and observed lifetimes $t_1 = 6$, $t_2 = 7$ in line with our expectations.
+It seems unreasonable to make the same probability statements on component lifetimes in these two fundamentally different scenarios.
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{fig1font}
+\caption{Prior and posterior cdf for $\lambda$ given surprising observations;
+the conflict between prior assumptions and data is averaged out,
+with a more pointed posterior giving a false sense of certainty.}
+\label{fig:weibull-pdc}
+\end{figure}
+
+
+\section{MODELS REFLECTING SURPRISING DATA}
+\label{sec:modforsurpr}
+
+Despite this issue of ignoring prior-data conflict,
+the tractability of the update step
+(the posterior is again a parametric distribution)
+is a very attractive feature of the conjugate setting.
+As was shown by \citeN{Walter2009a} (see also \citeNP{diss}, \S 3.1),
+it is possible to retain tractability and to have a meaningful reaction to prior-data conflict
+when using sets of priors generated by varying both $\nz$ and $\yz$.
+Then, the magnitude of the set of posteriors,
+and with it the precision of posterior probability statements,
+will be sensitive to the degree of prior-data conflict,
+i.e.\ leading to more cautious probability statements when prior-data conflict occurs.
+
+Instead of a single prior guess $\yz$ for the mean component lifetimes,
+we will now assume a range of prior guesses $[\yzl, \yzu]$, and also a range $[\nzl, \nzu]$ of pseudocounts,
+i.e., we now consider the set of priors
+%\begin{align}
+\begin{multline}
+\MZ := \{ p(\lambda\mid\nz,\yz) \mid \nz \in [\nzl, \nzu],\\ \yz \in [\yzl, \yzu] \}
+\label{eq:setofpriors}
+\end{multline}
+%\end{align}
+to express our prior knowledge about component lifetimes.
+Each of the priors $p(\lambda\mid\nz,\yz)$ is then updated to the posterior
+$p(\lambda\mid\nz,\yz,\vec{t}) = p(\lambda\mid\nn,\yn)$
+by using \eqref{eq:ig-update},
+such that the set of posteriors $\MN$ can be written as
+$\MN = \{ p(\lambda\mid\nn,\yn) \mid \nz \in [\nzl, \nzu], \yz \in [\yzl, \yzu] \}$.
+This procedure of using Bayes' Rule element by element
+is seen as self-evident in the robust Bayesian literature,
+but can be formally justified as being \emph{coherent}
+(a self-consistency property)
+in the framework of imprecise probability, where it is known as
+\emph{Generalized Bayes' Rule} \cite[\S 6.4]{1991:walley}.
+
+Technically, it is crucial to consider a range of pseudocounts $[\nzl, \nzu]$
+along with the range of prior guesses $[\yzl, \yzu]$,
+as only then $\taut/n \not\in [\yzl, \yzu]$
+leads to the set of posteriors being larger
+and hence reflecting prior-data conflict.
+
+Continuing the example from Section~\ref{sec:weibull} and Figure~\ref{fig:weibull-pdc},
+assume now for the mean component lifetimes the range 9 to 11 weeks,
+this corresponds to $[\yzl,\yzu] = [103.13, 154.06]$.
+We also choose $[\nzl,\nzu] =[2, 5]$,
+so we value our prior information as equivalent to having seen two to five observations.
+Compare now the set of posteriors obtained from observing
+$t_1 = 1$, $t_2 = 2$ (as before), see Figure~\ref{fig:setofpost-pdc},
+and $t_1 = 10$, $t_2 = 11$, see Figure~\ref{fig:setofpost-nopdc}.
+We now have a clear difference between the two scenarios of
+observations in line with expectations (Figure~\ref{fig:setofpost-nopdc})
+and observations in conflict (Figure~\ref{fig:setofpost-pdc}).
+In Figure~\ref{fig:setofpost-pdc}, the set of posteriors (blue)
+is shifted towards the left, but has about the same size as the set of priors (red),
+and so posterior quantification of reliability has the same precision,
+despite having seen two observations.
+Instead, in Figure~\ref{fig:setofpost-nopdc}, the set of posteriors
+is smaller than the set of priors,
+such that the two observations have increased the precision of probability statements.
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{fig2font}
+\caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two surprising observations $t_1 = 1$, $t_2 = 2$.}
+\label{fig:setofpost-pdc}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{fig3font}
+\caption{Set of prior (red) and posterior cdfs (blue) for $\lambda$ for two unsurprising observations $t_1 = 10$, $t_2 = 11$.}
+\label{fig:setofpost-nopdc}
+\end{figure}
+
+%\comments{More details for Fig 2 and 3 example? Also prior set?}
+%
+As each posterior in $\MN$ corresponds to a predictive distribution for $T_\text{sys}$,
+we will have a set of reliability functions $R_\text{sys}(t)$.
+The derivation of $R_\text{sys}(t)$ for a parallel system with $\ell$ components
+will be given in Section~\ref{sec:andrewsresults} below.
+This will include, in contrast to previous studies using sets of priors of type 
+\eqref{eq:setofpriors}, the treatment of censored observations.%
+\footnote{More specifically, we consider the case of \emph{non-informative right censoring},
+where the censoring process is independent of the failure process.}
+
+
+\section{ROBUST BAYESIAN INFERENCE FOR A PARALLEL SYSTEM}
+\label{sec:andrewsresults}
+
+We consider a simplified parallel system with $\ell$ exchangeable components,
+so the system functions when at least one of the $\ell$ components functions.
+Exchangeability means that the components are of the same type
+and that any permutation of the component labels would not change any results.
+We therefore assume that component load does not influence the failure distribution.%
+\footnote{The system can thus be seen as either a standby parallel with perfect switch
+where components degrade irrespective of load,
+or as an active parallel system where again load is not relevant for the failure distribution.
+We plan to extend our model to cover the influence of load, see our comments in Section~\ref{sec:conclusion}.}
+We observe the system until a certain time point $t_\text{now}$
+and wish to calculate $R_\text{sys}(t)$ for $t > t_\text{now}$.
+
+From the components in the system that have already failed by the current time $t_\text{now}$,
+we can learn about the failure distribution of the remaining components.
+But also the fact that these remaining components have not failed yet
+contains information on the lifetime distribution $p_c(t\mid \lambda)$.
+Such observations for which the failure event has not happened yet are called \emph{right-censored}.
+Right-censoring is very common in reliability studies,
+%and data including right-censored observations are often encoded
+%in pairs $(t_i, \delta_i)$, where $\delta_i$ indicates whether
+%a failure was observed at time $t_i$ for item $i$ ($\delta_i = 1$)
+%or the item $i$ was lost for follow-up at time $t_i$ ($\delta_i = 0$).
+%Often, censored observations are alternatively marked as $t_i^+$, in contrast to observed failures $t_i$.
+and censored observations are usually marked as $t_i^+$, in contrast to observed failures $t_i$.
+%The posterior for a parameter $\lambda$ based on $n$ possibly censored observations
+%$(t_i, \delta_i)$, $i=1,\ldots,n$,
+%can be written as (see, e.g., \citeNP{2003:lawless}, \S 2.2)
+%\begin{align}
+%p(\lambda \mid \{(t_i, \delta_i)\}^n) \propto p(\lambda) \prod_{i=1}^n p(t_i)^{\delta_i} (1-F(t_i))^{1-\delta_i}\,.
+%\end{align}
+The posterior distribution for parameter $\lambda$
+based on $\ell$ observations $\vec{t}_m^\ell := (t_1,\ldots,t_m,t^+_\text{now},\ldots,t^+_\text{now})$
+(so we have $m$ observed failure times $t_1,\ldots,t_m$
+and $\ell-m$ right-censored observations $t^+_\text{now}$
+for the $\ell-m$ components that have not failed as of current time $t_\text{now}$)
+can be written as%
+\footnote{See, e.g., \citeN[\S 2.2]{2003:lawless} for the derivation of the likelihood in case of right-censored observations.}
+\begin{align}
+p(\lambda \mid \vec{t}_m^\ell) \propto p(\lambda) \prod_{j=1}^m p_c(t_j) \big(1-F_c(t_\text{now})\big)^{\ell-m}\,,
+\end{align}
+where $p(\lambda)$ is some prior distribution over $\lambda$.%
+\footnote{Of course, one can take as prior $p(\lambda)$ also a posterior distribution
+obtained from updating a prior with data from, e.g., component tests,
+but we leave this possibility out here to keep the notation simple.}
+%
+%Also with censored observations, choosing $\lambda \sim \ig(\alpha,\beta)$
+%leads to the posterior $p(\lambda \mid \alpha,\beta, \vec{t}_m^n) = p(\lambda \mid \nz, \yz, \vec{t}_m^n)$
+%being inverse Gamma again:
+Choosing $\lambda \sim \ig(\alpha,\beta)$ and writing the posterior in terms of $\nz$ and $\yz$, we get
+\begin{align}
+\lefteqn{p(\lambda \mid \nz, \yz, \vec{t}_m^\ell)} \\
+	&\propto \prod_{j=1}^{m} p_c(t_j \mid \lambda) \big(1 - F_c(t_\text{now})\big)^{\ell-m} p(\lambda\mid \nz, \yz) \nonumber \\
+%	&\propto \frac{k^m}{\lambda^m} \bigg(\prod_{j=1}^{m} t_j^k \bigg)
+%             e^{-\frac{1}{\lambda}\sum_{j=1}^{m} t_j^k}
+%             e^{-\frac{1}{\lambda}(\ell-m) t_\text{now}^k} p_c(\lambda\mid \nz, \yz) \\
+	&\propto \lambda^{-m} e^{-\frac{1}{\lambda}(\sum_{j=1}^{m} t_j^k + (\ell-m) t_\text{now}^k)}
+           \lambda^{-(\nz+1)-1}   e^{-\frac{1}{\lambda}(\nz \yz)} \nonumber \\
+	&\propto \lambda^{-(\nz+m+1)-1} e^{-\frac{1}{\lambda}((\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k))} \,. \nonumber
+\end{align}
+This forms the core of an inverse gamma distribution, and thus we have
+$\lambda \mid \nz, \yz, \vec{t}_m^\ell \sim \ig\left(\nz + m + 1, \nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m}t_j^k \right)$.
+Also for data including right-censored observations,
+the posterior is again inverse gamma and posterior inference remains tractable.
+Comparing with \eqref{eq:ig-update-alpha},
+we see that $\alpha$ is now incremented only by the observed failure events,
+while $\beta$ is updated using also the censoring times $t_\text{now}$.
+
+For $R_\text{sys}(t \mid \vec{t}_m^\ell)$, first note that we know that the system has functioned until $t_\text{now}$,
+so $R_\text{sys}(t \mid \vec{t}_m^\ell) = 1$ $\forall t \leq t_\text{now}$.
+For $t > t_\text{now}$, let us consider the probability
+that the system fails before $t$ given data $\vec{t}_m^\ell$ and $\lambda$,
+\begin{align}
+\lefteqn{P(T_\text{sys} \leq t \mid \vec{t}_m^\ell, \lambda)} \\ 
+ &= P(T_{m+1}\leq t \cap \ldots \cap T_\ell \leq t \mid \vec{t}_m^\ell, \lambda) \nonumber \\
+ &= \big( P(T_{m+1} \leq t \mid \vec{t}_m^\ell, \lambda) \big)^{\ell-m} \nonumber \\
+ &= \big( P(T_{m+1} \leq t \mid T_{m+1} > t_\text{now}, \lambda) \big)^{\ell-m} \nonumber \\
+ &= \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}\,, \nonumber
+\end{align}
+where we used the definition of conditional probability
+and Eq.~\eqref{eq:weibull-pdf-cdf} in the last step.
+%
+Then, the predictive probability
+$P(T_\text{sys} \leq t \mid \vec{t}_m^\ell) = 1 - R_\text{sys}(t \mid \vec{t}_m^\ell)$ is
+\begin{align}
+\lefteqn{P(T_\text{sys} \leq t \mid \vec{t}_m^\ell)} \\
+% &= \int_0^\infty P(T_{m+1}\leq t \cap \ldots \cap T_\ell \leq t \mid \vec{t}_m^\ell, \lambda)
+%    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
+% &= \int_0^\infty \big( P(T_{m+1} \leq t \mid \vec{t}_m^\ell, \lambda) \big)^{\ell-m}
+%    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
+% &= \int_0^\infty \big( P(T_{m+1} \leq t \mid T_{m+1} \leq t_\text{now}, \lambda) \big)^{\ell-m}
+%    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \\
+ &= \int_0^\infty P(T_\text{sys} \leq t \mid \vec{t}_m^\ell, \lambda)
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \nonumber \\
+ &= \int_0^\infty \big( 1 - e^{-\frac{1}{\lambda} (t^k - t_\text{now}^k)} \big)^{\ell-m}
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \nonumber \\
+ &=\sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \times \nonumber \\ 
+ & \qquad
+    \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)}
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda \,. \nonumber
+\end{align}
+Substituting in the posterior, we obtain for the integral
+\begin{align}
+\lefteqn{%
+    \int_0^\infty e^{-\frac{i}{\lambda} (t^k - t_\text{now}^k)} %
+    p(\lambda \mid \nz, \yz, \vec{t}_m^\ell) \dd\lambda } \\
+ &= \frac{\left(\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^{m} t_j^k \right)^{\nz + m + 1}}{\Gamma(\nz + m + 1)}\times \nonumber \\
+ &  \int_0^\infty\!\! e^{-\frac{i(t^k - t_\text{now}^k)}{\lambda}} \lambda^{\nz + m + 1}
+    e^{-\frac{\nz \yz + (\ell-m) t_\text{now}^k + \sum_{j=1}^m t_j^k}{\lambda}}\! \dd\lambda\,. \nonumber
+\end{align}
+The terms remaining below the integral form the core of an inverse Gamma distribution
+with parameters
+\begin{align}
+\alpha &= \nz + m + 1\,,\\
+\beta  &= \nz \yz + (\ell - m - i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k\,,
+\end{align}
+allowing us to solve the integral using the corresponding normalization constant.
+%
+Substituting all back in, we thus obtain
+\begin{align}
+\label{eq:generalformula}
+\lefteqn{%
+R_\text{sys}(t \mid \vec{t}_m^\ell)
+  = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, \times } & \\
+ & %\qquad
+   \left(\!\! \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
+                   {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \!\!\right)^{\!\!\!\nz + m + 1}.\nonumber
+\end{align}
+%We can see that for $m$ increasing, i.e., the more failures we observe among the $\ell$ components, we lose terms in our sum.
+%We also see that each failure adds an extra power to the fraction.
+%The censored observations come into play in the fraction, and their effect decreases in each term as $i$ increases. 
+%Besides the $\nz$ in the exponent, the prior parameters $\nz$ and $\yz$ appear only in form of their product $\nz\yz$.
+%
+As described in Section~\ref{sec:modforsurpr},
+we can now choose bounds $[\nzl, \nzu]$ and $[\yzl, \yzu]$
+to reflect our prior knowledge about component lifetimes.
+The bounds $\lRsys(t \mid \vec{t}_m^\ell)$ and $\uRsys(t \mid \vec{t}_m^\ell)$ for the reliability function,
+which are obtained by minimizing and maximizing \eqref{eq:generalformula}
+over $[\nzl, \nzu] \times [\yzl, \yzu]$ for each $t > t_\text{now}$,
+will adequately reflect our knowledge about the reliability quantification of the system,
+based on both the prior knowledge and the behaviour of the components in the system until $t_\text{now}$.
+Specifically, we illustrate the quantification in case of prior-data conflict through three examples,
+where we consider a parallel system with three components
+for which we may observe surprising component behaviour.
+
+For all three examples, we continue to use the prior assumptions from Section~\ref{sec:modforsurpr},
+(where we chose $[\nzl, \nzu] = [2,5]$ and $[\yzl, \yzu] = [103.13, 154.06]$,
+expecting the mean component lifetimes to be in the range of 9 to 11 weeks),
+so the set of prior cdfs $\Fsys(t)$ is identical in the three Figures~\ref{fig:exampletwofailuresinline} to \ref{fig:examplenofailures} below.
+For easy comparison between the examples, all three plots depict the range $0 \leq t \leq 70$.
+
+\begin{example}
+\label{ex:1}
+% two failures in line with expectation. Post2Finline.pdf 
+Assume that we observe the system until $t_\text{now} = 11$
+and that we have seen failures for two of the three components
+at $t_1=10$ and $t_2=11$, which are thus in line with our expectations.
+We therefore have $\vec{t}_2^3 = (10, 11, 11^+)$.
+(Our set of posteriors for the Weibull scale parameter $\lambda$ would thus be like in Figure~\ref{fig:setofpost-nopdc}
+were it not for the additional censored observation $11^+$.)
+The prior bounds $\lFsys(t)$ and $\uFsys(t)$ (red),
+and the resulting posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$ (blue),  
+are depicted in Figure~\ref{fig:exampletwofailuresinline}.
+Notice that for all posterior cdfs between the bounds
+it holds that $\Fsys(t \mid \vec{t}_2^3) > 0$ only for $t > t_\text{now} = 11$,
+as the system has not failed by $t_\text{now} = 11$.
+We can see that based only on prior assumptions (so at time $0$),
+we predict, e.g., $\Fsys(15) = P(T_\text{sys} \leq 15) = [0.522, 0.752]$.
+After observing $\vec{t}_2^3$, i.e.\ at current time $11$,
+we have instead $\Fsys(15 \mid \vec{t}_2^3) = P(T_\text{sys} \leq 15 \mid \vec{t}_2^3) = [0.511, 0.600]$.
+As component failures were in line with our expectations,
+bounds for $\Fsys(15)$, and in fact for the whole range of $t$, 
+have become narrower,
+such that we can quantify the system reliability now more precisely.
+\end{example}
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{Post2Finlinefont}
+\caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ for two failures $t_1 = 10$, $t_2 = 11$ in line with expectations.}
+\label{fig:exampletwofailuresinline}
+\end{figure}
+
+\begin{example}
+\label{ex:2}
+%***two early failures. Post2FPlot.pdf
+Assume that we observe instead two surprisingly early failures at times $t_1 = 1$ and $t_2 = 2$
+(just like we assumed for the posterior on $\lambda$ in Figure~\ref{fig:setofpost-pdc}).
+The posterior bounds $\lFsys(t \mid \vec{t}_2^3)$ and $\uFsys(t \mid \vec{t}_2^3)$
+for $\vec{t}_2^3 = (1, 2, 2^+)$ calculated at time $2$
+are depicted in Figure~\ref{fig:exampletwoearlyfailures} (blue).
+Now, the prediction for the system to fail before 15 weeks
+is $[\lFsys(15 \mid \vec{t}_2^3), \uFsys(15 \mid \vec{t}_2^3)] = [0.864, 0.971]$
+instead of $[0.522, 0.752]$ at time $0$.
+This interval contains not only higher values,
+but its length has not reduced as much as was the case in Example~\ref{ex:1}.
+Also, the posterior predicted survival probability until $t=10$
+is now, at time $2$, $[\lRsys(10 \mid \vec{t}_2^3), \uRsys(10 \mid \vec{t}_2^3)] = [0.158,0.395]$,
+similarly cautious as the prior interval $[0.591,0.830]$ at time $0$,
+despite two observed failure events and a shorter time horizon for the prediction. 
+\end{example}
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{Post2FPlotpaperfont}
+\caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ for two surprisingly early failures $t_1 = 1$, $t_2 = 2$.}
+\label{fig:exampletwoearlyfailures}
+\end{figure}
+
+\begin{example}
+\label{ex:3}
+%***no failures by week 15. PostPredGS.pdf
+Assume now that we do not observe any failures until week $15$,
+such that we have $\vec{t}_0^3 = (15^+, 15^+, 15^+)$.
+Prior and posterior bounds for $\Fsys$ at time $15$ are depicted in Figure~\ref{fig:examplenofailures}.
+The posterior bounds for $\Fsys$ are shifted to the right, and are also wider than the prior bounds,
+so clearly indicating prior-data conflict through cautious probability statements.
+E.g., before the start of the system at time $0$, the predicted probability for the system to have failed by time $20$
+was $\Fsys(20) = [0.794, 0.914]$, whereas now, at time $15$, it is $\Fsys(20 \mid \vec{t}_0^3) = [0.091,0.210]$.
+Had we scheduled maintenance work for week 20
+based on the probability for the system surviving at least until time $20$ being between 25\% and 45\%,
+we could now reschedule it to, e.g, time 29,
+for which we predict $\Fsys(29 \mid \vec{t}_0^3) = [0.523,0.793]$,
+i.e., a similar survival probability range of 21\% to 48\%.
+\end{example}
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{PostPredGSpaperfont}
+\caption{Set of prior (red) and posterior (blue) cdfs $F_\text{sys}(t)$ given no failures observed by week 15.}
+\label{fig:examplenofailures}
+\end{figure}
+
+\section{CONCLUSION AND OUTLOOK}
+\label{sec:conclusion}
+
+In this paper we presented a robust Bayesian approach to reliability estimation for a simple parallel system,
+and showed how the use of sets of prior distributions results in increased imprecision,
+i.e., more cautious probability statements, in case of prior-data conflict (see Examples~\ref{ex:2} and \ref{ex:3}),
+while giving more precise reliability bounds when prior and data are in agreement (see Example~\ref{ex:1}).
+The parameters through which prior information is encoded have a clear interpretation
+and are thus easily elicited.
+Calculation of lower and upper predictive reliability bounds is tractable,
+requiring only a simple two-dimensional box-constrained optimization of Equation~\eqref{eq:generalformula}.
+
+%The robust Bayesian setting we employed provides many further modelling opportunities
+%for which we think increased imprecision is an appropriate tool.
+We think that increased imprecision is an appropriate tool for mirroring prior-data conflict
+when considering sets of priors as is done in both the robust Bayesian and imprecise probability framework.
+We want to emphazise, however, that this tool may be useful already
+for just highlighting `conflict' between multiple information sources,
+and that we do not think that the resulting set of posteriors,
+although it can form a meaningful basis, must necessarily be used
+for all consequential inferences, as a strict Bayesian would posit.
+We believe an analyst is free to reconsider any aspect of a model
+(of which the choice of prior can be seen to form a part) after seeing the data,
+and so may use our method only for becoming aware of a conflict between prior and data.
+
+The robust Bayesian setting we employed provides many further modelling opportunities
+beyond the explicit reaction to prior-data conflict.
+These opportunities have not yet been explored and
+provide a wide field for further research.
+An example is our currently ongoing investigation into
+extending the present model to allow also for an appropriate reflection of very strong agreement between prior and data.
+
+There are many aspects to further develop in our analysis and modeling.
+Straightforward to implement is, e.g., the analysis of the effect of replacing failed components
+in the parallel system on the reliability quantification $[\lRsys(t \mid \vec{t}), \uRsys(t \mid \vec{t})]$.
+Criteria for the trade-off between the cost of replacement and the gain in reliability
+would have to be adapted for the interval output of our model,
+leading to very interesting research questions.
+
+Following the approach in \citeN[\S 5]{2014:bayessurvsign},
+we intend to generalize our model to arbitrary system structures
+by making use of the recently introduced survival signature \cite{2012:survsign}.
+Like the system signature, the survival signature makes it possible to separate the system structure
+from individual component reliability, such that temporal aspects need to be accounted for
+only through the component lifetime distributions.
+Furthermore, it allows, in contrast to the system signature,
+for an easy calculation of the reliability for systems with multiple types of components.
+Having multiple types of components will allow us, among other improvements,
+to model component loads more realistically.
+%
+We also plan to explore the nonparametric lifetime models
+described in \citeN[\S 4]{2014:bayessurvsign},
+which allow to relax the rather strong assumptions in our parametric modeling of component lifetimes,
+but require either more data, or a much more detailed assessment of prior knowledge, than our approach.
+%nonparametric lifetime as in \citeNP{2014:bayessurvsign} \S 4, \comments{only mention if space}
+
+Another important aspect in system reliability we have not accounted for yet
+is the possibility of common-cause failures,
+i.e., failure events where several components fail at the same time due to a shared or common root cause.
+We thus plan to combine the common-cause failure model approaches
+of \citeN{Troffaes2014a} and \citeN{2015:coolen-commoncause}.
+
+On a more abstract level, our choice for the set of prior parameters
+(generating the set of prior component failure distributions) as $[\nzl, \nzu] \times [\yzl, \yzu]$
+has the advantage of allowing for easy elicitation and tractable inferences,
+but it may not be suitable to reflect certain kinds of prior knowledge.
+Also, as studied in \cite{Walter2011a} and \cite[\S 3.1]{diss},
+the shape of the prior parameter set has a crucial influence on model behaviour
+like the severity of prior-data conflict reaction.
+As noted in \cite[pp.~66f]{diss},
+more general prior parameter set shapes are possible in principle,
+but may be more difficult to elicit and make calculations more complex.
+
+
+\bibliographystyle{chicaco}
+\bibliography{esrel2015refs}
+
+\end{document}
+
