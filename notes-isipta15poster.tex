@@ -182,9 +182,9 @@ and so $\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k} \sim \ig(\nkn + 1, \nkn\ykn)$
 
 System survival calculated by (see Risk Analysis paper eq. (7))
 \begin{align}
-P(\Tsys > t) &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_K) P\Big( \bigcap_{k=1}^K \{ C^k_t = l_k\} \Big) \\
+P(\Tsys > t) &= \sum_{l_1=0}^{n_1} \cdots \sum_{l_K=0}^{n_K} \Phi(l_1,\ldots,\l_K) P\Big( \bigcap_{k=1}^K \{ C^k_t = l_k\} \Big) \\
 \intertext{ and assuming components of different types are independent,}
-             &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K P(C^k_t = l_k)
+             &= \sum_{l_1=0}^{n_1} \cdots \sum_{l_K=0}^{n_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K P(C^k_t = l_k)
 \end{align}
 where the survival signature $\Phi(l_1,\ldots,\l_K)$ is non-decreasing in each $l_k$ for coherent systems,
 and $P(C^k_t = l_k)$ is the (predictive) probability that exactly $l_k$ components of type $k$ function at time $t$.
@@ -282,7 +282,7 @@ help us for the lower and upper system survival function,
 the system survival for $t > \tnow$ being
 \begin{align}
 P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
- &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+ &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \,.
 \end{align}
 
@@ -295,12 +295,12 @@ So do we have to make the optimization over $(\nkz,\ykz)$ for the full expressio
 
 \begin{align}
 \lefteqn{P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})} \\
- &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+ &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \\
- &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+ &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!} \times \\ & \hspace*{45ex}
     \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa)}\right)^{\nkn + 1} \\
- &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+ &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!} \times \\ & \hspace*{17ex}
     \left(\frac{\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k) (\tnow)^\kappa }%
                {\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k-l_k-j) (\tnow)^\kappa + (l_k + j) t^\kappa }\right)^{%
