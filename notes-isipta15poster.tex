@@ -20,6 +20,7 @@
 
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{url}
+\usepackage{tikz}
 
 \usepackage[bookmarks]{hyperref}
 
@@ -288,7 +289,7 @@ P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
 We cannot simply plug in all the $\ul{P}(C^k_t = l_k\mid \ldots)$ %and $\ol{P}(C^k_t = l_k\mid \ldots)$
 into the above to get $\ul{P}(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$, % and $\ol{P}(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$,
 as the $\ul{P}(C^k_t = l_k\mid \ldots)$ could correspond to different $(\nkz,\ykz)$ for each $l_k$.
-(It would give us a lower bound for $\ul{P}(\Tsys > t\mid\ldots)$, however.)
+(It would give us a lower bound for $\ul{P}(\Tsys > t\mid\ldots)$, however, but it might be very coarse.)
 
 So do we have to make the optimization over $(\nkz,\ykz)$ for the full expression below?
 
@@ -305,6 +306,42 @@ So do we have to make the optimization over $(\nkz,\ykz)$ for the full expressio
                {\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k-l_k-j) (\tnow)^\kappa + (l_k + j) t^\kappa }\right)^{%
     \nkz + e_k + 1} 
 \end{align}
+
+
+The example system with $k=3$ component types, $n_1=2$, $n_2=2$, $n_3=1$:
+
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,fill=black!20,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,fill=black!20,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,fill=black!20,thick,inner sep=0pt,minimum size=6mm},
+ hv path/.style={to path={-| (\tikztotarget)}},
+ vh path/.style={to path={|- (\tikztotarget)}}]
+\node[type1] (double1) at ( 1, 0.6) {1};
+\node[type2] (double2) at ( 1,-0.6) {2};
+\node[type1] (triple1) at ( 3, 1)  {1};
+\node[type2] (triple2) at ( 3, 0)  {2};
+\node[type3] (triple3) at ( 3,-1)  {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge          (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge          (triple2.east)
+              edge[vh path] (triple3.east)
+              edge          (end);
+\end{tikzpicture}
+
 
 
 \end{document}
