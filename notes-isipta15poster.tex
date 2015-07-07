@@ -27,7 +27,7 @@
 
 % setting math equation indent from left 0pts
 
-\mathindent=0pt%
+%\mathindent=0pt%
 
 \newcommand{\reals}{\mathbb{R}}
 \newcommand{\posreals}{\reals_{>0}}
@@ -116,6 +116,12 @@
 \def\MZ{\mathcal{M}\uz}
 \def\MN{\mathcal{M}\un}
 
+\def\MkZ{\mathcal{M}\uz_k}
+\def\MkN{\mathcal{M}\un_k}
+
+\def\PkZ{\Pi\uz_k}
+\def\PkN{\Pi\un_k}
+
 \def\tnow{t_\text{now}}
 \def\tpnow{t^+_\text{now}}
 
@@ -131,7 +137,7 @@
 \begin{document}
 \maketitle
 
-Notation more similar to risk analysis paper.
+(Notation more similar to risk analysis paper.)
 
 System with components of $k=1,\ldots,K$ different types.
 There are $n_k$ components of type $k$ in the system.
@@ -149,7 +155,7 @@ f_{\lambda_k}(\lambda_k\mid \alpha_k,\beta_k) &= \frac{(\beta_k)^{\alpha_k}}{\Ga
 \end{align}
 In terms of canonical parameters $\nkz,\ykz$, $\lambda_k \mid \nkz,\ykz \sim \ig(\nkz + 1, \nkz\ykz)$.
 
-Set of priors defined by $(\nkz,\ykz) \in [\nkzl,\nkzu] \times [\ykzl,\ykzu]$.
+Set of priors $\MkZ$ defined by $(\nkz,\ykz) \in \PkZ = [\nkzl,\nkzu] \times [\ykzl,\ykzu]$.
 
 Observing a one of a kind system with $n_k$ components of type $k$ running until $\tnow$,
 where $e_k$ components have failed by $\tnow$, and $n_k - e_k$ components still function:
@@ -176,6 +182,7 @@ and so $\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k} \sim \ig(\nkn + 1, \nkn\ykn)$
 System survival calculated by (see Risk Analysis paper eq. (7))
 \begin{align}
 P(\Tsys > t) &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_K) P\Big( \bigcap_{k=1}^K \{ C^k_t = l_k\} \Big) \\
+\intertext{ and assuming components of different types are independent,}
              &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K P(C^k_t = l_k)
 \end{align}
 where the survival signature $\Phi(l_1,\ldots,\l_K)$ is non-decreasing in each $l_k$ for coherent systems,
@@ -187,9 +194,12 @@ P(C^k_t = l_k\mid\nkz,\ykz)
  &= { n_k \choose l_k} \int [F_k(t \mid\lambda_k)]^{n_k-l_k}
                         [1 - F_k(t \mid\lambda_k)]^{l_k} f_{\lambda_k}(\lambda_k\mid\nkz,\ykz) \dd \lambda_k
 \end{align}
+under the assumption that components of the same type are independent given $\lambda_k$.
+
+\bigskip
 
 For the situation with the system observed until $\tnow$, with data $\mbf{t}^k_{e_k;n_k}$,
-what is the posterior preedictive probability $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$?
+we need the posterior predictive probability $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$.
 
 For $l_k > n_k - e_k$, we must have $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) = 0$,
 as at most $n_k - e_k$ components can function for $t > \tnow$.
@@ -199,7 +209,7 @@ as at most $n_k - e_k$ components can function for $t > \tnow$.
 A posteriori, we have, for $l_k = 0,1,\ldots, n_k - e_k$,
 \begin{align}
 P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
- &= { n_k - e_k \choose l_k} \int [P_k(T \leq t \mid T > \tnow, \lambda_k)]^{n_k - e_k - l_k} \times \\ & \hspace*{10ex}
+ &= { n_k - e_k \choose l_k} \int [P_k(T \leq t \mid T > \tnow, \lambda_k)]^{n_k - e_k - l_k} \times \\ & \hspace*{7ex}
                               [1 - P_k(T \leq t \mid T > \tnow, \lambda_k)]^{l_k}
     f_{\lambda_k\mid\ldots}(\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k}) \dd \lambda_k
 \end{align}
@@ -215,10 +225,85 @@ P_k(T \leq t \mid T > \tnow, \lambda_k)
 
 With this and the posterior substituted in, we get
 \begin{align}
-P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+\lefteqn{P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})} \\
  &= { n_k - e_k \choose l_k} \int \Big[1 - e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}\Big]^{n_k - e_k - l_k}
-                                  \Big[    e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}\Big]^{l_k} \times \\ & \hspace*{25ex}
-    \frac{[\nkn\ykn]^{\nkn + 1}}{\Gamma(\nkn+1)} \lambda_k^{-(\nkn + 1) - 1} e^{-\frac{\nkn\ykn}{\lambda_k}} \dd \lambda_k
+                                  \Big[    e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}\Big]^{l_k} %\times \\ & \hspace*{25ex}
+    \frac{[\nkn\ykn]^{\nkn + 1}}{\Gamma(\nkn+1)} \lambda_k^{-(\nkn + 1) - 1} e^{-\frac{\nkn\ykn}{\lambda_k}} \dd \lambda_k \\
+ &= { n_k - e_k \choose l_k} \sum_{j=0}^{n_k-e_k-l_k} (-1)^j { n_k - e_k - l_k \choose j} \frac{[\nkn\ykn]^{\nkn + 1}}{\Gamma(\nkn+1)} 
+    \int \lambda_k^{-(\nkn + 1) - 1} e^{-\frac{(l_k + j) (t^\kappa - (\tnow)^\kappa) + \nkn\ykn}{\lambda_k}} \dd \lambda_k
+\end{align}
+
+The terms remaining under the integral form the core of an $\ig(\nkn + 1, \nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa))$,
+allowing us to solve the integral using the corresponding normalization constant.
+\begin{align}
+\lefteqn{P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})} \\
+ &= { n_k - e_k \choose l_k} \sum_{j=0}^{n_k-e_k-l_k} (-1)^j { n_k - e_k - l_k \choose j}
+    \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa)}\right)^{\nkn + 1} \\
+ &= \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!}   
+    \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa)}\right)^{\nkn + 1} \\
+ &= \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!} \times \\ & \hspace*{20ex}  
+    \left(\frac{\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k) (\tnow)^\kappa }%
+               {\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k-l_k-j) (\tnow)^\kappa + (l_k + j) t^\kappa }\right)^{%
+    \nkz + e_k + 1} 
+\end{align}
+for $l_k \in \{0,1,\ldots,n_k-e_k\}$.
+
+(We actually need only those $P(C^k_t = l_k\mid \ldots)$ with $l_k$'s
+for which $\Phi(l_1,\ldots,\l_K) > 0$!)
+
+
+Seen as function in $t$, we see that $t$ appears $n_k-e_k-l_k+1$ times,
+once in each summand, in the denominator of the fraction powered to the $\nkn+1$.
+Nevertheless, $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$
+must be decreasing in $t$, as the remaining $n_k-e_k$ components continue to age,
+and so the probability that $l_k$ of them remain operational must decrease.
+
+I would think that
+$\min / \max_{(\nkz,\ykz) \in \PkZ} P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$
+must be solved by numeric optimization for each $k, l_k, t$ 
+because of the alternating signs for the summands.
+(In absolute terms, each summand is increasing in $\ykz$, but not monotone in $\nkz$.)
+
+(Box-constraint optimization possible, e.g., with option \texttt{L-BFGS-B} of \texttt{optim} in \textbf{R}.)
+
+Do I get your comments right that based on lower and upper bounds
+$\ul{P}(C^k_t = l_k\mid \ldots)$ and $\ol{P}(C^k_t = l_k\mid \ldots)$ for all $l_k = 0, 1, \ldots, n_k - e_k$,
+we can easily get lower and upper bounds for the cdf $F_{C^k_t}(l_k \mid \ldots)$?
+
+The cdf for $C^k_t$ is 
+\begin{align}
+%F_{C^k_t}(l_k \mid \nkz,\ykz, \mbf{t}^k_{e_k;n_k}) = P(C^k_t \leq l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) 
+% = \sum_{q=0}^{l_k} P(C^k_t = q\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+F_{C^k_t}(l_k \mid \ldots) = P(C^k_t \leq l_k\mid\ldots) = \sum_{q=0}^{l_k} P(C^k_t = q\mid\ldots)
+\end{align} 
+But I don't see how $\ul{F}_{C^k_t}(l_k \mid \ldots)$ and $\ol{F}_{C^k_t}(l_k \mid \ldots)$
+help us for the lower and upper system survival function,
+the system survival for $t > \tnow$ being
+\begin{align}
+P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+ &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+    P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \,.
+\end{align}
+
+We cannot simply plug in all the $\ul{P}(C^k_t = l_k\mid \ldots)$ %and $\ol{P}(C^k_t = l_k\mid \ldots)$
+into the above to get $\ul{P}(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$, % and $\ol{P}(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$,
+as the $\ul{P}(C^k_t = l_k\mid \ldots)$ could correspond to different $(\nkz,\ykz)$ for each $l_k$.
+(It would give us a lower bound for $\ul{P}(\Tsys > t\mid\ldots)$, however.)
+
+So do we have to make the optimization over $(\nkz,\ykz)$ for the full expression below?
+
+\begin{align}
+\lefteqn{P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})} \\
+ &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+    P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \\
+ &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+    \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!} \times \\ & \hspace*{45ex}
+    \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa)}\right)^{\nkn + 1} \\
+ &= \sum_{l_1=1}^{n_1-e_1} \cdots \sum_{l_K=1}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
+    \sum_{j=0}^{n_k-e_k-l_k} (-1)^j \frac{(n_k - e_k)!}{l_k! j! (n_k - e_k - l_k - j)!} \times \\ & \hspace*{17ex}
+    \left(\frac{\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k) (\tnow)^\kappa }%
+               {\nkz\ykz + \sum_{i=1}^{e_k} (t_i^k)^\kappa + (n_k-e_k-l_k-j) (\tnow)^\kappa + (l_k + j) t^\kappa }\right)^{%
+    \nkz + e_k + 1} 
 \end{align}
 
 
