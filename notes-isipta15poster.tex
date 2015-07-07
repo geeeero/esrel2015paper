@@ -140,7 +140,7 @@ For each $k$, component lifetimes ($i=1,\ldots,n_k$) are $T_i^k \mid \lambda_k \
 where $\kappa$ is fixed and known:
 \begin{align}
 f_k(t_i^k \mid \lambda_k) &= \frac{\kappa}{\lambda_k} (t_i^k)^{\kappa-1} e^{-\frac{(t_i^k)^{\kappa-1}}{\lambda_k}} \\
-F_k(t_i^k \mid \lambda_k) &= 1 - e^{-\frac{(t_i^k)^{\kappa-1}}{\lambda_k}}
+F_k(t_i^k \mid \lambda_k) &= 1 - e^{-\frac{(t_i^k)^{\kappa-1}}{\lambda_k}} = P_k(T_i^k \leq t_i^k \mid \lambda_k)
 \end{align}
 
 Conjugate prior is $\lambda_k \sim \ig(\alpha_k,\beta_k)$:
@@ -171,6 +171,8 @@ and so $\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k} \sim \ig(\nkn + 1, \nkn\ykn)$
 \nkn\ykn &= \nkz\ykz + (n_k-e_k) \tnow^\kappa + \sum_{i=1}^{e_k} (t_i^k)^\kappa
 \end{align}
 
+\newpage
+
 System survival calculated by (see Risk Analysis paper eq. (7))
 \begin{align}
 P(\Tsys > t) &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_K) P\Big( \bigcap_{k=1}^K \{ C^k_t = l_k\} \Big) \\
@@ -179,9 +181,45 @@ P(\Tsys > t) &= \sum_{l_1=1}^{n_1} \cdots \sum_{l_K=1}^{n_K} \Phi(l_1,\ldots,\l_
 where the survival signature $\Phi(l_1,\ldots,\l_K)$ is non-decreasing in each $l_k$ for coherent systems,
 and $P(C^k_t = l_k)$ is the (predictive) probability that exactly $l_k$ components of type $k$ function at time $t$.
 
-A priori, we have
+A priori, we have, for $l_k = 0,1,\ldots, n_k$,
 \begin{align}
-P(C^k_t = l_k) &= { n_k \choose l_k} \int [F_k(t \mid\lambda_k)]^{n_k-l_k}
+P(C^k_t = l_k\mid\nkz,\ykz)
+ &= { n_k \choose l_k} \int [F_k(t \mid\lambda_k)]^{n_k-l_k}
+                        [1 - F_k(t \mid\lambda_k)]^{l_k} f_{\lambda_k}(\lambda_k\mid\nkz,\ykz) \dd \lambda_k
 \end{align}
+
+For the situation with the system observed until $\tnow$, with data $\mbf{t}^k_{e_k;n_k}$,
+what is the posterior preedictive probability $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$?
+
+For $l_k > n_k - e_k$, we must have $P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) = 0$,
+as at most $n_k - e_k$ components can function for $t > \tnow$.
+
+(Should one work with the subsystem consisting only of the non-failed $n_k - e_k$ components?)\\
+
+A posteriori, we have, for $l_k = 0,1,\ldots, n_k - e_k$,
+\begin{align}
+P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+ &= { n_k - e_k \choose l_k} \int [P_k(T \leq t \mid T > \tnow, \lambda_k)]^{n_k - e_k - l_k} \times \\ & \hspace*{10ex}
+                              [1 - P_k(T \leq t \mid T > \tnow, \lambda_k)]^{l_k}
+    f_{\lambda_k\mid\ldots}(\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k}) \dd \lambda_k
+\end{align}
+
+Now,
+\begin{align}
+P_k(T \leq t \mid T > \tnow, \lambda_k)
+ &= \frac{P_k(\tnow < T \leq t \mid\lambda_k)}{P_k(T > \tnow \mid \lambda_k)}
+  = \frac{F_k(t\mid\lambda_k) - F_k(\tnow\mid\lambda_k)}{1-F_k(\tnow\mid\lambda_k)} \\
+ &= \frac{e^{-\frac{(\tnow)^\kappa}{\lambda_k}} - e^{-\frac{t^\kappa}{\lambda_k}}}{e^{-\frac{(\tnow)^\kappa}{\lambda_k}}}
+  = 1 - e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}
+\end{align}
+
+With this and the posterior substituted in, we get
+\begin{align}
+P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+ &= { n_k - e_k \choose l_k} \int \Big[1 - e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}\Big]^{n_k - e_k - l_k}
+                                  \Big[    e^{-\frac{t^\kappa - (\tnow)^\kappa}{\lambda_k}}\Big]^{l_k} \times \\ & \hspace*{25ex}
+    \frac{[\nkn\ykn]^{\nkn + 1}}{\Gamma(\nkn+1)} \lambda_k^{-(\nkn + 1) - 1} e^{-\frac{\nkn\ykn}{\lambda_k}} \dd \lambda_k
+\end{align}
+
 
 \end{document}
