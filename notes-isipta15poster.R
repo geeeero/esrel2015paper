@@ -5,6 +5,8 @@
 # provides dinvgamma(x, shape, scale) where shape = alpha and scale = beta
 library(actuar)
 
+library(luck)
+
 # translate lambda parameter of weibull to expected failure time
 # lambda - scale parameter of weibull
 # k      - shape parameter of weibull
@@ -96,5 +98,45 @@ asdf <- postpredCcmf(n0y0_1, kappa, n_1, fts <- c(7,8), tnow=8, t = 9)
 asdf2 <- postpredCcmf(n0y0_1, kappa, n_1, fts <- c(7,8), tnow=8, t = 9)
 Ccmfplot(asdf)
 Ccmfplot(asdf2, add=TRUE, lty=2)
+
+# plots and prints the cmfs for the four 'corner' (n0,y0) pairs.
+fourCorners <- function(luckobj, kappa, n, fts, tnow, t){
+  n0 <- n0(luckobj)
+  y0 <- y0(luckobj)
+  tl <- postpredCcmf(n0y0 = c(n0[1], y0[2]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
+  tr <- postpredCcmf(n0y0 = c(n0[2], y0[2]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
+  bl <- postpredCcmf(n0y0 = c(n0[1], y0[1]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
+  br <- postpredCcmf(n0y0 = c(n0[2], y0[1]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
+  Ccmfplot(tl, main = bquote(paste("n0 = [",.(n0[1]),",",.(n0[2]),"], y0 = [",.(round(y0[1],2)),",",.(round(y0[2],2)),"]")))
+  Ccmfplot(tr, col = 2, add = TRUE)
+  Ccmfplot(bl, col = 4, add = TRUE)
+  Ccmfplot(br, col = 5, add = TRUE)
+  fail <- toString(fts)
+  cens <- paste(toString(tnow),"+", sep="")
+  cens <- paste(rep(cens, n-length(fts)), collapse=",")
+  data <- paste(fail, cens, sep=",")
+  mtext(paste("n = ",toString(n),", data = (",data,"), t = ",toString(t), sep=""), side = 3, line = 0.5)
+  legend("topleft", legend=c("tl","tr","bl","br"), lty=1, col=c(1,2,4,5))
+  cat("  ", paste(names(tl), collapse = "      "), "\n")
+  cat("tl", paste(round(tl,4), collapse = " "), "\n")
+  cat("tr", paste(round(tr,4), collapse = " "), "\n")
+  cat("bl", paste(round(bl,4), collapse = " "), "\n")
+  cat("br", paste(round(br,4), collapse = " "), "\n")
+}
+
+fc1 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
+#n_1 <- 4      # four components of type 1
+#fts_npdc <- c(10,11) 
+#tnow <- 11
+fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=12) # F_lower = bl, F_upper = tr
+fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=15) # F_lower = bl-br!!, F_upper = tr
+fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=20) # F_lower = br, F_upper = tr-tl!!!
+
+fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=3)  # F_lower = bl, F_upper = tr
+fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=5)  # F_lower = bl, F_upper = tr
+fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=10) # F_lower = bl, F_upper = tr
+fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=20) # F_lower = bl, F_upper = tr
+
+fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=8, t=10) # F_lower = bl, F_upper = tr
 
 #
