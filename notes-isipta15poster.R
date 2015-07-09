@@ -2,6 +2,30 @@
 #                       Code for ISIPTA'15 system poster                      #
 ###############################################################################
 
+# provides dinvgamma(x, shape, scale) where shape = alpha and scale = beta
+library(actuar)
+
+# translate lambda parameter of weibull to expected failure time
+# lambda - scale parameter of weibull
+# k      - shape parameter of weibull
+lambdatofailure <- function(lambda, k = 2){
+  lambda^(1/k) * gamma(1 + 1/k)
+}
+
+# translate failure time to lambda parameter of weibull
+# ft - expected failure time
+# k  - shape parameter of weibull
+failuretolambda <- function(ft, k = 2){
+  (ft/gamma(1 + 1/k))^k
+}
+
+# inverse gamma pdf and cdf with canonical parameters n0 and y0
+cdinvgamma <- function(x, n0, y0, ...)
+  dinvgamma(x, shape = n0+1, scale = n0*y0, ...)
+
+cpinvgamma <- function(x, n0, y0, ...)
+  pinvgamma(x, shape = n0+1, scale = n0*y0, ...)
+
 # function to calculate P(C_t = l | n^(0), y^(0), data),
 # the posterior predictive probability that l components function at time t
 # in the system observed until t_now (notion "of type k" dropped here)
