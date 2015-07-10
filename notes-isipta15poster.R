@@ -96,7 +96,7 @@ Ccmfplot(asdf)
 Ccmfplot(asdf2, add=TRUE, lty=2)
 
 # plots and prints the cmfs for the four 'corner' (n0,y0) pairs.
-fourCorners <- function(luckobj, kappa, n, fts, tnow, t){
+fourCornersCcmf <- function(luckobj, kappa, n, fts, tnow, t){
   n0 <- n0(luckobj)
   y0 <- y0(luckobj)
   tl <- postpredCcmf(n0y0 = c(n0[1], y0[2]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
@@ -104,15 +104,15 @@ fourCorners <- function(luckobj, kappa, n, fts, tnow, t){
   bl <- postpredCcmf(n0y0 = c(n0[1], y0[1]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
   br <- postpredCcmf(n0y0 = c(n0[2], y0[1]), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
   Ccmfplot(tl, main = bquote(paste("n0 = [",.(n0[1]),",",.(n0[2]),"], y0 = [",.(round(y0[1],2)),",",.(round(y0[2],2)),"]")))
-  Ccmfplot(tr, col = 2, add = TRUE)
-  Ccmfplot(bl, col = 4, add = TRUE)
-  Ccmfplot(br, col = 5, add = TRUE)
+  Ccmfplot(tr, lty = 2, add = TRUE)
+  Ccmfplot(bl, col = 2, add = TRUE)
+  Ccmfplot(br, col = 2, lty = 2, add = TRUE)
   fail <- toString(fts)
   cens <- paste(toString(tnow),"+", sep="")
   cens <- paste(rep(cens, n-length(fts)), collapse=",")
   data <- paste(fail, cens, sep=",")
   mtext(paste("n = ",toString(n),", data = (",data,"), t = ",toString(t), sep=""), side = 3, line = 0.5)
-  legend("topleft", legend=c("tl","tr","bl","br"), lty=1, col=c(1,2,4,5))
+  legend("topleft", legend=c("tl","tr","bl","br"), lty=c(1,2,1,2), col=c(1,1,2,2))
   cat("  ", paste(names(tl), collapse = "      "), "\n")
   cat("tl", paste(round(tl,4), collapse = " "), "\n")
   cat("tr", paste(round(tr,4), collapse = " "), "\n")
@@ -124,16 +124,16 @@ fc1 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,kappa), failuretolambda(1
 #n_1 <- 4      # four components of type 1
 #fts_npdc <- c(10,11) 
 #tnow <- 11
-fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=12) # F_lower = bl, F_upper = tr
-fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=15) # F_lower = bl-br!!, F_upper = tr
-fourCorners(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=20) # F_lower = br, F_upper = tr-tl!!!
+fourCornersCcmf(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=12) # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=15) # F_lower = bl-br!!, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(10,11), tnow=11, t=20) # F_lower = br, F_upper = tr-tl!!!
 
-fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=3)  # F_lower = bl, F_upper = tr
-fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=5)  # F_lower = bl, F_upper = tr
-fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=10) # F_lower = bl, F_upper = tr
-fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=20) # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=3)  # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=5)  # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=10) # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=20) # F_lower = bl, F_upper = tr
 
-fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=8, t=10) # F_lower = bl, F_upper = tr
+fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=8, t=10) # F_lower = bl, F_upper = tr
 
 library(ReliabilityTheory)
 
@@ -155,7 +155,7 @@ sys1sign <- computeSystemSurvivalSignature(sys1)
 #          the list element should be NULL if no failure has been observed for type k, 
 # tnow     time until the system is observed
 # t        time t for which to calculate P(T_sys > t), t > t_now
-sysrel <- function(n0y0, survsign, kappa, fts, tnow, t){
+sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE){
   K <- dim(survsign)[2] - 1
   nk <- apply(survsign, 2, max)
   nk <- nk[-length(nk)]
@@ -179,7 +179,11 @@ sysrel <- function(n0y0, survsign, kappa, fts, tnow, t){
     }
   }
   survsign2$summand <- apply(survsign2[,-(1:K)], 1, prod)
-  sum(survsign2$summand)
+  res <- sum(survsign2$summand)
+  if(table)
+    return(list(rel = res, table = survsign2))
+  else
+    return(res)
 }
 
 n0y0_1 <- c(2, failuretolambda(9,kappa))
@@ -189,6 +193,8 @@ n0y0_3 <- c(3, failuretolambda(10,kappa))
 
 sysrel(n0y0 = list(n0y0_1,n0y0_2,n0y0_3), survsign = sys1sign, kappa=rep(2,3),
        fts = list(c(7), c(3,4), NULL), tnow = 7, t = 8)
+sysrel(n0y0 = list(n0y0_1,n0y0_2,n0y0_3), survsign = sys1sign, kappa=rep(2,3),
+       fts = list(c(7), c(3,4), NULL), tnow = 7, t = 8, table = T)
 
 tvec <- seq(7,15,by=0.1)
 rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
