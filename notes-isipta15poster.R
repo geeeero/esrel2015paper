@@ -37,7 +37,8 @@ cpinvgamma <- function(x, n0, y0, ...)
 # l       number of functioning components, \in {0, 1, ..., n-e}
 # n       number of components in the system
 # tnow    time until the system is observed
-# fts     vector of length e giving the observed failure times
+# fts     vector of length e giving the observed failure times,
+#         or NULL if no failures observed
 # kappa   fixed weibull shape parameter
 postpredC <- function(n0y0, kappa, n, fts, tnow, t, l){
   if (t < tnow)
@@ -60,7 +61,8 @@ n_1 <- 4      # four components of type 1
 fts_1 <- c(1,2) # two failures at times 1 and 2, so l = 0,1,2
 tnow <- 3     # observed until tnow=3, so t > 3 
 postpredC(n0y0_1, kappa, n_1, fts_1, tnow, t = 4, l = 2)
-  
+
+# calculates the probability mass function for C_t
 postpredCpmf <- function(n0y0, kappa, n, fts, tnow, t){
   l <- seq(0, n-length(fts))
   res <- numeric(length(l))
@@ -72,21 +74,15 @@ postpredCpmf <- function(n0y0, kappa, n, fts, tnow, t){
 
 postpredCpmf(n0y0_1, kappa, n_1, fts_1, tnow, t = 4)
 
-postpredCpmf <- function(n0y0, kappa, n, fts, tnow, t){
-  l <- seq(0, n-length(fts))
-  res <- numeric(length(l))
-  for (i in l) res[i+1] <- postpredC(n0y0, kappa, n, fts, tnow, t, i)
-  res <- array(res)
-  dimnames(res)[[1]] <- l
-  res
-}
 
+# calculates the cumulative mass function for C_t
 postpredCcmf <- function(n0y0, kappa, n, fts, tnow, t){
   pmf <- postpredCpmf(n0y0, kappa, n, fts, tnow, t)
   cmf <- cumsum(pmf)
   cmf
 }
 
+# plots the cumulative mass function for C_t
 Ccmfplot <- function(cmf, add = FALSE, ylim = c(0,1), xlab = "l", ylab = "F(C = l)",...){
   if(add)
     lines(as.numeric(names(cmf)), cmf, type="s", ...)
@@ -138,5 +134,72 @@ fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=10) # F_lower = bl, F_upper =
 fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=2, t=20) # F_lower = bl, F_upper = tr
 
 fourCorners(fc1, kappa, n=4, fts=c(1,2), tnow=8, t=10) # F_lower = bl, F_upper = tr
+
+library(ReliabilityTheory)
+
+sys1 <- graph.formula(s -- 1:2 -- 3:4:5 -- t)
+V(sys1)$compType <- NA # This just creates the attribute compType
+V(sys1)$compType[match(c("1","3"), V(sys1)$name)] <- "Type 1"
+V(sys1)$compType[match(c("2","4"), V(sys1)$name)] <- "Type 2"
+V(sys1)$compType[match(c("5"), V(sys1)$name)] <- "Type 3"
+V(sys1)$compType[match(c("s","t"), V(sys1)$name)] <- NA
+sys1sign <- computeSystemSurvivalSignature(sys1)
+
+
+# calculates the system reliability / survival
+# this implements (24)
+# n0y0     list of c(n0,y0) of prior parameter pairs
+# survsign data frame with the survival signature as output by computeSystemSurvivalSignature()
+# kappa    vector of fixed weibull shape parameters
+# fts      list of K vectors giving the observed failure times for the compents of type 1,...,K;
+#          the list element should be NULL if no failure has been observed for type k, 
+# tnow     time until the system is observed
+# t        time t for which to calculate P(T_sys > t), t > t_now
+sysrel <- function(n0y0, survsign, kappa, fts, tnow, t){
+  K <- dim(survsign)[2] - 1
+  nk <- apply(survsign, 2, max)
+  nk <- nk[-length(nk)]
+  ek <- unlist(lapply(fts, length))
+  # sumarray <- array(data = NA, dim = nk-ek+1)
+  # dimnames(sumarray) <- lapply(as.list(nk - ek), function(x) as.character(seq(0,x)))
+  # signarray <- sumarray
+  # only those rows of survsign which have up to nk-ek functioning
+  survsign2 <- survsign
+  for (k in 1:K)
+    survsign2 <- survsign2[survsign2[,k] <= (nk-ek)[k],]
+  survsign2 <- survsign2[survsign2$Probability > 0,]
+  for (k in 1:K){
+    survsign2$new <- NA
+    newname <- paste("PCt",k,sep="")
+    ncols <- length(survsign2)
+    names(survsign2) <- c(names(survsign2)[-ncols], newname)
+    for (i in 1:dim(survsign2)[1]){
+      survsign2[i,ncols] <- postpredC(n0y0 = n0y0[[k]], kappa = kappa[k], n = nk[k],
+                                      fts = fts[[k]], tnow = tnow, t = t, l = survsign2[i,k])
+    }
+  }
+  survsign2$summand <- apply(survsign2[,-(1:K)], 1, prod)
+  sum(survsign2$summand)
+}
+
+n0y0_1 <- c(2, failuretolambda(9,kappa))
+n0y0_2 <- c(5, failuretolambda(4,kappa))
+n0y0_3 <- c(3, failuretolambda(10,kappa))
+
+
+sysrel(n0y0 = list(n0y0_1,n0y0_2,n0y0_3), survsign = sys1sign, kappa=rep(2,3),
+       fts = list(c(7), c(3,4), NULL), tnow = 7, t = 8)
+
+tvec <- seq(7,15,by=0.1)
+rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
+               survsign = sys1sign, kappa=rep(2,3), fts = list(c(7), c(3,4), NULL), tnow = 7)
+plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
+# starts with 0.5 as one of type 1 and one of type 3 still function,
+# and the working type 1 component could be either of the two in the system 
+
+rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
+               survsign = sys1sign, kappa=rep(2,3), fts = list(NULL, c(4), c(7)), tnow = 7)
+plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
+
 
 #
