@@ -112,9 +112,9 @@ fourCornersCcmf <- function(luckobj, kappa, n, fts, tnow, t){
 
 # calculates the system reliability / survival
 # this implements (24)
-# n0y0     list of c(n0,y0) of prior parameter pairs
+# n0y0     list of K of prior parameter pairs c(n0,y0)
 # survsign data frame with the survival signature as output by computeSystemSurvivalSignature()
-# kappa    vector of fixed weibull shape parameters
+# kappa    vector of K fixed weibull shape parameters
 # fts      list of K vectors giving the observed failure times for the compents of type 1,...,K;
 #          the list element should be NULL if no failure has been observed for type k, 
 # tnow     time until the system is observed
@@ -150,15 +150,44 @@ sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE){
     return(res)
 }
 
-# calculates the 
-fourCornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, t){
-  n0 <- n0(luckobj) # list!
-  y0 <- y0(luckobj)
-  tl <- sysrel(n0y0 = c(n0[1], y0[2]), survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
-  tr <- sysrel(n0y0 = c(n0[2], y0[2]), survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
-  bl <- sysrel(n0y0 = c(n0[1], y0[1]), survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
-  br <- sysrel(n0y0 = c(n0[2], y0[1]), survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
-  data.frame(tl = tl, tr = tr, bl = bl, br = br)
+# calculates the system reliability function for the  corner priors
+# luckobjlist list of K of prior luckmodel objetcs
+# survsign    data frame with the survival signature as output by computeSystemSurvivalSignature()
+# kappa       vector of K fixed weibull shape parameters
+# fts         list of K vectors giving the observed failure times for the compents of type 1,...,K;
+#             the list element should be NULL if no failure has been observed for type k, 
+# tnow        time until the system is observed
+# tvec        vector of timepoints for which to calculate P(T_sys > t), t > t_now
+fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
+  K <- length(luckobjlist)
+  ncomb <- 2^K
+  combs <- as.list(rep(NA,K))
+  for (k in 1:K)
+    combs[[k]] <- c(1,2)
+  # with all y0[1], jede spalte eine kombination, darunter dann tvec 
+  lowercorners <- t(expand.grid(combs)) # transposed!
+  NAmat <- matrix(NA, nrow = length(tvec), ncol = ncomb)
+  lowercorners <- rbind(lowercorners, NAmat)
+  uppercorners <- lowercorners
+  # all n0 combinations with lower y's
+  for (i in 1:ncomb){ # over columns!
+    comblist <- as.list(rep(NA, K))
+    for (k in 1:K)    # over rows!
+      comblist[[k]] <- c(n0(luckobjlist[[k]])[lowercorners[k,i]], y0(luckobjlist[[k]])[1])
+    rvec <- sapply(tvec, FUN = sysrel, n0y0 = comblist,
+                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow)
+    lowercorners[(1:length(rvec))+K,i] <- rvec
+  }
+  # all n0 combinations with upper y's
+  for (i in 1:ncomb){ # over columns!
+    comblist <- as.list(rep(NA, K))
+    for (k in 1:K)    # over rows!
+      comblist[[k]] <- c(n0(luckobjlist[[k]])[lowercorners[k,i]], y0(luckobjlist[[k]])[2])
+    rvec <- sapply(tvec, FUN = sysrel, n0y0 = comblist,
+                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow)
+    uppercorners[(1:length(rvec))+K,i] <- rvec
+  }
+  list(lower = lowercorners, upper = uppercorners)
 }
 
 

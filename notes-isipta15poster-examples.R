@@ -81,6 +81,10 @@ rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
 plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 
 
+fc1 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
+fc2 <- LuckModel(n0 = c(4,8), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
+fc3 <- LuckModel(n0 = c(3,6), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
+fclist <- list(fc1,fc2,fc3)
 
 
 
