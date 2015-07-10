@@ -190,5 +190,33 @@ fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
   list(lower = lowercorners, upper = uppercorners)
 }
 
+# plots one of the result data frames produced by fourKcornersSysrel()
+# tvec   vector of t values, used for fourKcornersSysrel()
+# rframe one of the two data frames produced by fourKcornersSysrel()
+#
+fourKcornersSysrelPlot <- function(tvec, rframe, legend = FALSE, add = FALSE,
+                                   col = NULL, lty = NULL, ylim = c(0,1), ...){
+  plotmat <- rframe[dimnames(rframe)[[1]] == "",]
+  combmat <- rframe[dimnames(rframe)[[1]] != "",]
+  K <- dim(combmat)[1]
+  ncomb <- dim(combmat)[2]
+  if(is.null(col)) col <- 1
+  if(is.null(lty)) lty <- 1
+  if(!add)
+    matplot(tvec, plotmat, type = "l", col = col, lty = lty, ylim = ylim, ...)
+  else
+    matlines(tvec, plotmat, col = col, lty = lty, ...)
+  if(legend){
+    #if(is.null(col) & is.null(lty))
+    #  stop("supply at least one of col and lty to get a legend")
+    #if(is.null(col)) col <- 1
+    #if(is.null(lty)) lty <- 1      
+    legend("topright", legend=apply(combmat, 2, function(x) paste(x,collapse="")),
+           lty = lty, col = col)
+  }
+}
 
+sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
+  
+}
 #

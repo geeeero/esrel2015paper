@@ -80,13 +80,23 @@ rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
                survsign = sys3sign, kappa=rep(2,3), fts = list(NULL, c(4,5), c(7)), tnow = 7)
 plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 
-
+# simpler system again
 fc1 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
-fc2 <- LuckModel(n0 = c(4,8), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
-fc3 <- LuckModel(n0 = c(3,6), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
+fc2 <- LuckModel(n0 = c(4,8), y0 = c(failuretolambda(4,kappa), failuretolambda(6,kappa)))
+fc3 <- LuckModel(n0 = c(1,3), y0 = c(failuretolambda(9,kappa), failuretolambda(11,kappa)))
 fclist <- list(fc1,fc2,fc3)
 
+tvec <- seq(7,15,by=0.1)
+r1 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
+                         fts = list(c(7), c(3,4), NULL), tnow = 7, tvec = tvec)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, legend = TRUE, add = FALSE, col = c(1,2,4), lty = c(1,1,1,2,2,2,3,3))
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
 
-
+tvec <- seq(7,15,by=0.1)
+r3 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys3sign, kappa = rep(2,3),
+                         fts = list(NULL, c(3,4), 7), tnow = 7, tvec = tvec)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r3$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r3$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
 
 #
