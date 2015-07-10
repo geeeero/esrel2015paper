@@ -195,11 +195,29 @@ rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
                survsign = sys1sign, kappa=rep(2,3), fts = list(c(7), c(3,4), NULL), tnow = 7)
 plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 # starts with 0.5 as one of type 1 and one of type 3 still function,
-# and the working type 1 component could be either of the two in the system 
+# and the working type 1 component could be either of the two in the system.
+
+rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
+               survsign = sys1sign, kappa=rep(2,3), fts = list(c(7), c(3), NULL), tnow = 7)
+plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 
 rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
                survsign = sys1sign, kappa=rep(2,3), fts = list(NULL, c(4), c(7)), tnow = 7)
 plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 
+# more complex system:
+fig3 <- graph.formula(s -- 1:4 -- 2:5 -- 3:6 -- t, s -- 7:8, 8 -- 9, 7:9 -- t)
+plot(fig3)
+V(fig3)$compType <- NA # This just creates the attribute compType
+V(fig3)$compType[match(c("1"), V(fig3)$name)] <- "Type 1"
+V(fig3)$compType[match(c("2","3","4","7"), V(fig3)$name)] <- "Type 2"
+V(fig3)$compType[match(c("5","6","8","9"), V(fig3)$name)] <- "Type 3"
+V(fig3)$compType[match(c("s","t"), V(fig3)$name)] <- NA
+sys3sign <- computeSystemSurvivalSignature(fig3)
+
+tvec <- seq(7,20,by=0.1)
+rvec <- sapply(tvec, FUN = sysrel, n0y0 = list(n0y0_1,n0y0_2,n0y0_3),
+               survsign = sys3sign, kappa=rep(2,3), fts = list(NULL, c(4,5), c(7)), tnow = 7)
+plot(tvec, rvec, type="l", ylim=c(0,1), xlab="t", ylab=expression(R[sys](t)))
 
 #
