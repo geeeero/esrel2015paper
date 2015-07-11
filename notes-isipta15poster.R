@@ -150,7 +150,8 @@ sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE){
     return(res)
 }
 
-# calculates the system reliability function for the  corner priors
+# calculates the system reliability function for the 2*2^K corner priors
+# (all combinations of K lower and upper n's, for both lower and upper y)
 # luckobjlist list of K of prior luckmodel objetcs
 # survsign    data frame with the survival signature as output by computeSystemSurvivalSignature()
 # kappa       vector of K fixed weibull shape parameters
@@ -191,9 +192,10 @@ fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
 }
 
 # plots one of the result data frames produced by fourKcornersSysrel()
-# tvec   vector of t values, used for fourKcornersSysrel()
-# rframe one of the two data frames produced by fourKcornersSysrel()
-#
+# tvec    vector of t values, used for fourKcornersSysrel()
+# rframe  one of the two data frames produced by fourKcornersSysrel()
+# legend  if to print a legend
+# add     just adds lines if TRUE
 fourKcornersSysrelPlot <- function(tvec, rframe, legend = FALSE, add = FALSE,
                                    col = NULL, lty = NULL, ylim = c(0,1), ...){
   plotmat <- rframe[dimnames(rframe)[[1]] == "",]
@@ -212,11 +214,96 @@ fourKcornersSysrelPlot <- function(tvec, rframe, legend = FALSE, add = FALSE,
     #if(is.null(col)) col <- 1
     #if(is.null(lty)) lty <- 1      
     legend("topright", legend=apply(combmat, 2, function(x) paste(x,collapse="")),
-           lty = lty, col = col)
+           lty = lty, col = col, lwd = 2)
   }
 }
 
-sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
-  
+
+
+# calculates the lower and upper system reliability for fixed t,
+# together with parameter pairs which achieve these bounds,
+# using optim over the K n0-parameters
+# luckobjlist list of K of prior luckmodel objetcs
+# survsign    data frame with the survival signature as output by computeSystemSurvivalSignature()
+# kappa       vector of K fixed weibull shape parameters
+# fts         list of K vectors giving the observed failure times for the compents of type 1,...,K;
+#             the list element should be NULL if no failure has been observed for type k, 
+# tnow        time until the system is observed
+# t           timepoint for which to calculate P(T_sys > t), t > t_now
+# returnasvec if output should be a vector (lower bound, upper bound, l.b. parameters, u.b. parameters)
+sysrelLuck <- function(luckobjlist, survsign, kappa, fts, tnow, t, returnasvec = FALSE){
+  K <- length(luckobjlist)
+  optimfu <- function(n0vec, y0vec, K, survsign, kappa, fts, tnow, t){
+    n0y0 <- as.list(rep(NA, K))
+    for (k in 1:K)
+      n0y0[[k]] <- c(n0vec[k], y0vec[k])
+    #cat("optimfu called with n0y0vec:\n")
+    #print(n0y0)
+    sysrel(n0y0 = n0y0, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
+  }
+  parl <- numeric(K)
+  paru <- numeric(K)
+  y0l <- y0u <- numeric(K)
+  for (k in 1:K){
+    parl[k] <- n0(luckobjlist[[k]])[1]
+    paru[k] <- n0(luckobjlist[[k]])[2]
+    y0l[k] <- y0(luckobjlist[[k]])[1]
+    y0u[k] <- y0(luckobjlist[[k]])[2]
+  }
+  optl <- optim(par = parl, fn = optimfu, method = "L-BFGS-B", lower = parl, upper = paru,
+                y0vec = y0l, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
+  optu <- optim(par = paru, fn = optimfu, method = "L-BFGS-B", lower = parl, upper = paru,
+                y0vec = y0u, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t,
+                control = list(fnscale = -1))
+  if(returnasvec)
+    return(c(optl$value, optu$value, optl$par, optu$par))
+  else
+    return(list(rel = c(optl$value, optu$value), lpar = optl$par, upar = optu$par))  
 }
+
+
+# plots the the lower and upper system reliability function for vector of timepoints tvec
+# as grey area
+# luckobjlist list of K of prior luckmodel objetcs
+# survsign    data frame with the survival signature as output by computeSystemSurvivalSignature()
+# kappa       vector of K fixed weibull shape parameters
+# fts         list of K vectors giving the observed failure times for the compents of type 1,...,K;
+#             the list element should be NULL if no failure has been observed for type k, 
+# tnow        time until the system is observed
+# tvec        vector of timepoints for which to calculate P(T_sys > t), t > t_now
+# returnres   if a data frame containing the lower and upper bound, together with the n's for
+#             which these bounds are obtained
+# noplot      whether no plot should should be produced (sets returnres = TRUE)
+sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, add = FALSE, ylim = c(0,1),
+                       xlab = "t", ylab = expression(R[sys](t)), polygonBorderCol = NA, polygonFillCol = "grey",
+                       returnres = FALSE, noplot = FALSE, ...){
+  res <- sapply(tvec, FUN = sysrelLuck, luckobjlist = luckobjlist, survsign = survsign,
+                kappa = kappa, fts = fts, tnow = tnow, returnasvec = TRUE)
+  res <- t(res)
+  K <- length(luckobjlist)
+  colnames(res) <- c("lower", "upper", paste("ln", 1:K, sep=""), paste("un", 1:K, sep=""))
+  if(noplot){
+    add = TRUE
+    returnres = TRUE
+  }
+  if(!add){
+    plot(c(min(tvec), max(tvec)),c(0,0), type = "n", ylim = ylim, xlab = "", ylab = "", ...)
+    mtext(xlab, 1, 2)
+    mtext(ylab, 2, 2)
+  }
+  tvecrev <- numeric(length(tvec))
+  lower <- res[,1]
+  upper <- numeric(length(tvec))
+  for (t in 1:length(tvec)){
+    tvecrev[length(tvec)-t+1] <- tvec[t]
+    upper[length(tvec)-t+1] <- res[t,2]
+  }
+  if(!noplot)
+    polygon(c(tvec, tvecrev), c(lower, upper), border = polygonBorderCol, col = polygonFillCol)
+  if(returnres)
+    return(res)
+}
+
+
+
 #
