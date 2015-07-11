@@ -109,21 +109,68 @@ fourKcornersSysrelPlot(tvec = tvec, rframe = r3$upper, legend = FALSE, add = TRU
 r1luck10 <- sysrelLuck(luckobjlist <- fclist, survsign = sys1sign, kappa = rep(2,3),
                        fts= list(c(7), c(3), NULL), tnow = 7, t = 10)
 
-pdf("fourKcornerSys1.pdf", width=5, height=4)
-fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
-fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
-lines(rep(10,2), r1luck10$rel, lwd=3, lend=2)
-dev.off()
 
-tvec <- seq(7, 15, by=0.1)
+# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+
+par(mar = c(4, 4, 3.5, 0.2) + 0.1)
+# example system with full signature
+tvec <- seq(7,15,by=0.1)
 r1 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
                          fts = list(c(7), c(3), NULL), tnow = 7, tvec = tvec)
+pdf("fourKcornerSys1.pdf", width=5, height=4)
+par(mar = c(4, 4, 3.5, 0.2) + 0.1)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
+#lines(rep(10,2), r1luck10$rel, lwd=3, lend=2)
+dev.off()
 pdf("rsyspbox1.pdf", width=5, height=4)
+par(mar = c(4, 4, 3.5, 0.2) + 0.1)
 pbox1 <- sysrelPbox(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
                     fts = list(c(7), c(3), NULL), tnow = 7, tvec = tvec, returnres = T)
 fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, add = TRUE)
 fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, add = TRUE)
 dev.off()
+#look in r1 to see whether the switch between 111 and 121 in the lower bound really happens
+checkswitchl <- r1$lower[-c(1:3),c(1,3)]
+checkswitchl <- cbind(checkswitchl, checkswitchl[,1] > checkswitchl[,2], tvec)
+table(checkswitchl[,3])
+#look in r1 to see whether there is also a switch between 212 and 222 in the upper bound
+checkswitchu <- r1$upper[-c(1:3),c(6,8)]
+checkswitchu <- cbind(checkswitchu, checkswitchu[,1] > checkswitchu[,2], tvec)
+table(checkswitchu[,3]) # no switch
+
+
+# example system with reduced signature
+sys1f <- graph.formula(s -- 1 -- 2:3 -- t)
+V(sys1f)$compType <- NA # This just creates the attribute compType
+V(sys1f)$compType[match(c("1"), V(sys1f)$name)] <- "Type 1"
+V(sys1f)$compType[match(c("2"), V(sys1f)$name)] <- "Type 2"
+V(sys1f)$compType[match(c("3"), V(sys1f)$name)] <- "Type 3"
+V(sys1f)$compType[match(c("s","t"), V(sys1f)$name)] <- NA
+sys1fsign <- computeSystemSurvivalSignature(sys1f)
+
+tvec <- seq(7,15,by=0.1)
+r1f <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys1fsign, kappa = rep(2,3),
+                          fts = list(c(7), c(3), NULL), tnow = 7, tvec = tvec, nk = c(2,2,1))
+pdf("fourKcornerSys1failed.pdf", width=5, height=4)
+par(mar = c(4, 4, 3.5, 0.2) + 0.1)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1f$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1f$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
+#lines(rep(10,2), r1luck10$rel, lwd=3, lend=2)
+dev.off()
+pdf("rsyspbox1failed.pdf", width=5, height=4)
+par(mar = c(4, 4, 3.5, 0.2) + 0.1)
+pbox1 <- sysrelPbox(luckobjlist = fclist, survsign = sys1fsign, kappa = rep(2,3),
+                    fts = list(c(7), c(3), NULL), tnow = 7, tvec = tvec, returnres = T, nk = c(2,2,1))
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1f$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1f$upper, add = TRUE)
+dev.off()
+#look in r1f to verify the switch between 111 and 121 in the lower bound
+checkswitchlf <- r1f$lower[-c(1:3),c(1,3)]
+checkswitchlf <- cbind(checkswitchlf, checkswitchlf[,1] > checkswitchlf[,2], tvec)
+table(checkswitchlf[,3])
+
 
 # system with four components to see whether that problem with the Ccmfs carries over
 fc4 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9, 2), failuretolambda(11, 2)))
@@ -132,7 +179,17 @@ V(sys4)$compType <- NA # This just creates the attribute compType
 V(sys4)$compType[match(c("1","2","3","4"), V(sys4)$name)] <- "Type 1"
 V(sys4)$compType[match(c("s","t"), V(sys4)$name)] <- NA
 sys4sign <- computeSystemSurvivalSignature(sys4)
-tvec <- seq(12, 20, by=0.1)
+
+pdf("cmfssys4.pdf", width=12, height=4)
+par(mfrow=c(1,3))
+fourCornersCcmf(fc4, kappa = 2, n=4, fts=c(10,11), tnow=11, t=12)
+fourCornersCcmf(fc4, kappa = 2, n=4, fts=c(10,11), tnow=11, t=15)
+fourCornersCcmf(fc4, kappa = 2, n=4, fts=c(10,11), tnow=11, t=20)
+par(mfrow=c(1,1))
+dev.off()
+
+
+tvec <- seq(11, 27, by=0.1)
 r4 <- fourKcornersSysrel(luckobjlist = list(fc4), survsign = sys4sign, kappa = 2,
                          fts = list(c(10, 11)), tnow = 11, tvec = tvec)
 pdf("rsyspbox2.pdf", width=5, height=4)

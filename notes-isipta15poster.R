@@ -31,7 +31,7 @@ cpinvgamma <- function(x, n0, y0, ...)
 # function to calculate P(C_t = l | n^(0), y^(0), data),
 # the posterior predictive probability that l components function at time t
 # in the system observed until t_now (notion "of type k" dropped here)
-# this implements (19)
+# this implements (20)
 # n0y0    pair c(n0,y0) of prior parameters
 # t       time t for which to calculate P(C_t), t > t_now
 # l       number of functioning components, \in {0, 1, ..., n-e}
@@ -111,18 +111,23 @@ fourCornersCcmf <- function(luckobj, kappa, n, fts, tnow, t){
 
 
 # calculates the system reliability / survival
-# this implements (24)
-# n0y0     list of K of prior parameter pairs c(n0,y0)
+# this implements (25)
+# n0y0     list of K prior parameter pairs c(n0,y0)
 # survsign data frame with the survival signature as output by computeSystemSurvivalSignature()
 # kappa    vector of K fixed weibull shape parameters
 # fts      list of K vectors giving the observed failure times for the compents of type 1,...,K;
 #          the list element should be NULL if no failure has been observed for type k, 
 # tnow     time until the system is observed
 # t        time t for which to calculate P(T_sys > t), t > t_now
-sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE){
-  K <- dim(survsign)[2] - 1
-  nk <- apply(survsign, 2, max)
-  nk <- nk[-length(nk)]
+# table    if results table should be given along with the reliability
+# nk       vector of length K giving the number of components of each type,
+#          only needed when reduced survival signature is used
+sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE, nk = NULL){
+  K <- length(fts)
+  if(is.null(nk)){
+    nk <- apply(survsign, 2, max)
+    nk <- nk[-length(nk)]
+  }
   ek <- unlist(lapply(fts, length))
   # sumarray <- array(data = NA, dim = nk-ek+1)
   # dimnames(sumarray) <- lapply(as.list(nk - ek), function(x) as.character(seq(0,x)))
@@ -159,7 +164,7 @@ sysrel <- function(n0y0, survsign, kappa, fts, tnow, t, table = FALSE){
 #             the list element should be NULL if no failure has been observed for type k, 
 # tnow        time until the system is observed
 # tvec        vector of timepoints for which to calculate P(T_sys > t), t > t_now
-fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
+fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, nk = NULL){
   K <- length(luckobjlist)
   ncomb <- 2^K
   combs <- as.list(rep(NA,K))
@@ -176,7 +181,7 @@ fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
     for (k in 1:K)    # over rows!
       comblist[[k]] <- c(n0(luckobjlist[[k]])[lowercorners[k,i]], y0(luckobjlist[[k]])[1])
     rvec <- sapply(tvec, FUN = sysrel, n0y0 = comblist,
-                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow)
+                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow, nk = nk)
     lowercorners[(1:length(rvec))+K,i] <- rvec
   }
   # all n0 combinations with upper y's
@@ -185,7 +190,7 @@ fourKcornersSysrel <- function(luckobjlist, survsign, kappa, fts, tnow, tvec){
     for (k in 1:K)    # over rows!
       comblist[[k]] <- c(n0(luckobjlist[[k]])[lowercorners[k,i]], y0(luckobjlist[[k]])[2])
     rvec <- sapply(tvec, FUN = sysrel, n0y0 = comblist,
-                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow)
+                   survsign = survsign, kappa=kappa, fts = fts, tnow = tnow, nk = nk)
     uppercorners[(1:length(rvec))+K,i] <- rvec
   }
   list(lower = lowercorners, upper = uppercorners)
@@ -231,15 +236,15 @@ fourKcornersSysrelPlot <- function(tvec, rframe, legend = FALSE, add = FALSE,
 # tnow        time until the system is observed
 # t           timepoint for which to calculate P(T_sys > t), t > t_now
 # returnasvec if output should be a vector (lower bound, upper bound, l.b. parameters, u.b. parameters)
-sysrelLuck <- function(luckobjlist, survsign, kappa, fts, tnow, t, returnasvec = FALSE){
+sysrelLuck <- function(luckobjlist, survsign, kappa, fts, tnow, t, returnasvec = FALSE, nk = NULL){
   K <- length(luckobjlist)
-  optimfu <- function(n0vec, y0vec, K, survsign, kappa, fts, tnow, t){
+  optimfu <- function(n0vec, y0vec, K, survsign, kappa, fts, tnow, t, nk){
     n0y0 <- as.list(rep(NA, K))
     for (k in 1:K)
       n0y0[[k]] <- c(n0vec[k], y0vec[k])
     #cat("optimfu called with n0y0vec:\n")
     #print(n0y0)
-    sysrel(n0y0 = n0y0, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
+    sysrel(n0y0 = n0y0, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t, nk = nk)
   }
   parl <- numeric(K)
   paru <- numeric(K)
@@ -251,9 +256,9 @@ sysrelLuck <- function(luckobjlist, survsign, kappa, fts, tnow, t, returnasvec =
     y0u[k] <- y0(luckobjlist[[k]])[2]
   }
   optl <- optim(par = parl, fn = optimfu, method = "L-BFGS-B", lower = parl, upper = paru,
-                y0vec = y0l, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t)
+                y0vec = y0l, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t, nk = nk)
   optu <- optim(par = paru, fn = optimfu, method = "L-BFGS-B", lower = parl, upper = paru,
-                y0vec = y0u, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t,
+                y0vec = y0u, K = K, survsign = survsign, kappa = kappa, fts = fts, tnow = tnow, t = t, nk = nk,
                 control = list(fnscale = -1))
   if(returnasvec)
     return(c(optl$value, optu$value, optl$par, optu$par))
@@ -274,11 +279,11 @@ sysrelLuck <- function(luckobjlist, survsign, kappa, fts, tnow, t, returnasvec =
 # returnres   if a data frame containing the lower and upper bound, together with the n's for
 #             which these bounds are obtained
 # noplot      whether no plot should should be produced (sets returnres = TRUE)
-sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, add = FALSE, ylim = c(0,1),
+sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, nk = NULL, add = FALSE, ylim = c(0,1),
                        xlab = "t", ylab = expression(R[sys](t)), polygonBorderCol = NA, polygonFillCol = "grey",
                        returnres = FALSE, noplot = FALSE, ...){
   res <- sapply(tvec, FUN = sysrelLuck, luckobjlist = luckobjlist, survsign = survsign,
-                kappa = kappa, fts = fts, tnow = tnow, returnasvec = TRUE)
+                kappa = kappa, fts = fts, tnow = tnow, nk = nk, returnasvec = TRUE)
   res <- t(res)
   K <- length(luckobjlist)
   colnames(res) <- c("lower", "upper", paste("ln", 1:K, sep=""), paste("un", 1:K, sep=""))
@@ -304,6 +309,6 @@ sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, add = FALS
     return(res)
 }
 
-
+#
 
 #
