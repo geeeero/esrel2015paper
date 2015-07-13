@@ -4,8 +4,8 @@
 
 # provides dinvgamma(x, shape, scale) where shape = alpha and scale = beta
 library(actuar)
-
 library(luck)
+library(ReliabilityTheory)
 
 # translate lambda parameter of weibull to expected failure time
 # lambda - scale parameter of weibull

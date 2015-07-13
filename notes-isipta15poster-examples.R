@@ -2,6 +2,8 @@
 #                     Examples for ISIPTA'15 system poster                    #
 ###############################################################################
 
+source("notes-isipta15poster.R")
+
 kappa <- 2
 n0y0_1 <- c(2, failuretolambda(9,kappa))
 # n0 = 2, y0 corresponding to mean failure time 9
@@ -36,8 +38,6 @@ fourCornersCcmf(fc1, kappa = 2, n=4, fts=c(1,2), tnow=2, t=20) # F_lower = bl, F
 
 fourCornersCcmf(fc1, kappa, n=4, fts=c(1,2), tnow=8, t=10) # F_lower = bl, F_upper = tr
 
-library(ReliabilityTheory)
-
 sys1 <- graph.formula(s -- 1:2 -- 3:4:5 -- t)
 V(sys1)$compType <- NA # This just creates the attribute compType
 V(sys1)$compType[match(c("1","3"), V(sys1)$name)] <- "Type 1"
@@ -46,9 +46,9 @@ V(sys1)$compType[match(c("5"), V(sys1)$name)] <- "Type 3"
 V(sys1)$compType[match(c("s","t"), V(sys1)$name)] <- NA
 sys1sign <- computeSystemSurvivalSignature(sys1)
 
-n0y0_1 <- c(2, failuretolambda(9,kappa))
-n0y0_2 <- c(5, failuretolambda(4,kappa))
-n0y0_3 <- c(3, failuretolambda(10,kappa))
+n0y0_1 <- c(2, failuretolambda(9, 2))
+n0y0_2 <- c(5, failuretolambda(4, 2))
+n0y0_3 <- c(3, failuretolambda(10,2))
 
 
 sysrel(n0y0 = list(n0y0_1,n0y0_2,n0y0_3), survsign = sys1sign, kappa=rep(2,3),
@@ -104,9 +104,9 @@ r3 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys3sign, kappa = rep(
                          fts = list(NULL, c(3,4), 7), tnow = 7, tvec = tvec)
 fourKcornersSysrelPlot(tvec = tvec, rframe = r3$lower, legend = TRUE, add = FALSE, col = 1:8, lwd = 2)
 fourKcornersSysrelPlot(tvec = tvec, rframe = r3$upper, legend = FALSE, add = TRUE, col = 1:8, lwd = 2, lty = 2)
+# there might be a switch in the lower here, too.
 
-
-r1luck10 <- sysrelLuck(luckobjlist <- fclist, survsign = sys1sign, kappa = rep(2,3),
+r1luck10 <- sysrelLuck(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
                        fts= list(c(7), c(3), NULL), tnow = 7, t = 10)
 
 
@@ -171,6 +171,12 @@ checkswitchlf <- r1f$lower[-c(1:3),c(1,3)]
 checkswitchlf <- cbind(checkswitchlf, checkswitchlf[,1] > checkswitchlf[,2], tvec)
 table(checkswitchlf[,3])
 
+#-------------------------------------------------------------------------------------
+
+
+
+
+#-------------------------------------------------------------------------------------
 
 # system with four components to see whether that problem with the Ccmfs carries over
 fc4 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9, 2), failuretolambda(11, 2)))
