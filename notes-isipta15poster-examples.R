@@ -173,6 +173,36 @@ table(checkswitchlf[,3])
 
 #-------------------------------------------------------------------------------------
 
+# check in example system sys1 that when only the single component of type 3 fails,
+# the calculations with the full and the reduced signature lead to the same results
+
+# with full signature when type 3 comoponent fails
+tvec <- seq(7,15,by=0.1)
+r13 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
+                          fts = list(NULL, NULL, c(7)), tnow = 7, tvec = tvec) #, nk = c(2,2,1))
+pbox13 <- sysrelPbox(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
+                     fts = list(NULL, NULL, c(7)), tnow = 7, tvec = tvec, returnres = T)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, add = TRUE)
+
+# determine the reduced signature when type 3 comoponent fails
+sys13f <- graph.formula(s -- 1:2 -- 3:4 -- t)
+V(sys13f)$compType <- NA # This just creates the attribute compType
+V(sys13f)$compType[match(c("1","3"), V(sys13f)$name)] <- "Type 1"
+V(sys13f)$compType[match(c("2","4"), V(sys13f)$name)] <- "Type 2"
+#V(sys13f)$compType[match(c("5"), V(sys1)$name)] <- "Type 3"
+V(sys13f)$compType[match(c("s","t"), V(sys13f)$name)] <- NA
+sys13fsign <- computeSystemSurvivalSignature(sys13f)
+
+# with full signature when type 3 comoponent fails
+tvec <- seq(7,15,by=0.1)
+r13 <- fourKcornersSysrel(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
+                          fts = list(NULL, NULL, c(7)), tnow = 7, tvec = tvec) #, nk = c(2,2,1))
+pbox13 <- sysrelPbox(luckobjlist = fclist, survsign = sys1sign, kappa = rep(2,3),
+                     fts = list(NULL, NULL, c(7)), tnow = 7, tvec = tvec, returnres = T)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = tvec, rframe = r1$upper, add = TRUE)
+
 
 
 
