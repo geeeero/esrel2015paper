@@ -78,6 +78,7 @@
 % Define TU/e colors
 % Main colors
 \definecolor{tuepmsprocesscyan}{cmyk}{1,0,0,0}%PMS Process Cyan; RGB 0,162,222
+\definecolor{tuecyan}{cmyk}{1,0,0,0}%PMS Process Cyan; RGB 0,162,222
 \definecolor{tuepmswarmred}{cmyk}{0,1,0.9,0}%PMS Warm Red; RGB 247,49,49
 \definecolor{tuepms206}{cmyk}{0,1,0.5,0}%PMS 206; RGB 214,0,74
 \definecolor{tuepms226}{cmyk}{0.1,1,0,0}%PMS 226; RGB 214,0,123

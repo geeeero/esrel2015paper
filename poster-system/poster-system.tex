@@ -2,7 +2,11 @@
 %
 % Add additionally required packages
 %
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+
 \usepackage{amssymb, amsmath, amsfonts, enumerate}
+\usepackage{bm}
 \usepackage{multicol}
 
 \usepackage{tikz}
@@ -49,6 +53,108 @@
 %
 \newcommand{\vcenterbox}[1]{\ensuremath{\vcenter{\hbox{#1}}}}
 %
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\posreals}{\reals_{>0}}
+\newcommand{\posrealszero}{\reals_{\ge 0}}
+\newcommand{\naturals}{\mathbb{N}}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\renewcommand{\vec}[1]{{\bm#1}}
+
+\newcommand{\uz}{^{(0)}} % upper zero
+\newcommand{\un}{^{(n)}} % upper n
+\newcommand{\ui}{^{(i)}} % upper i
+
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\Rsys}{R_\text{sys}}
+\newcommand{\lRsys}{\ul{R}_\text{sys}}
+\newcommand{\uRsys}{\ol{R}_\text{sys}}
+
+\newcommand{\Fsys}{F_\text{sys}}
+\newcommand{\lFsys}{\ul{F}_\text{sys}}
+\newcommand{\uFsys}{\ol{F}_\text{sys}}
+
+\def\Tsys{T_\text{sys}}
+
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\V}{\operatorname{Var}}
+\newcommand{\wei}{\operatorname{Wei}} % Weibull Distribution
+\newcommand{\ig}{\operatorname{IG}}   % Inverse Gamma Distribution
+
+\def\yz{y\uz}
+\def\yn{y\un}
+%\def\yi{y\ui}
+\newcommand{\yfun}[1]{y^{({#1})}}
+\newcommand{\yfunl}[1]{\ul{y}^{({#1})}}
+\newcommand{\yfunu}[1]{\ol{y}^{({#1})}}
+
+\def\ykz{y\uz_k}
+\def\ykn{y\un_k}
+
+\def\yzl{\ul{y}\uz}
+\def\yzu{\ol{y}\uz}
+\def\ynl{\ul{y}\un}
+\def\ynu{\ol{y}\un}
+\def\yil{\ul{y}\ui}
+\def\yiu{\ol{y}\ui}
+
+\def\ykzl{\ul{y}\uz_k}
+\def\ykzu{\ol{y}\uz_k}
+\def\yknl{\ul{y}\un_k}
+\def\yknu{\ol{y}\un_k}
+
+
+\def\nz{n\uz}
+\def\nn{n\un}
+%\def\ni{n\ui}
+\newcommand{\nfun}[1]{n^{({#1})}}
+\newcommand{\nfunl}[1]{\ul{n}^{({#1})}}
+\newcommand{\nfunu}[1]{\ol{n}^{({#1})}}
+
+\def\nkz{n\uz_k}
+\def\nkn{n\un_k}
+\newcommand{\nkzfun}[1]{n\uz_{#1}}
+
+
+\def\nzl{\ul{n}\uz}
+\def\nzu{\ol{n}\uz}
+\def\nnl{\ul{n}\un}
+\def\nnu{\ol{n}\un}
+\def\nil{\ul{n}\ui}
+\def\niu{\ol{n}\ui}
+
+\def\nkzl{\ul{n}\uz_k}
+\def\nkzu{\ol{n}\uz_k}
+\def\nknl{\ul{n}\un_k}
+\def\nknu{\ol{n}\un_k}
+
+
+\def\taut{\tau(\vec{t})}
+\def\ttau{\tilde{\tau}}
+\def\ttaut{\ttau(\vec{t})}
+
+\def\MZ{\mathcal{M}\uz}
+\def\MN{\mathcal{M}\un}
+
+\def\MkZ{\mathcal{M}\uz_k}
+\def\MkN{\mathcal{M}\un_k}
+
+\def\PkZ{\Pi\uz_k}
+\def\PkN{\Pi\un_k}
+\newcommand{\PZi}[1]{\Pi\uz_{#1}}
+
+
+\def\tnow{t_\text{now}}
+\def\tpnow{t^+_\text{now}}
+
+\newcommand{\comp}[1]{\raisebox{-2mm}{\tikz{\node[type1]{#1};}}}
+
+
 % Define title, authors and possibly logo's of partners/sponsors
 % For logo's of partners/sponsors, a box of width 52mm and height 18mm is
 % available. Notice that TU/e poster format has been defined for A3 (explaining
@@ -69,45 +175,59 @@
 \begin{document}
 
 %\begin{figure*}[ht]%
-\fbox{%
-\includegraphics[width=\textwidth]{logounidurham-large}%
-}%
+%\fbox{%
+%\includegraphics[width=\textwidth]{logounidurham-large}%
+\begin{tikzpicture}
+[cyanbox/.style={rounded corners, text centered, fill=tuecyan!20, inner sep=5mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=5mm, very thick},
+ type1/.style={rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ pfeil/.style={-latex', line width=1mm, color=tuepmswarmred},
+ hv path/.style={to path={-| (\tikztotarget)}},
+ vh path/.style={to path={|- (\tikztotarget)}}]
+% available space
+%\draw[thick, color=tuepmsprocesscyan] (0,0) rectangle (27, 24);
+% central formula
+\node[cyanbox] (lowerrel) at (0,0)%
+     {$\displaystyle
+       \ul{P}\left(\Tsys > t \mid \{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}{}^{1:K}\right)
+       = \min_{\PZi{1},\ldots,\PZi{K}}
+         \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K)
+         \prod_{k=1}^K P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$} ;
+% survival signature
+\node[cyanrand] (survsign) at (-5,-5)%
+     {\parbox[c]{0.31\textwidth}{survival signature\\
+       $= P(\text{system functions} \mid \{l_k \text{ \comp{k}'s function}\}^{1:K})$\\
+      \qquad\begin{tabular}{ccc|l}
+      $l_1$ & $l_2$ & $l_3$ & $\Phi$ \\
+      \hline
+      0 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 1 & 1 & 0.5 \\
+      0 & 2 & 0 & 1 \phantom{\vdots}
+      \end{tabular} \qquad
+      \begin{tabular}{ccc|l}
+      $l_1$ & $l_2$ & $l_3$ & $\Phi$ \\
+      \hline
+      0 & 2 & 1 & 1 \\
+      1 & 0 & 0 & 0 \\
+      1 & 0 & 1 & 0.5 \\
+      1 & 1 & 1 & 0.75 \\
+      \vdots & \vdots & \vdots & \vdots
+      \end{tabular} } };
+\path (survsign.north) edge[pfeil] (2,-0.5);
+% posterior predictive
+\node[cyanrand] (survsign) at (10,-5)%
+     {\parbox[c]{0.4\textwidth}{posterior predictive probability that $l_k$ of the $n_k-e_k$ surviving \comp{k}'s function at time $t$
+     } };
+\end{tikzpicture}
+%}%
 %\end{figure*}
 
-\begin{multicols}{3}
-\section{Before making your poster}
-Before you start to make your poster, first quickly walk through the corridor.
-When you arrive at the end, think of posters that caught your attention. Then
-think of why these posters caught your attention. Most likely this will be
-posters with many colorful pictures and not too much text. Make sure your
-poster will be noticable!
-
-Also, try to explain to someone in ten minutes about your work using pen and
-paper. What pictures did you draw? What results did you present? Those pictures
-should become the figures on your poster.  Using only those pictures you should
-be able to explain your work and your results. A rule of thumb is to have four
-figures.
-
-%\section{Getting started: TU/e font required}
-%The mnposter style requires correct installation of the TU/e font and logo.
-%This is guaranteed when installing MiKTex 2.9 which can be obtained from
-%\verb=\\webmath1\MiKTeX29=. For Linux users, obtain from the MiKTex directory
-%the file \texttt{localtexmf.zip} and add its contents to your local texmf
-%directory.
-
-\section{Options of the stylefile}
-This stylefile has two kinds of options. The first kind of
-options has to do with the papersize. Specify either \texttt{a4} (which is
-used for the website) or \texttt{a1plus} (which is used for plotting). The
-second kind of options is related to the color of the titleframe, which default
-is \texttt{red}, but can also be \texttt{orange}, \texttt{green},
-\texttt{cyan}, or \texttt{blue}.
-
-So, in order to obtain a large size poster with tick marks, with a cyan
-titleframe, start your document with
-\verb=\documentclass[a4,cyan]{mnposter}=.
-
-
+\begin{multicols}{2}
 \section{Color usage}
 Restrict the colors in your figures to the TU/e main colors:
 \begin{description}
@@ -129,57 +249,10 @@ and the TU/e support colors:
 \item[PMS 375] \colorbox{tuepms375}{RGB 132,210,0}
 \end{description}
 
+\cite{2012:survsign}
+
+\bibliographystyle{plain}
+\bibliography{./../esrel2015refs}
 \end{multicols}
-
-\iffalse
-\section{Logos of partners/sponsors}
-Logos of partners/sponsors can be added to the MN logo on the top of the
-poster. For this the macro \verb=\otherlogos= has been provided. For an
-example of the usage, see the \LaTeX\ source of this document. For logos of
-partners/sponsors, a box of width 52mm and height 18mm is available (formatting
-of a TU/e scientific poster is defined on A3).
-
-Keep in mind that according to the TU/e corporate identity (TU/e huisstijl), at
-most three logos of partners/sponsors can be used, where the (optical) size of
-these logos should be less than that of the TU/e logo.
-
-\section{Other remarks}
-Most of the standard \LaTeX\ macros should be available. As an examples,
-figures can be included in the standard way.
-\begin{figure}[htb]
-\begin{center}
-%\vcenterbox{\includegraphics[width=18mm]{logo_oce}}
-\hskip1cm
-%\vcenterbox{\includegraphics[width=52mm]{logo_vanderlande}}
-\end{center}
-\caption{An example picture, in this case two more logos}
-\label{fig:morelogos}
-\end{figure}
-You can refer to this figure as Figure~\ref{fig:morelogos}. In a similar way
-also tables can be entered.
-
-Furthermore, equations can be entered in the standard way:
-\begin{subequations}
-\label{eq:dynamics}
-\begin{align}
-\dot x(t) &= Ax(t)+Bu(t) & x(0)&=x_0 \\
-y(t)      &= Cx(t)+Du(t)
-\label{eq:output}
-\end{align}
-\end{subequations}
-and you can refer to \eqref{eq:dynamics} or \eqref{eq:output}.
-
-If desired, one can even add references, such as %\cite{LRN99b}.
-
-\section{Final remarks/suggestions for improvement}
-If you have any questions or remarks about this stylefile can be addressed to
-Erjen Lefeber (Gemini Zuid, room~0.122). Keep in mind that stylefiles should
-not be edited, so if you feel a need for modifying the stylefile either a
-new version of the stylefile should be made available via the website, or
-you should solve your problem differently.
-\fi
-
-%\bibliographystyle{plain}
-%\bibliography{poster}
 
 \end{document}
