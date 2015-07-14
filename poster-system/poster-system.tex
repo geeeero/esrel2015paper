@@ -1,0 +1,185 @@
+\documentclass[a0,red]{opacpstr}
+%
+% Add additionally required packages
+%
+\usepackage{amssymb, amsmath, amsfonts, enumerate}
+\usepackage{multicol}
+
+\usepackage{tikz}
+\usetikzlibrary{%
+   arrows,%
+   calc,%
+   fit,%
+   patterns,%
+   plotmarks,%
+   shapes.geometric,%
+   shapes.misc,%
+   shapes.symbols,%
+   shapes.arrows,%
+   shapes.callouts,%
+   shapes.multipart,%
+%   shapes.gates.logic.US,%
+%   shapes.gates.logic.IEC,%
+   er,%
+   automata,%
+   backgrounds,%
+   chains,%
+   topaths,%
+   trees,%
+   petri,%
+%   mindmap,%
+   matrix,%
+%   calendar,%
+   folding,%
+   fadings,%
+   through,%
+   positioning,%
+   scopes,%
+   decorations.fractals,%
+   decorations.shapes,%
+   decorations.text,%
+   decorations.pathmorphing,%
+   decorations.pathreplacing,%
+   decorations.footprints,%
+   decorations.markings,%
+   shadows}
+
+%
+% Add additional macros
+%
+\newcommand{\vcenterbox}[1]{\ensuremath{\vcenter{\hbox{#1}}}}
+%
+% Define title, authors and possibly logo's of partners/sponsors
+% For logo's of partners/sponsors, a box of width 52mm and height 18mm is
+% available. Notice that TU/e poster format has been defined for A3 (explaining
+% the 52mm and 18mm).
+%
+\title{System Reliability Estimation\\ under Prior-Data Conflict}
+\author{{\large Gero Walter${}^\text{a}$, Frank P.A. Coolen${}^\text{b}$, Simme Douwe Flapper${}^\text{a}$}\\
+        {\small ${}^\text{a}$ School of Industrial Engineering, Eindhoven University of Technology, Eindhoven, NL\\
+                ${}^\text{b}$ Department of Mathematical Sciences, Durham University, Durham, UK}}
+\graphicspath{{logos/}}
+\otherlogos{\includegraphics[width=55mm]{logounidurham-large}}%
+%            \hfill%
+%            \includegraphics[width=23mm]{logo_stw}%
+%           }
+
+
+
+\begin{document}
+
+%\begin{figure*}[ht]%
+\fbox{%
+\includegraphics[width=\textwidth]{logounidurham-large}%
+}%
+%\end{figure*}
+
+\begin{multicols}{3}
+\section{Before making your poster}
+Before you start to make your poster, first quickly walk through the corridor.
+When you arrive at the end, think of posters that caught your attention. Then
+think of why these posters caught your attention. Most likely this will be
+posters with many colorful pictures and not too much text. Make sure your
+poster will be noticable!
+
+Also, try to explain to someone in ten minutes about your work using pen and
+paper. What pictures did you draw? What results did you present? Those pictures
+should become the figures on your poster.  Using only those pictures you should
+be able to explain your work and your results. A rule of thumb is to have four
+figures.
+
+%\section{Getting started: TU/e font required}
+%The mnposter style requires correct installation of the TU/e font and logo.
+%This is guaranteed when installing MiKTex 2.9 which can be obtained from
+%\verb=\\webmath1\MiKTeX29=. For Linux users, obtain from the MiKTex directory
+%the file \texttt{localtexmf.zip} and add its contents to your local texmf
+%directory.
+
+\section{Options of the stylefile}
+This stylefile has two kinds of options. The first kind of
+options has to do with the papersize. Specify either \texttt{a4} (which is
+used for the website) or \texttt{a1plus} (which is used for plotting). The
+second kind of options is related to the color of the titleframe, which default
+is \texttt{red}, but can also be \texttt{orange}, \texttt{green},
+\texttt{cyan}, or \texttt{blue}.
+
+So, in order to obtain a large size poster with tick marks, with a cyan
+titleframe, start your document with
+\verb=\documentclass[a4,cyan]{mnposter}=.
+
+
+\section{Color usage}
+Restrict the colors in your figures to the TU/e main colors:
+\begin{description}
+\item[PMS Process Cyan] \colorbox{tuepmsprocesscyan}{RGB 0,162,222}
+\item[PMS Warm Red] \colorbox{tuepmswarmred}{RGB 247,49,49}
+\item[PMS 206] \colorbox{tuepms206}{RGB 214,0,74}
+\item[PMS 226] \colorbox{tuepms226}{RGB 214,0,123}
+\item[PMS 253] \colorbox{tuepms253}{RGB 173,32,173}
+\item[PMS 300] \colorbox{tuepms300}{RGB 0,102,204}
+\item[PMS 2748] \colorbox{tuepms2748}{RGB 16,16,115}
+\end{description}
+and the TU/e support colors:
+\begin{description}
+\item[PMS 137] \colorbox{tuepms137}{RGB 255,154,0}
+\item[PMS Yellow 012] \colorbox{tuepmsyellow012}{RGB 255,221,0}
+\item[PMS 396] \colorbox{tuepms396}{RGB 206,223,0}
+\item[PMS Green] \colorbox{tuepmsgreen}{RGB 0,172,130}
+\item[PMS 3135] \colorbox{tuepms3135}{RGB 0,146,181}
+\item[PMS 375] \colorbox{tuepms375}{RGB 132,210,0}
+\end{description}
+
+\end{multicols}
+
+\iffalse
+\section{Logos of partners/sponsors}
+Logos of partners/sponsors can be added to the MN logo on the top of the
+poster. For this the macro \verb=\otherlogos= has been provided. For an
+example of the usage, see the \LaTeX\ source of this document. For logos of
+partners/sponsors, a box of width 52mm and height 18mm is available (formatting
+of a TU/e scientific poster is defined on A3).
+
+Keep in mind that according to the TU/e corporate identity (TU/e huisstijl), at
+most three logos of partners/sponsors can be used, where the (optical) size of
+these logos should be less than that of the TU/e logo.
+
+\section{Other remarks}
+Most of the standard \LaTeX\ macros should be available. As an examples,
+figures can be included in the standard way.
+\begin{figure}[htb]
+\begin{center}
+%\vcenterbox{\includegraphics[width=18mm]{logo_oce}}
+\hskip1cm
+%\vcenterbox{\includegraphics[width=52mm]{logo_vanderlande}}
+\end{center}
+\caption{An example picture, in this case two more logos}
+\label{fig:morelogos}
+\end{figure}
+You can refer to this figure as Figure~\ref{fig:morelogos}. In a similar way
+also tables can be entered.
+
+Furthermore, equations can be entered in the standard way:
+\begin{subequations}
+\label{eq:dynamics}
+\begin{align}
+\dot x(t) &= Ax(t)+Bu(t) & x(0)&=x_0 \\
+y(t)      &= Cx(t)+Du(t)
+\label{eq:output}
+\end{align}
+\end{subequations}
+and you can refer to \eqref{eq:dynamics} or \eqref{eq:output}.
+
+If desired, one can even add references, such as %\cite{LRN99b}.
+
+\section{Final remarks/suggestions for improvement}
+If you have any questions or remarks about this stylefile can be addressed to
+Erjen Lefeber (Gemini Zuid, room~0.122). Keep in mind that stylefiles should
+not be edited, so if you feel a need for modifying the stylefile either a
+new version of the stylefile should be made available via the website, or
+you should solve your problem differently.
+\fi
+
+%\bibliographystyle{plain}
+%\bibliography{poster}
+
+\end{document}
