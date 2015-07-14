@@ -234,6 +234,10 @@ update with censored obs
 prior-data conflict,
 \end{multicols}
 \fi
+%
+%
+%
+%
 \begin{tikzpicture}
 [cyanbox/.style={rounded corners, text centered, fill=tuecyan!20, inner sep=5mm},
  cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=5mm, very thick},
@@ -242,24 +246,24 @@ prior-data conflict,
  type2/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
  type3/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
  cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
- pfeil/.style={-latex', line width=1mm, color=tuepmswarmred, shorten <=3mm},
+ pfeil/.style={-latex', line width=1mm, color=tuepmswarmred, shorten <=2mm},
  hv path/.style={to path={-| (\tikztotarget)}},
  vh path/.style={to path={|- (\tikztotarget)}}]
 % available space
 %\draw[thick, color=tuepmsprocesscyan] (0,0) rectangle (27, 24);
 %
 %
-\node[cyanrands] (intro1) at (-6,8)%
-{\parbox[c]{0.27\textwidth}{\raggedright %
+\node[cyanrands] (intro1) at (-6.2,8.15)%
+{\parbox[c]{0.28\textwidth}{\raggedright %
 \cyansec{System reliability}\\
 We want to find the \emph{system reliability} $P(\Tsys > t)$ for a one-of-a-kind system: %, e.g.\\
 \begin{tikzpicture}
-[type1/.style={rectangle,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
- type2/.style={rectangle,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
- type3/.style={rectangle,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+[type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
  cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
- hv path/.style={to path={-| (\tikztotarget)}},
- vh path/.style={to path={|- (\tikztotarget)}}]
+ hv path/.style={to path={-| (\tikztotarget)},rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},rounded corners=0mm}]
 \node[type1] (double1) at ( 1, 0.6) {1};
 \node[type2] (double2) at ( 1,-0.6) {2};
 \node[type1] (triple1) at ( 3, 1)  {1};
@@ -286,46 +290,58 @@ We want to find the \emph{system reliability} $P(\Tsys > t)$ for a one-of-a-kind
               edge          (end);
 \node[draw] (nks) at (6,0) {\parbox[l]{6ex}{$n_1 = 2$\\ $n_2 = 2$\\ $n_3 = 1$}};
 \end{tikzpicture}\\
-The system consists of $n_k$ components of types \comp{1},\ldots,\comp{K}. %$k = 1,\ldots,K$.%: \comp{1} $\cdots$ \comp{K},
+The system consists of $n_k$ exchangeable components of types \comp{1}\,,\ldots,\,\comp{K}. %$k = 1,\ldots,K$.%: \comp{1} $\cdots$ \comp{K},
 }};
 % component lifetimes
-\node[cyanrands] (intro2) at (2.1,8)%
+\node[cyanrands] (intro2) at (2.1,8.15)%
 {\parbox[c]{0.27\textwidth}{\raggedright %
 \cyansec{Component Lifetimes}\\
-The lifetime for each \comp{k} is assumed as Weibull with fixed shape $\kappa$:\vspace*{-1ex}
-\begin{align*}
-F_k(t \mid \lambda_k) &= 1 - e^{-\frac{t^{\kappa}}{\lambda_k}}\\
-\E[T\mid\lambda_k]    &= \sqrt[\kappa]{\lambda_k} \Gamma(1+1/\kappa)%\vspace*{-1ex}%
-\end{align*}
+The lifetime for each \comp{k} is assumed as Weibull with fixed shape $\kappa$:\\[0.9ex] %\vspace*{-1ex}
+%\begin{align*}
+\centerline{$\displaystyle F_k(t \mid \lambda_k) = 1 - e^{-\frac{t^{\kappa}}{\lambda_k}}$ \rule{5.3ex}{0ex}}
+\centerline{$\displaystyle \E[T\mid\lambda_k]    = \sqrt[\kappa]{\lambda_k} \, \Gamma(1+1/\kappa)$} %\vspace*{-1ex}%
+%\end{align*}
+\vspace*{0.9ex}
 We have information on $\lambda_k$ from the component manufacturer,
 but do not fully trust it and model knowledge on $\lambda_k$ cautiously with a \emph{set of priors} $\MkZ$.%
 }};
 % set of priors
-\node[cyanrands] (intro3) at (12,8)%
+\node[cyanrands] (intro3) at (12,8.95)%
 {\parbox[c]{0.4\textwidth}{\raggedright %
 \cyansec{Set of Priors}\\
-Each $\MkZ$ is taken as a set of conjugate inverse Gamma priors in canonical parametrization \cite{diss,Walter2009a}:\\
+Each $\MkZ$ is taken as a set of conjugate inverse Gamma priors.
+In terms of canonical parameters $\nz$, $\yz$,\\
 $\MkZ = \big\{ \ig(\nkz+1, \nkz\ykz) \mid [\nkzl,\nkzu] \times [\ykzl,\ykzu] \big\}$,
-where $\ykz = \E[\lambda_k\mid\nkz,\ykz]$ and $\nkz =$ pseudocounts or prior strength
+where $\ykz = \E[\lambda_k\mid\nkz,\ykz]$ and $\nkz =$ pseudocounts.\\ %or prior strength
+The prior parameter set $\PkZ = [\nkzl,\nkzu] \times [\ykzl,\ykzu]$
+allows for more imprecision in case of \emph{prior-data conflict} \cite{diss}.
 }};
 %
-\node[cyanrands] (intro4) at (-5,3)%
-{\parbox[c]{0.3\textwidth}{\raggedright %
-We start the system and observe, at time $\tnow$, e.g., $\mbf{t}^k_{e_k;n_k} = (7, 11^+)$ 
-update with censored obs
-prior-data conflict,
+\node[cyanrands] (intro4) at (12,4.8)%
+{\parbox[c]{0.4\textwidth}{\raggedright %
+\cyansec{Data}\\
+We observe the system from startup until $\tnow$. For each $k$,
+the data $\mbf{t}^k_{e_k;n_k}$ contains $e_k$ failure times and $n_k-e_k$ censored observations.\\ % = (7, 11^+)$ 
+$\nkz$ and $\ykz$ are updated to $\nkn$ and $\ykn$ via Bayes' Rule.
 }};
-
+% minimization
+\node[cyanrands] (minimization) at (-2.1,3.9)%
+{\parbox[c]{0.58\textwidth}{\raggedright %
+Need to minimize over $\nkz$'s only, as min must be reached for $\ykzl$'s
+(lower expected lifetimes = lower component survival probabilities = lower system survival probability).
+}};
+%
 % central formula
-\node[cyanbox] (lowerrel) at (4,0)%
+\node[cyanbox] (lowerrel) at (4,1.2)%
      {$\displaystyle
        \ul{P}\left(\Tsys > t \mid \{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}{}^{1:K}\right)
-       = \min_{\PZi{1},\ldots,\PZi{K}}
+       = \min_{\nkzfun{1},\ldots,\nkzfun{K}}
          \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K)
-         \prod_{k=1}^K P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$} ;
+         \prod_{k=1}^K P(C^k_t = l_k\mid\nkz,\ykzl, \mbf{t}^k_{e_k;n_k})$} ;
+\draw [pfeil] (minimization.south) to [out=300,in=140] (1.7,1.6);
 % survival signature
-\node[cyanrand] (survsign) at (-5,-5)%
-     {\parbox[c]{0.31\textwidth}{survival signature $\Phi(l_1,\ldots,\l_K)$\\
+\node[cyanrand] (survsign) at (-5,-3.8)%
+     {\parbox[c]{0.31\textwidth}{survival signature $\Phi(l_1,\ldots,\l_K)$ \cite{2012:survsign}\\
        $= P(\text{system functions} \mid \{l_k \text{ \comp{k}'s function}\}^{1:K})$\\
       \qquad\begin{tabular}{ccc|l}
       $l_1$ & $l_2$ & $l_3$ & $\Phi$ \\
@@ -346,9 +362,9 @@ prior-data conflict,
       \vdots & \vdots & \vdots & \vdots
       \end{tabular} } };
 %\path (survsign.north) edge[pfeil] (6.5,-0.5);
-\draw [pfeil] (survsign.north) to [out=60,in=230] (6,-0.5);
+\draw [pfeil] (survsign.north) to [out=60,in=230] (6,0.7);
 % posterior predictive
-\node[cyanrand] (postpred) at (9,-5.2)%
+\node[cyanrand, inner sep=3.7mm] (postpred) at (9,-3.8)%
      {\parbox[c]{0.6\textwidth}{posterior predictive probability that $l_k$ of the $n_k-e_k$ surviving \comp{k}'s function at time $t$:
       \begin{align*}
 %P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
@@ -361,13 +377,18 @@ prior-data conflict,
 %     \tikz{\node (lk) {$l_k$ survive};}
      } };
 %\path (postpred.north) edge[pfeil] (10,-0.5);
-\draw [pfeil] (postpred.north) to [out=60,in=240] (10,-0.5);
+\draw [pfeil] (postpred.north) to (10,0.7); %[out=60,in=240] (10,0.7);
 %
-\draw [pfeil] (1,1.5) to  (2,0.5);
-
 \end{tikzpicture}
 %}%
 %\end{figure*}
+
+{\small
+\bibliographystyle{plain}
+\bibliography{./../esrel2015refs}
+}
+
+\newpage
 
 \begin{multicols}{2}
 \section{Color usage}
@@ -390,11 +411,6 @@ and the TU/e support colors:
 \item[PMS 3135] \colorbox{tuepms3135}{RGB 0,146,181}
 \item[PMS 375] \colorbox{tuepms375}{RGB 132,210,0}
 \end{description}
-
-\cite{2012:survsign}
-
-\bibliographystyle{plain}
-\bibliography{./../esrel2015refs}
 \end{multicols}
 
 \end{document}
