@@ -10,12 +10,27 @@ n0y0_1 <- c(2, failuretolambda(9,kappa))
 n_1 <- 4      # four components of type 1
 fts_1 <- c(1,2) # two failures at times 1 and 2, so l = 0,1,2
 tnow <- 3     # observed until tnow=3, so t > 3 
-postpredC(n0y0_1, kappa, n_1, fts_1, tnow, t = 4, l = 2)
+postpredC(n0y0_1, kappa = 2, n_1, fts_1, tnow, t = 4, l = 2)
 
-asdf <- postpredCcmf(n0y0_1, 2, n_1, fts <- c(7,8), tnow=8, t = 9)
-asdf2 <- postpredCcmf(n0y0_1, 2, n_1, fts <- c(7,8), tnow=8, t = 9)
+asdf <- postpredCcmf(n0y0_1, 2, n_1, fts = c(7,8), tnow=8, t = 9)
+asdf2 <- postpredCcmf(n0y0_1, 2, n_1, fts = c(7,8), tnow=8, t = 9)
 Ccmfplot(asdf)
 Ccmfplot(asdf2, add=TRUE, lty=2)
+
+# -------------------------------------------------------
+
+fcc <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
+applyfun <- function(n0, y0, kappa, n, fts, tnow, t)
+  postpredCcmf(n0y0 = c(n0, y0), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
+
+n0vec <- seq(n0(fcc)[1], n0(fcc)[2], length.out=101)
+ccmfs <- sapply(n0vec, applyfun, y0 = y0(fcc)[1], kappa = 2, n = 4, fts = c(10), tnow = 11, t = 15)
+ccmfs <- t(rbind(n0vec, ccmfs))
+matplot(ccmfs[,1],  ccmfs[,2:5], type="l", ylim=c(0,1), lty = 1, col = as.numeric(dimnames(ccmfs)[[2]][-1]) + 1)
+
+fourCornersCcmf(fcc, kappa = 2, n=4, fts=c(10), tnow=11, t=15)
+
+# -------------------------------------------------------
 
 fc1 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
 #n_1 <- 4      # four components of type 1
@@ -184,7 +199,7 @@ V(sys13f)$compType[match(c("2","4"), V(sys13f)$name)] <- "Type 2"
 #V(sys13f)$compType[match(c("5"), V(sys1)$name)] <- "Type 3"
 V(sys13f)$compType[match(c("s","t"), V(sys13f)$name)] <- NA
 sys13fsign <- computeSystemSurvivalSignature(sys13f)
-tvec <- seq(7,15,by=0.1)
+tvec <- seq(7,20,by=0.1)
 # with full signature when type 3 component fails
 r13 <- fourKcornersSysrel(luckobjlist = list(fc1,fc2,fc3), survsign = sys1sign, kappa = rep(2,3),
                           fts = list(NULL, NULL, c(7)), tnow = 7, tvec = tvec, nk = c(2,2,1))
@@ -203,10 +218,17 @@ pbox13f <- sysrelPbox(luckobjlist = list(fc1,fc2), survsign = sys13fsign, kappa 
 fourKcornersSysrelPlot(tvec = tvec, rframe = r13f$lower, add = TRUE)
 fourKcornersSysrelPlot(tvec = tvec, rframe = r13f$upper, add = TRUE)
 dev.off()
-table(pbox13[,1] == pbox13f[,1]) ; table(pbox13[,2] == pbox13f[,2])
-# test succesfull
+table(pbox13[,1] == pbox13f[,1]) ; table(pbox13[,2] == pbox13f[,2]) # test succesfull
+# additional check whether the min of the 'corner' is the same as the optimized
+corner13lower <- r13$lower[-(1:3),]
+corner13lower <- apply(corner13lower, 1, min)
+table(corner13lower == pbox13[,1]) # due to numeric?
+all.equal(corner13lower, pbox13[,1])
+# indeed, pbox13 has some non-extreme values for n0 at the end
+#-------------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------------
+
 
 # system with four components to see whether that problem with the Ccmfs carries over
 fc4 <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9, 2), failuretolambda(11, 2)))
