@@ -246,7 +246,7 @@ prior-data conflict,
  type2/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
  type3/.style={rectangle,rounded corners=0mm,draw,fill=tuepms137!20,thick,inner sep=0pt,minimum size=6mm},
  cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
- pfeil/.style={-latex', line width=1mm, color=tuepmswarmred, shorten <=2mm},
+ pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=2mm},
  hv path/.style={to path={-| (\tikztotarget)}},
  vh path/.style={to path={|- (\tikztotarget)}}]
 % available space
@@ -321,7 +321,7 @@ allows for more imprecision in case of \emph{prior-data conflict} \cite{diss}.
 {\parbox[c]{0.4\textwidth}{\raggedright %
 \cyansec{Data}\\
 We observe the system from startup until $\tnow$. For each $k$,
-the data $\mbf{t}^k_{e_k;n_k}$ contains $e_k$ failure times and $n_k-e_k$ censored observations.\\ % = (7, 11^+)$ 
+the data $\mbf{t}^k_{e_k;n_k}$ consists of $e_k$ failure times and $n_k-e_k$ censored observations.\\ % = (7, 11^+)$ 
 $\nkz$ and $\ykz$ are updated to $\nkn$ and $\ykn$ via Bayes' Rule.
 }};
 % minimization
@@ -382,12 +382,152 @@ Need to minimize over $\nkz$'s only, as min must be reached for $\ykzl$'s
 \end{tikzpicture}
 %}%
 %\end{figure*}
+We assume $\kappa = 2$,
+$\E[T\mid\yz_1] \in [9,11]$, $\nz_1 \in [2,10]$,
+$\E[T\mid\yz_2] \in [4, 5]$, $\nz_2 \in [8,16]$, and
+$\E[T\mid\yz_3] \in [9,11]$, $\nz_3 \in [1, 5]$.
+\begin{multicols}{3}
+\cyansec{Failure times as expected}\\
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={to path={-| (\tikztotarget)},rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},rounded corners=0mm}]
+\node at (0,0) {\includegraphics[width=0.99\columnwidth]{poster1}};
+%\fill (0,0) circle (3pt);
+\begin{scope}[xshift=1.1cm, yshift=2cm]
+%\fill (0,0) circle (3pt);
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 0.6) {1};
+\node[type2] (double2) at ( 1,-0.6) {2};
+\node[cross] at ( 1,-0.6) {};
+\node[type1] (triple1) at ( 3, 1)  {1};
+\node[type2] (triple2) at ( 3, 0)  {2};
+\node[cross] at ( 3, 0) {};
+\node[type3] (triple3) at ( 3,-1)  {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge          (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge          (triple2.east)
+              edge[vh path] (triple3.east)
+              edge          (end);
+\end{scope}
+\end{scope}
+\node at (-1.2, -1.2)%
+     {\parbox[c]{15ex}{$\mbf{t}^1_{0;2} = (5^+, 5^+)$\\ $\mbf{t}^2_{2;2} = (4, 5)$\\ $\mbf{t}^3_{0;1} = (5^+)$}};
+\end{tikzpicture}
+%\columnbreak
+
+\cyansec{Surprisingly early failures}\\
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={to path={-| (\tikztotarget)},rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},rounded corners=0mm}]
+\node at (0,0) {\includegraphics[width=0.99\columnwidth]{poster2}};
+%\fill (0,0) circle (3pt);
+\begin{scope}[xshift=1.1cm, yshift=2cm]
+%\fill (0,0) circle (3pt);
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 0.6) {1};
+\node[type2] (double2) at ( 1,-0.6) {2};
+\node[cross] at ( 1,-0.6) {};
+\node[type1] (triple1) at ( 3, 1)  {1};
+\node[cross] at ( 3, 1) {};
+\node[type2] (triple2) at ( 3, 0)  {2};
+\node[type3] (triple3) at ( 3,-1)  {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge          (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge          (triple2.east)
+              edge[vh path] (triple3.east)
+              edge          (end);
+\end{scope}
+\end{scope}
+\node at (-1.2, -1.2)%
+     {\parbox[c]{15ex}{$\mbf{t}^1_{1;2} = (3, 3^+)$\\ $\mbf{t}^2_{1;2} = (1, 3^+)$\\ $\mbf{t}^3_{0;1} = (3^+)$}};
+\end{tikzpicture}
+
+\cyansec{Surprisingly late failures}\\
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={to path={-| (\tikztotarget)},rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},rounded corners=0mm}]
+\node at (0,0) {\includegraphics[width=0.99\columnwidth]{poster3}};
+%\fill (0,0) circle (3pt);
+\begin{scope}[xshift=1.1cm, yshift=2cm]
+%\fill (0,0) circle (3pt);
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 0.6) {1};
+\node[type2] (double2) at ( 1,-0.6) {2};
+\node[type1] (triple1) at ( 3, 1)  {1};
+\node[type2] (triple2) at ( 3, 0)  {2};
+\node[cross] at ( 3, 0) {};
+\node[type3] (triple3) at ( 3,-1)  {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge          (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge          (triple2.east)
+              edge[vh path] (triple3.east)
+              edge          (end);
+\end{scope}
+\end{scope}
+\node at (-1.2, -1.2)%
+     {\parbox[c]{15ex}{$\mbf{t}^1_{0;2} = (10^+, 10^+)$\\ $\mbf{t}^2_{1;2} = (10, 10^+)$\\ $\mbf{t}^3_{0;1} = (10^+)$}};
+\end{tikzpicture}
+\end{multicols}
 
 {\small
 \bibliographystyle{plain}
 \bibliography{./../esrel2015refs}
 }
-
+\iffalse
 \newpage
 
 \begin{multicols}{2}
@@ -412,5 +552,5 @@ and the TU/e support colors:
 \item[PMS 375] \colorbox{tuepms375}{RGB 132,210,0}
 \end{description}
 \end{multicols}
-
+\fi
 \end{document}

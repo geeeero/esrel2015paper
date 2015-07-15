@@ -19,7 +19,7 @@ Ccmfplot(asdf2, add=TRUE, lty=2)
 
 # -------------------------------------------------------
 
-fcc <- LuckModel(n0 = c(2,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
+fcc <- LuckModel(n0 = c(1,10), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
 applyfun <- function(n0, y0, kappa, n, fts, tnow, t)
   postpredCcmf(n0y0 = c(n0, y0), kappa = kappa, n = n, fts = fts, tnow = tnow, t = t)
 
@@ -265,6 +265,106 @@ pbox4zoom <- sysrelPbox(luckobjlist = list(fc4), survsign = sys4sign, kappa = 2,
                         fts = list(c(10,11)), tnow = 11, tvec = tveczoom, returnres = T, ylim = c(0.1,0.3))
 fourKcornersSysrelPlot(tvec = tveczoom, rframe = r4zoom$lower, add = TRUE)
 fourKcornersSysrelPlot(tvec = tveczoom, rframe = r4zoom$upper, add = TRUE)
+dev.off()
+
+###############################################################################
+# the three poster examples
+###############################################################################
+posterprior1 <- LuckModel(n0 = c(2,10), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
+posterprior2 <- LuckModel(n0 = c(8,16), y0 = c(failuretolambda(4,2), failuretolambda(5,2)))
+posterprior3 <- LuckModel(n0 = c(1,5), y0 = c(failuretolambda(9,2), failuretolambda(11,2)))
+posterprior <- list(posterprior1, posterprior2, posterprior3)
+
+# prior system reliability
+posterfts0 <- list(NULL, NULL, NULL)
+# full system signature (for prior system reliability)
+postersys <- graph.formula(s -- 1:2 -- 3:4:5 -- t)
+V(postersys)$compType <- NA # This just creates the attribute compType
+V(postersys)$compType[match(c("1","3"), V(postersys)$name)] <- "Type 1"
+V(postersys)$compType[match(c("2","4"), V(postersys)$name)] <- "Type 2"
+V(postersys)$compType[match(c("5"), V(postersys)$name)] <- "Type 3"
+V(postersys)$compType[match(c("s","t"), V(postersys)$name)] <- NA
+postersyssign <- computeSystemSurvivalSignature(postersys)
+
+postertvec0 <- seq(0, 10, by=0.02)
+postercorners0 <- fourKcornersSysrel(luckobjlist = posterprior, survsign = postersyssign, nk = c(2,2,1),
+                                     kappa = rep(2,3), fts = posterfts0, tnow = 0, tvec = postertvec0)
+pdf("poster0.pdf", width=5, height=4)
+posterpbox0 <- sysrelPbox(luckobjlist = posterprior, survsign = postersyssign,
+                          kappa = rep(2,3), fts = posterfts0, tnow = 0, tvec = postertvec0,
+                          returnres = T, polygonFillCol = rgb(255,154,0, max =255))
+fourKcornersSysrelPlot(tvec = postertvec0, rframe = postercorners0$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = postertvec0, rframe = postercorners0$upper, add = TRUE)
+dev.off()
+
+
+# example 1: failure times as expected: no failures type 1, failures type 2 c(4,5), no failure type 3
+posterfts1 <- list(NULL, NULL)
+# reduced signature
+postersys1 <- graph.formula(s -- 1 -- 2:3 -- t)
+V(postersys1)$compType <- NA # This just creates the attribute compType
+V(postersys1)$compType[match(c("1", "2"), V(postersys1)$name)] <- "Type 1"
+V(postersys1)$compType[match(c("3"), V(postersys1)$name)] <- "Type 2"
+#V(postersys1)$compType[match(c("3"), V(postersys1)$name)] <- "Type 3"
+V(postersys1)$compType[match(c("s","t"), V(postersys1)$name)] <- NA
+postersys1sign <- computeSystemSurvivalSignature(postersys1)
+
+postertvec1 <- seq(5, 15, by=0.02)
+postercorners1 <- fourKcornersSysrel(luckobjlist = list(posterprior1, posterprior3), survsign = postersys1sign,
+                                     kappa = rep(2,2), fts = posterfts1, tnow = 5, tvec = postertvec1, nk = c(2,1))
+pdf("./poster-system/poster1.pdf", width=5, height=4)
+par(mar=c(3,3,0,0)+0.1)
+posterpbox1 <- sysrelPbox(luckobjlist = list(posterprior1, posterprior3), survsign = postersys1sign,
+                          kappa = rep(2,2), fts = posterfts1, tnow = 5, tvec = postertvec1, nk = c(2,1),
+                          returnres = T, polygonFillCol = rgb(255,154,0, max =255))
+fourKcornersSysrelPlot(tvec = postertvec1, rframe = postercorners1$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = postertvec1, rframe = postercorners1$upper, add = TRUE)
+dev.off()
+
+# example 2: early failure times: one failure of type 1 at 3, one failure of type 2 at 1, no failure type 3
+posterfts2 <- list(c(3), c(1), NULL)
+# reduced signature
+postersys2 <- graph.formula(s -- 1 -- 2:3 -- t)
+V(postersys2)$compType <- NA # This just creates the attribute compType
+V(postersys2)$compType[match(c("1"), V(postersys2)$name)] <- "Type 1"
+V(postersys2)$compType[match(c("2"), V(postersys2)$name)] <- "Type 2"
+V(postersys2)$compType[match(c("3"), V(postersys2)$name)] <- "Type 3"
+V(postersys2)$compType[match(c("s","t"), V(postersys2)$name)] <- NA
+postersys2sign <- computeSystemSurvivalSignature(postersys2)
+
+postertvec2 <- seq(3, 13, by=0.02)
+postercorners2 <- fourKcornersSysrel(luckobjlist = posterprior, survsign = postersys2sign,
+                                     kappa = rep(2,3), fts = posterfts2, tnow = 3, tvec = postertvec2, nk = c(2,2,1))
+pdf("./poster-system/poster2.pdf", width=5, height=4)
+par(mar=c(3,3,0,0)+0.1)
+posterpbox2 <- sysrelPbox(luckobjlist = posterprior, survsign = postersys2sign,
+                          kappa = rep(2,3), fts = posterfts2, tnow = 3, tvec = postertvec2, nk = c(2,2,1),
+                          returnres = T, polygonFillCol = rgb(255,154,0, max =255))
+fourKcornersSysrelPlot(tvec = postertvec2, rframe = postercorners2$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = postertvec2, rframe = postercorners2$upper, add = TRUE)
+dev.off()
+
+# example 3: late failure times: no failure of type 1, one failure of type 2 at 10, no failure type 3
+posterfts3 <- list(NULL, c(10), NULL)
+# reduced signature
+postersys3 <- graph.formula(s -- 1:2 -- 3:4 -- t)
+V(postersys3)$compType <- NA # This just creates the attribute compType
+V(postersys3)$compType[match(c("1", "3"), V(postersys3)$name)] <- "Type 1"
+V(postersys3)$compType[match(c("2"), V(postersys3)$name)] <- "Type 2"
+V(postersys3)$compType[match(c("4"), V(postersys3)$name)] <- "Type 3"
+V(postersys3)$compType[match(c("s","t"), V(postersys3)$name)] <- NA
+postersys3sign <- computeSystemSurvivalSignature(postersys3)
+
+postertvec3 <- seq(10, 20, by=0.02)
+postercorners3 <- fourKcornersSysrel(luckobjlist = posterprior, survsign = postersys3sign,
+                                     kappa = rep(2,3), fts = posterfts3, tnow = 10, tvec = postertvec3, nk = c(2,2,1))
+pdf("./poster-system/poster3.pdf", width=5, height=4)
+par(mar=c(3,3,0,0)+0.1)
+posterpbox3 <- sysrelPbox(luckobjlist = posterprior, survsign = postersys3sign,
+                          kappa = rep(2,3), fts = posterfts3, tnow = 10, tvec = postertvec3, nk = c(2,2,1),
+                          returnres = T, polygonFillCol = rgb(255,154,0, max =255))
+fourKcornersSysrelPlot(tvec = postertvec3, rframe = postercorners3$lower, add = TRUE)
+fourKcornersSysrelPlot(tvec = postertvec3, rframe = postercorners3$upper, add = TRUE)
 dev.off()
 
 #
