@@ -296,10 +296,10 @@ The system consists of $n_k$ exchangeable components of types \comp{1}\,,\ldots,
 \node[cyanrands] (intro2) at (2.1,8.15)%
 {\parbox[c]{0.27\textwidth}{\raggedright %
 \cyansec{Component Lifetimes}\\
-The lifetime for each \comp{k} is assumed as Weibull with fixed shape $\kappa$:\\[0.9ex] %\vspace*{-1ex}
+The lifetime for each \comp{k} is assumed as Weibull with fixed shape $\beta$:\\[0.9ex] %\vspace*{-1ex}
 %\begin{align*}
-\centerline{$\displaystyle F_k(t \mid \lambda_k) = 1 - e^{-\frac{t^{\kappa}}{\lambda_k}}$ \rule{5.3ex}{0ex}}
-\centerline{$\displaystyle \E[T\mid\lambda_k]    = \sqrt[\kappa]{\lambda_k} \, \Gamma(1+1/\kappa)$} %\vspace*{-1ex}%
+\centerline{$\displaystyle F_k(t \mid \lambda_k) = 1 - e^{-\frac{t^{\beta}}{\lambda_k}}$ \rule{5.3ex}{0ex}}
+\centerline{$\displaystyle \E[T\mid\lambda_k]    = \sqrt[\beta]{\lambda_k} \, \Gamma(1+1/\beta)$} %\vspace*{-1ex}%
 %\end{align*}
 \vspace*{0.9ex}
 We have information on $\lambda_k$ from the component manufacturer,
@@ -372,17 +372,18 @@ Need to minimize over $\nkz$'s only, as min must be reached for $\ykzl$'s
       & \hspace*{11ex}                \Big[1 - P_k(T > t \mid T > \tnow, \lambda_k)\Big]^{n_k - e_k - l_k} \
         f_{\lambda_k\mid\ldots}(\lambda_k\mid\nkz,\ykz,\mbf{t}^k_{e_k;n_k}) \dd \lambda_k \\
       &= { n_k - e_k \choose l_k} \sum_{j=0}^{n_k-e_k-l_k} (-1)^j { n_k - e_k - l_k \choose j}
-         \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\kappa - (\tnow)^\kappa)}\right)^{\nkn + 1}
+         \left(\frac{\nkn\ykn}{\nkn\ykn + (l_k + j) (t^\beta - (\tnow)^\beta)}\right)^{\nkn + 1}
       \end{align*}
 %     \tikz{\node (lk) {$l_k$ survive};}
      } };
 %\path (postpred.north) edge[pfeil] (10,-0.5);
 \draw [pfeil] (postpred.north) to (10,0.7); %[out=60,in=240] (10,0.7);
 %
-\end{tikzpicture}
+\end{tikzpicture}\\[1.2ex]
 %}%
 %\end{figure*}
-We assume $\kappa = 2$,
+%\vspace*{2ex}
+We assume $\beta = 2$,
 $\E[T\mid\yz_1] \in [9,11]$, $\nz_1 \in [2,10]$,
 $\E[T\mid\yz_2] \in [4, 5]$, $\nz_2 \in [8,16]$, and
 $\E[T\mid\yz_3] \in [9,11]$, $\nz_3 \in [1, 5]$.
