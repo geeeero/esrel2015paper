@@ -322,6 +322,22 @@ sysrelPbox <- function(luckobjlist, survsign, kappa, fts, tnow, tvec, nk = NULL,
     return(res)
 }
 
+plotSysrelPbox <- function(tvec, res, add = FALSE, ylim = c(0,1), xlab = "t", ylab = expression(R[sys](t)),
+                           polygonBorderCol = NA, polygonFillCol = "grey", ...){
+  if(!add){
+    plot(c(min(tvec), max(tvec)),c(0,0), type = "n", ylim = ylim, xlab = "", ylab = "", ...)
+    mtext(xlab, 1, 2)
+    mtext(ylab, 2, 2)
+  }
+  tvecrev <- numeric(length(tvec))
+  lower <- res[,1]
+  upper <- numeric(length(tvec))
+  for (t in 1:length(tvec)){
+    tvecrev[length(tvec)-t+1] <- tvec[t]
+    upper[length(tvec)-t+1] <- res[t,2]
+  }
+  polygon(c(tvec, tvecrev), c(lower, upper), border = polygonBorderCol, col = polygonFillCol)
+}
 #
 
 #
