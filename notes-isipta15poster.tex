@@ -305,7 +305,7 @@ and the $\ol{F}_{C^k_t}(l_k \mid \ldots)$'s the upper bound.
 Note that e.g.\ $\ul{F}_{C^k_t}(l_k \mid \ldots)$ may, however, not correspond to a single parameter pair $(\nkz, \ykz)$.
 Also, in the system survival equation ($t > \tnow$)
 \begin{align} \label{eq:25}
-P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})
+P(\Tsys > t\mid\{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}_{k=1}^K)
  &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \,.
 \end{align}
@@ -316,7 +316,7 @@ as the $\ul{P}(C^k_t = l_k\mid \ldots)$ could correspond to different $(\nkz,\yk
 
 Writing out Equation~\eqref{eq:25}, we get
 \begin{align}
-\lefteqn{P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})} \\
+\lefteqn{P(\Tsys > t\mid\{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}_{k=1}^K}) \\
  &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
     P(C^k_t = l_k\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k}) \\
  &= \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,\l_K) \prod_{k=1}^K
@@ -331,8 +331,8 @@ Writing out Equation~\eqref{eq:25}, we get
 
 While it is clear that the lower bounds for $\ykz$ will lead to the lower system survival function,
 the role of $\nkz$ is not so clear.
-We therefore resort to numerical optimization of \eqref{eq:25} over $\{\nkz, k=1,\ldots,K$
-to obtain the lower bound for $P(\Tsys > t\mid\nkz,\ykz, \mbf{t}^k_{e_k;n_k})$.
+We therefore resort to numerical optimization of \eqref{eq:25} over $\{\nkz, k=1,\ldots,K\}$
+to obtain the lower bound for $P(\Tsys > t\mid\{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}_{k=1}^K)$.
 
 
 The example system with $K=3$ component types, $n_1=2$, $n_2=2$, $n_3=1$:\\
@@ -423,7 +423,7 @@ and observe $\mbf{t}^1_{e_1;n_1} = (7, 7^+)$, $\mbf{t}^2_{e_2;n_2} = (3,7^+)$ an
 so something that we more or less expect. Then the graph for $P(\Tsys > t\mid\PkZ, \mbf{t}^k_{e_k;n_k})$,
 assuming we don't know which of the components of the same type have failed, is below:\\
 
-\includegraphics[width=0.85\textwidth]{rsyspbox1}
+\includegraphics[width=0.8\textwidth]{rsyspbox1}
 
 This starts at $0.75$ as there is $1/4$ probability that the two failed components
 are both in the first parallel part.
@@ -512,5 +512,4 @@ This is then mirrored in $\Rsys(t)$, see graphs below, where the right one zooms
 \includegraphics[width=0.5\textwidth]{rsyspbox2}
 \includegraphics[width=0.5\textwidth]{rsyspbox2zoom}
 
-***have clear pdc situations in observed data already (so far only in posterior predictive scenario.)
 \end{document}
