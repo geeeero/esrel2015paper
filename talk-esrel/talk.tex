@@ -210,7 +210,7 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
             \includegraphics[height=9mm]{logos/tuelogo} \quad
             \includegraphics[height=9mm]{logos/logounidurham-large} \quad
             \includegraphics[height=9mm]{logos/dinalog-hp} }
-\date{09.09.\ 2015}
+\date{09-09-2015}
 
 \begin{document}
 
@@ -218,23 +218,86 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
 \titlepage
 }
 
-
+\iffalse
 \frame{\frametitle{Outline}
 \begin{enumerate}
 \item System reliability with the survival signature
 \item Cautious modelling of prior information
 \end{enumerate}
 }
+\fi
 
-\section{System Reliability}
+%\section{System Reliability}
 
 
 \frame{
-\frametitle{System Reliability}
+\frametitle{Setting: a one of kind parallel system}
 
-
+\begin{columns}
+\begin{column}{0.2\textwidth}
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={thick, to path={-| (\tikztotarget)}},
+ vh path/.style={thick, to path={|- (\tikztotarget)}}]
+\coordinate (start) at (0,0);
+\coordinate (prllst) at (0.3,0);
+\node[type1] (p1) at ( 1, 1.5) {};
+\node[type1] (p2) at ( 1, 0.5) {};
+%\node[type1] (p3) at ( 1,-0.5) {};
+\node[inner sep=0pt,minimum size=6mm] (p3) at ( 1,-0.5) {$\vdots$};
+\node[type1] (p4) at ( 1,-1.5) {};
+\node at ($(p1.south east) + (0.1,-0.0)$) {$1$};
+\node at ($(p2.south east) + (0.1,-0.0)$) {$2$};
+\node at ($(p4.south east) + (0.1,-0.0)$) {$\ell$};
+\coordinate (prllen) at (1.7,0);
+\coordinate (end)   at (2,0);
+\path (start)  edge          (prllst)
+      (prllst) edge[vh path] (p1.west)
+               edge[vh path] (p2.west)
+               edge[vh path] (p3.west)
+               edge[vh path] (p4.west)
+      (prllen) edge[vh path] (p1.east)
+               edge[vh path] (p2.east)
+               edge[vh path] (p3.east)
+               edge[vh path] (p4.east)
+               edge          (end);
+\end{tikzpicture}\\
+($1$ out of $\ell$)
+\end{column}
+\begin{column}{0.8\textwidth}
+We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
+\begin{enumerate}
+\item[\play] system run until time $\tnow$:
+ \begin{itemize}
+ \item[] $\ell$ observations, each being either\\ a failure time $t_j$ or a censoring time $t_j^+ = \tnow$
+ \end{itemize}
+\item[\play] cautious assumptions on component reliability:
+ \begin{itemize}
+ \item[] expert information,\\ e.g. from the component manufactor\\ \alert{which we don't trust entirely}
+ \end{itemize}
+\end{enumerate}
+How to combine these two information sources?
+\end{column}
+\end{columns}
 }
 
+\frame{
+\frametitle{Bayesian inference}
+\begin{align*}
+\begin{array}{ccccl}
+\text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\
+\text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\
+p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{(Bayes' Rule)} \\
+\downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
+\text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
+\text{prior}         & & \text{fixed shape}  & & \quad \text{posterior} \quad \text{(conjugacy)} \\
+{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
+\end{array}
+\end{align*}
+}
 
 \end{document}
 
