@@ -108,6 +108,7 @@
 \newcommand{\uz}{^{(0)}} % upper zero
 \newcommand{\un}{^{(n)}} % upper n
 \newcommand{\ui}{^{(i)}} % upper i
+\newcommand{\uell}{^{(\ell)}} % upper ell
 
 \newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\ol}[1]{\overline{#1}}
@@ -130,6 +131,7 @@
 \def\yz{y\uz}
 \def\yn{y\un}
 %\def\yi{y\ui}
+\def\yell{y\uell}
 \newcommand{\yfun}[1]{y^{({#1})}}
 \newcommand{\yfunl}[1]{\ul{y}^{({#1})}}
 \newcommand{\yfunu}[1]{\ol{y}^{({#1})}}
@@ -153,6 +155,7 @@
 \def\nz{n\uz}
 \def\nn{n\un}
 %\def\ni{n\ui}
+\def\nell{n\uell}
 \newcommand{\nfun}[1]{n^{({#1})}}
 \newcommand{\nfunl}[1]{\ul{n}^{({#1})}}
 \newcommand{\nfunu}[1]{\ol{n}^{({#1})}}
@@ -231,7 +234,7 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
 
 
 \frame{
-\frametitle{Setting: a one of kind parallel system}
+\frametitle{Setting: a one of a kind parallel system}
 
 \begin{columns}
 \begin{column}{0.2\textwidth}
@@ -290,14 +293,59 @@ How to combine these two information sources?
 \begin{array}{ccccl}
 \text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\
 \text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\
-p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{(Bayes' Rule)} \\
+p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{\alert{\play\ Bayes' Rule}} \\
 \downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
 \text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
-\text{prior}         & & \text{fixed shape}  & & \quad \text{posterior} \quad \text{(conjugacy)} \\
-{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
+\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\alert{\play\ conjugacy}} \\
+\lambda \sim \ig(\alpha\uz,\beta\uz) & & \mbf{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\mbf{t} \sim \ig(\alpha\uell,\beta\uell)
+%{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
 \end{array}
 \end{align*}
+\begin{itemize}
+\item conjugacy holds also for censored observations
+\item makes learning about component reliability tractable,\\  %posterior distribution
+      just update parameters:\quad $\alpha\uz \to \alpha\uell$, $\beta\uz \to \beta\uell$
+\item closed form for system reliability function $\Rsys(t\mid\mbf{t})$
+\end{itemize}
 }
+
+\frame{
+\frametitle{Prior-data conflict}
+What if expert information and data tell different stories?\\
+\play\ reparametrization helps to understand effect of prior-data conflict:\\
+\begin{tikzpicture}
+[pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
+ redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
+ redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
+\node at (0,0) {\parbox[c]{\textwidth}{%
+\begin{align*}
+\nz &= \alpha\uz - 1\,,
+&
+\yz &= \beta\uz / (\alpha\uz - 1)
+%\end{align*}
+\intertext{%
+such that
+$\lambda \sim \ig(\nz+1,\nz\yz)$ and $\lambda\mid\mbf{t} \sim \ig(\nell+1,\nell\yell)$,
+where}%
+%\begin{align*}
+\nell &= \nz + \ell\,, 
+&
+\yell &=  \frac{\nz}{\nz + \ell} \, \yz + \frac{\ell}{\nz + \ell} \cdot \frac{1}{\ell} \textstyle\sum_{j=1}^\ell t_j^k
+\end{align*}
+}};
+\node[cyanrand] (yz) at (-0.5,-2.6) {$\yz = \E[\lambda]$};
+\draw [pfeil] (yz.north east) to [out= 30,in=260] (1.1,-1.35);
+\draw [pfeil] (yz.north west) to [out=130,in=240] (-1.3,0.9);
+\node[cyanrand] (nz) at (-4  ,-2.6) {$\nz =$ pseudocounts};
+\draw [pfeil] (nz.north)      to [out=80,in=250] (-3.7,-1.3);
+\draw [pfeil] (nz.north west) to [out=95,in=240] (-4.7, 0.9);
+\node[cyanrand] (ml) at ( 4.3,-2.6) {ML estimator $\hat{\lambda}$};
+\draw [redbrace] (4.9,-1.8) to (3.4,-1.8);
+\node[redbox] (wavg) at (0,-3.5) {$\E[\lambda\mid\mbf{t}]$ is a weighted average of $\E[\lambda]$ and $\hat{\lambda}$!};
+\end{tikzpicture}
+}
+
 
 \end{document}
 
