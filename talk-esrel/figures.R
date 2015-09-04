@@ -43,11 +43,13 @@ dev.off()
 
 # almost same posterior for no-pdc example
 y0a <- failuretolambda(7,k); y0a
+invgammasd(n2, y0a)
 t1a <- 6
 t2a <- 7
 (t1a^k + t2a^k)/2
 
 y2a <- (n0*y0a + t1a^k + t2a^k)/n2; y2a
+lambdatofailure(y2a)
 invgammasd(n2, y2a)
 
 

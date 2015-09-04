@@ -183,6 +183,9 @@
 \def\ttau{\tilde{\tau}}
 \def\ttaut{\ttau(\vec{t})}
 
+\def\PZ{\mathrm I\!\Pi\uz}
+\def\PN{\mathrm I\!\Pi\un}
+
 \def\MZ{\mathcal{M}\uz}
 \def\MN{\mathcal{M}\un}
 
@@ -371,7 +374,41 @@ where}%
 \end{tikzpicture}
 }
 
+\frame{
+\frametitle{Imprecise / Interval probability}
+reliability function $R(t)$ is a collection of probability statements\\
+(in the long run, what percentage of components survive past $t$?)\\
+with usual Bayesian inference, we cannot express uncertainty about such probability statements!\\
 
+\textbf{Add \alert{imprecision} as new modelling dimension:\\
+\alert{Sets of priors} model uncertainty in probability statements\\
+and allow to better model partial or vague information on $\lambda$} \\
+(can also be seen as systematic sensitivity analysis)\\[1ex]
+}
+
+\frame{
+\frametitle{Sets of prior distributions}
+\uncover<1->{%
+\begin{block}{Uncertainty about probability statements}
+\centerline{smaller sets $=$ more precise probability statements}
+\vspace*{1ex}
+\parbox[t]{0.45\textwidth}{\centering \textbf{Lottery A}\\
+                          Number of winning tickets:\\
+                          exactly known as 5 out of 100\\
+                          \then\ $P(\text{win}) = 5/100$}
+\qquad
+\parbox[t]{0.45\textwidth}{\centering \textbf{Lottery B}\\
+                          Number of winning tickets:\\
+                          not exactly known, supposedly\\
+                          between 1 and 7 out of 100\\
+                          \then\ $P(\text{win}) = [1/100,\, 7/100]$}
+\end{block}}
+\uncover<2->{%
+\centerline{Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ \alert{set of priors}}
+Walter \& Augustin (2009): $\PZ$ of type $[\nzl, \nzu] \times [\yzl, \yzu]$
+allow meaningful reaction to prior-data conflict: larger set in case of conflict
+}
+}
 \end{document}
 
 
