@@ -125,6 +125,7 @@
 
 \newcommand{\E}{\operatorname{E}}
 \newcommand{\V}{\operatorname{Var}}
+\newcommand{\sd}{\operatorname{sd}}
 \newcommand{\wei}{\operatorname{Wei}} % Weibull Distribution
 \newcommand{\ig}{\operatorname{IG}}   % Inverse Gamma Distribution
 
@@ -291,12 +292,12 @@ How to combine these two information sources?
 \frametitle{Bayesian inference}
 \begin{align*}
 \begin{array}{ccccl}
-\text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\
-\text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\
+\text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\[1.5ex]
+\text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\[1.5ex]
 p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{\alert{\play\ Bayes' Rule}} \\
 \downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
 \text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
-\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\alert{\play\ conjugacy}} \\
+\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\alert{\play\ conjugacy}} \\[1ex]
 \lambda \sim \ig(\alpha\uz,\beta\uz) & & \mbf{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\mbf{t} \sim \ig(\alpha\uell,\beta\uell)
 %{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
 \end{array}
@@ -343,6 +344,30 @@ where}%
 \node[cyanrand] (ml) at ( 4.3,-2.6) {ML estimator $\hat{\lambda}$};
 \draw [redbrace] (4.9,-1.8) to (3.4,-1.8);
 \node[redbox] (wavg) at (0,-3.5) {$\E[\lambda\mid\mbf{t}]$ is a weighted average of $\E[\lambda]$ and $\hat{\lambda}$!};
+\end{tikzpicture}
+}
+
+\frame{
+\frametitle{Prior-data conflict example}
+\begin{tikzpicture}
+[pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
+ redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
+ redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
+\uncover<1-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc1}};}
+\uncover<1-3>{\node at (2,1) {\color{tuered} $\yz = \E[\lambda] = 103$ (9 weeks), $\sd = 146$};}
+\uncover<2-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc2}};}
+\uncover<2-3>{\node at (-3.6,0) {$t_1 = 1$}; \node at (-3.6,-0.5) {$t_2 = 2$}; \node at (-3.6,-1) {$\hat{\lambda} = 2.5$}; }
+\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc3}};}
+\uncover<3-3>{\node at (2,2) {\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 53$ (6.4 weeks), $\sd = 61$};}
+%
+\uncover<4->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc1}};}
+\uncover<4->{\node at (2,1) {\color{tuered} $\yz = \E[\lambda] = 62$ (7 weeks), $\sd = 72$};}
+\uncover<5->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc2}};}
+\uncover<5->{\node at (-2.1,0) {$t_1 = 6$}; \node at (-2.1,-0.5) {$t_2 = 7$}; \node at (-2.1,-1) {$\hat{\lambda} = 42.5$}; }
+\uncover<6->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc3}};}
+\uncover<6->{\node at (2,2) {\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 52$ (6.4 weeks), $\sd = 61$};}
+\uncover<6->{\node at (2,1.6) {\color{tuecyan} \emph{almost the same as before!}};}
 \end{tikzpicture}
 }
 
