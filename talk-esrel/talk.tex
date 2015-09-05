@@ -375,7 +375,7 @@ where}%
 }
 
 \frame{
-\frametitle{Imprecise / Interval probability}
+\frametitle{Imprecise / interval probability}
 reliability function $R(t)$ is a collection of probability statements\\
 (in the long run, what percentage of components survive past $t$?)\\
 with usual Bayesian inference, we cannot express uncertainty about such probability statements!\\
@@ -406,9 +406,37 @@ and allow to better model partial or vague information on $\lambda$} \\
 \uncover<2->{%
 \centerline{Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ \alert{set of priors}}
 Walter \& Augustin (2009): $\PZ$ of type $[\nzl, \nzu] \times [\yzl, \yzu]$
-allow meaningful reaction to prior-data conflict: larger set in case of conflict
+allow meaningful reaction to prior-data conflict: larger set in case of conflict\\
+sets of priors $\to$ sets of posteriors via so-called GBR\\ \hfill {\small (ensures coherence, a consistency property)}
 }
 }
+
+\frame{
+\frametitle{Sets of prior distributions: example}
+\begin{tikzpicture}
+[pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
+ redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
+ redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
+\uncover<1->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc1}};}
+\end{tikzpicture}
+}
+
+\frame{
+\frametitle{system reliability graphs}
+
+}
+
+\frame{
+\frametitle{summary, extensions}
+
+}
+
+\frame{
+\frametitle{literature}
+
+}
+
 \end{document}
 
 
