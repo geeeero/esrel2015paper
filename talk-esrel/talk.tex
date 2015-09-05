@@ -204,6 +204,7 @@
 rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm]{#1};}}}
 
 \newcommand{\cyansec}[1]{\textcolor{tuecyan}{\large\bf #1}}
+\newcommand{\cyanalert}[1]{\textcolor{tuecyan}{#1}}
 
 % ------------------------------------------------------------------------------
 
@@ -297,10 +298,10 @@ How to combine these two information sources?
 \begin{array}{ccccl}
 \text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\[1.5ex]
 \text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\[1.5ex]
-p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{\alert{\play\ Bayes' Rule}} \\
+p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{\cyanalert{\play\ Bayes' Rule}} \\
 \downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
 \text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
-\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\alert{\play\ conjugacy}} \\[1ex]
+\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\cyanalert{\play\ conjugacy}} \\[1ex]
 \lambda \sim \ig(\alpha\uz,\beta\uz) & & \mbf{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\mbf{t} \sim \ig(\alpha\uell,\beta\uell)
 %{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
 \end{array}
@@ -376,14 +377,19 @@ where}%
 
 \frame{
 \frametitle{Imprecise / interval probability}
-reliability function $R(t)$ is a collection of probability statements\\
-(in the long run, what percentage of components survive past $t$?)\\
-with usual Bayesian inference, we cannot express uncertainty about such probability statements!\\
-
-\textbf{Add \alert{imprecision} as new modelling dimension:\\
+\begin{itemize}
+\item Averaging property holds \emph{for all conjugate models} (!)\\
+\cyanalert{Can we mitigate this and still keep tractability?}
+\item Reliability function $R(t)$ is a collection of probability statements:\\
+%In the long run, what percentage of components survive past $t$?\\
+The probability that the system survives past $t$.\\
+\cyanalert{How can we express uncertainty\\ about these probability statements?}
+\item[\play] \textbf{Add \alert{imprecision} as new modelling dimension:\\
 \alert{Sets of priors} model uncertainty in probability statements\\
-and allow to better model partial or vague information on $\lambda$} \\
-(can also be seen as systematic sensitivity analysis)\\[1ex]
+and allow to better model partial or vague information on $\lambda$.}
+\item This can also be seen as systematic sensitivity analysis
+or robust Bayesian approach.
+\end{itemize}
 }
 
 \frame{
@@ -404,10 +410,15 @@ and allow to better model partial or vague information on $\lambda$} \\
                           \then\ $P(\text{win}) = [1/100,\, 7/100]$}
 \end{block}}
 \uncover<2->{%
-\centerline{Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ \alert{set of priors}}
-Walter \& Augustin (2009): $\PZ$ of type $[\nzl, \nzu] \times [\yzl, \yzu]$
-allow meaningful reaction to prior-data conflict: larger set in case of conflict\\
-sets of priors $\to$ sets of posteriors via so-called GBR\\ \hfill {\small (ensures coherence, a consistency property)}
+Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ set of priors\\[1ex]
+Walter \& Augustin (2009), Walter (2013): $\PZ = [\nzl, \nzu] \times [\yzl, \yzu]$\\
+allows meaningful reaction to prior-data conflict:
+\begin{itemize}
+\item larger set of posteriors %$\to$ larger intervals
+\item more imprecise / cautious probability statements
+\end{itemize}
+sets of priors $\to$ sets of posteriors by updating element by element\\
+GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 }
 }
 
