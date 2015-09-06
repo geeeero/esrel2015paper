@@ -359,19 +359,19 @@ where}%
  redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
  redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
 \uncover<1-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc1}};}
-\uncover<1-3>{\node at (2,1) {\color{tuered} $\yz = \E[\lambda] = 103$ (9 weeks), $\sd = 146$};}
+\uncover<1-3>{\node at (3,1) {\parbox{0.7\textwidth}{\color{tuered} $\yz = \E[\lambda] = 103$ (9 weeks), $\sd = 146$\\ $\nz = 2$}};}
 \uncover<2-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc2}};}
 \uncover<2-3>{\node at (-3.6,0) {$t_1 = 1$}; \node at (-3.6,-0.5) {$t_2 = 2$}; \node at (-3.6,-1) {$\hat{\lambda} = 2.5$}; }
 \uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc3}};}
-\uncover<3-3>{\node at (2,2) {\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 53$ (6.4 weeks), $\sd = 61$};}
+\uncover<3-3>{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 53$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
 %
 \uncover<4->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc1}};}
-\uncover<4->{\node at (2,1) {\color{tuered} $\yz = \E[\lambda] = 62$ (7 weeks), $\sd = 72$};}
+\uncover<4->{\node at (3,1) {\parbox{0.7\textwidth}{\color{tuered} $\yz = \E[\lambda] = 62$ (7 weeks), $\sd = 72$\\ $\nz = 2$}};}
 \uncover<5->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc2}};}
 \uncover<5->{\node at (-2.1,0) {$t_1 = 6$}; \node at (-2.1,-0.5) {$t_2 = 7$}; \node at (-2.1,-1) {$\hat{\lambda} = 42.5$}; }
 \uncover<6->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc3}};}
-\uncover<6->{\node at (2,2) {\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 52$ (6.4 weeks), $\sd = 61$};}
-\uncover<6->{\node at (2,1.6) {\color{tuecyan} \emph{almost the same as before!}};}
+\uncover<6->{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 52$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
+\uncover<6->{\node at (2,1.8) {\color{tuecyan} \play\ \emph{almost the same as before!}};}
 \end{tikzpicture}
 }
 
@@ -430,17 +430,27 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
  redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
  redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
 \uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc1}};}
+\uncover<1-3>{\node at (3.5,-1) {\parbox{0.7\textwidth}{\color{tuered}\small $\yz = \E[\lambda] \in [46, 81]$ (6--8 weeks),\\
+                                                                       $\nz \in [2, 5]$, $\sd \in [51, 115]$}};}
 \uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc2}};}
-\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc1}};}
-\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc2}};}
-\uncover<5-5>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc-nopdc}};}
+\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc3}};}
+\uncover<3-3>{\node at (3.5,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [44, 70]$ (5.9--7.4 weeks),\\
+                                                                         $\nfun{2} \in [4, 7]$, $\sd \in [48, 76]$}};}
+\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc1}};}
+\uncover<4-6>{\node at (3.9,-1) {\parbox{0.7\textwidth}{\color{tuered}\small $\yz = \E[\lambda] \in [81, 127]$ (8--10 weeks),\\
+                                                                       $\nz \in [2, 5]$, $\sd \in [91, 180]$}};}
+\uncover<5-5>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc2}};}
+\uncover<6-6>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc3}};}
+\uncover<6-6>{\node at (3.9,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [42, 92]$ (5.7--8.5 weeks),\\
+                                                                         $\nfun{2} \in [4, 7]$, $\sd \in [48, 99]$}};}
+\uncover<7-7>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc-nopdc}};}
 \end{tikzpicture}
 }
 
 \frame{
 \frametitle{System reliability}
 
-\play\ Closed form for the parallel system reliability:
+\play\ Closed form for the system reliability:
 \begin{multline*}
 \Rsys(t \mid \vec{t}_m^\ell, \nz, \yz) \\
   = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, 
@@ -460,7 +470,7 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 }
 
 \frame{
-\frametitle{summary, extensions}
+\frametitle{summary, outlook}
 
 }
 

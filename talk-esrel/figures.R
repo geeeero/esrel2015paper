@@ -106,13 +106,35 @@ luckrect <- function(luck){
   list(n = n, y = c(yl, yu))
 }
 
-
+varlambda <- function(luck, posterior = FALSE){
+  optimfu <- function(.n0y0, luck){
+    if(posterior){
+      ny <- c(updateLuckN(.n0y0[1], n(data(luck))),
+              updateLuckY(.n0y0[1], .n0y0[2], tau(data(luck)), n(data(luck))))
+    } else {
+      ny <- .n0y0
+    }
+    ny[2]^2/(1 - 1/ny[1])
+  }
+  lres <- wrapOptim(par = c(mean(n0(luck)), mean(y0(luck))), fn = optimfu, control = list(fnscale = 1),
+                    lower = c(n0(luck)[1], y0(luck)[1]), upper = c(n0(luck)[2], y0(luck)[2]), luck = luck)
+  ures <- wrapOptim(par = c(mean(n0(luck)), mean(y0(luck))), fn = optimfu, control = list(fnscale = -1),
+                    lower = c(n0(luck)[1], y0(luck)[1]), upper = c(n0(luck)[2], y0(luck)[2]), luck = luck)
+  c(lres$value, ures$value)
+}
 
 luck12 <- WeibullLuckModel(n0 = c(2,5), y0 = c(failuretolambda(8,2), failuretolambda(10,2)),
                              data = WeibullData(1:2))
 luck67 <- WeibullLuckModel(n0 = c(2,5), y0 = c(failuretolambda(6,2), failuretolambda(8,2)),
                              data = WeibullData(6:7))
 xseq <- seq(0, 200, length.out = 201)
+
+sqrt(varlambda(luck67))
+luckrect(luck67)
+lambdatofailure(luckrect(luck67)$y)
+sqrt(varlambda(luck67, posterior=T))
+
+sqrt(varlambda(luck12))
 
 pdf("talk-esrel/lucknopdc1.pdf",width=5,height=3)
 par(mar=c(3,3,0,0)+0.1)
@@ -124,6 +146,16 @@ lines(y0(luck67), rep(0.01,2), lwd = 2, lend = 2, col = tuered())
 dev.off()
 
 pdf("talk-esrel/lucknopdc2.pdf",width=5,height=3)
+par(mar=c(3,3,0,0)+0.1)
+cdfplot(luck67, xvec = xseq, vertdist = TRUE,
+        control = controlList(posterior = FALSE, borderCol = tuered(), polygonCol = tuered(0.4)))
+lines(y0(luck67), rep(0.01,2), lwd = 2, lend = 2, col = tuered())
+points(42.5, 0, pch = 17)
+mtext(expression(lambda), 1, 2)
+mtext(expression(F(lambda)), 2, 2)
+dev.off()
+
+pdf("talk-esrel/lucknopdc3.pdf",width=5,height=3)
 par(mar=c(3,3,0,0)+0.1)
 cdfplot(luck67, xvec = xseq, vertdist = TRUE,
         control = controlList(posterior = FALSE, borderCol = tuered(), polygonCol = tuered(0.4)))
@@ -151,13 +183,22 @@ cdfplot(luck12, xvec = xseq, vertdist = TRUE,
         control = controlList(posterior = FALSE, borderCol = tuered(), polygonCol = tuered(0.4)))
 lines(y0(luck12), rep(0.01,2), lwd = 2, lend = 2, col = tuered())
 points(2.5, 0, pch = 17)
+mtext(expression(lambda), 1, 2)
+mtext(expression(F(lambda)), 2, 2)
+dev.off()
+
+pdf("talk-esrel/luckpdc3.pdf",width=5,height=3)
+par(mar=c(3,3,0,0)+0.1)
+cdfplot(luck12, xvec = xseq, vertdist = TRUE,
+        control = controlList(posterior = FALSE, borderCol = tuered(), polygonCol = tuered(0.4)))
+lines(y0(luck12), rep(0.01,2), lwd = 2, lend = 2, col = tuered())
+points(2.5, 0, pch = 17)
 cdfplot(luck12, xvec = xseq, add = TRUE, vertdist = TRUE,
         control = controlList(posterior = TRUE, borderCol = tuecyan(), polygonCol = tuecyan(0.8)))
 lines(luckrect(luck12)$y, rep(-0.01,2), lwd = 2, lend = 2, col = tuecyan())
 mtext(expression(lambda), 1, 2)
 mtext(expression(F(lambda)), 2, 2)
 dev.off()
-
 
 pdf("talk-esrel/pdc-nopdc.pdf",width=5,height=3)
 par(mar=c(3,3,0,0)+0.1)
