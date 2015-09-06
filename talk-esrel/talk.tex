@@ -429,8 +429,29 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
  cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
  redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
  redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
-\uncover<1->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc1}};}
+\uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc1}};}
+\uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc2}};}
+\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc1}};}
+\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc2}};}
+\uncover<5-5>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc-nopdc}};}
 \end{tikzpicture}
+}
+
+\frame{
+\frametitle{System reliability}
+
+\play\ Closed form for the parallel system reliability:
+\begin{multline*}
+\Rsys(t \mid \vec{t}_m^\ell, \nz, \yz) \\
+  = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, 
+   \left( \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
+               {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \right)^{\nz + m + 1}
+\end{multline*}
+\play\ Lower / upper bound through optimization for each $t$:
+\begin{align*}
+\lRsys(t \mid \vec{t}_m^\ell, \PZ) &= \min_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzl) \\ 
+\uRsys(t \mid \vec{t}_m^\ell, \PZ) &= \max_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzu)
+\end{align*}
 }
 
 \frame{
