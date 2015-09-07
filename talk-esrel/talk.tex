@@ -433,6 +433,7 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 \uncover<1-3>{\node at (3.5,-1) {\parbox{0.7\textwidth}{\color{tuered}\small $\yz = \E[\lambda] \in [46, 81]$ (6--8 weeks),\\
                                                                        $\nz \in [2, 5]$, $\sd \in [51, 115]$}};}
 \uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc2}};}
+\uncover<2-3>{\node at (-2.8,0) {\parbox{0.2\textwidth}{\small $t_1 = 6$\\ $t_2 = 7$\\ $\hat{\lambda} = 42.5$}};}
 \uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc3}};}
 \uncover<3-3>{\node at (3.5,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [44, 70]$ (5.9--7.4 weeks),\\
                                                                          $\nfun{2} \in [4, 7]$, $\sd \in [48, 76]$}};}
@@ -440,10 +441,13 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 \uncover<4-6>{\node at (3.9,-1) {\parbox{0.7\textwidth}{\color{tuered}\small $\yz = \E[\lambda] \in [81, 127]$ (8--10 weeks),\\
                                                                        $\nz \in [2, 5]$, $\sd \in [91, 180]$}};}
 \uncover<5-5>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc2}};}
+\uncover<5-6>{\node at (-2.8,0) {\parbox{0.2\textwidth}{\small $t_1 = 1$\\ $t_2 = 2$\\ $\hat{\lambda} = 2.5$}};}
 \uncover<6-6>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc3}};}
 \uncover<6-6>{\node at (3.9,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [42, 92]$ (5.7--8.5 weeks),\\
                                                                          $\nfun{2} \in [4, 7]$, $\sd \in [48, 99]$}};}
 \uncover<7-7>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc-nopdc}};}
+\uncover<7-7>{\node at (4.5, 0) {\parbox{0.7\textwidth}{\color{tuepms137} no conflict}};}
+\uncover<7-7>{\node at (4.5,-0.5) {\parbox{0.7\textwidth}{\color{tuecyan} prior-data conflict}};}
 \end{tikzpicture}
 }
 
@@ -472,47 +476,68 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 \frame{
 \frametitle{Summary \& Outlook}
 %Summary
+\begin{tikzpicture}
+\node at (0,0) {\parbox{\textwidth}{%
 \begin{itemize}
-\item[\play] Very limited data: Bayesian model with conjugate priors %for component reliability
-\item[\play] Set of system reliability functions %appropriately
+\item[\play]<1-> Very limited data: Bayesian model with conjugate priors %for component reliability
+\item[\play]<2-> Set of system reliability functions %appropriately
 reflects uncertainties from limited data (censoring!) and vague expert information  
-\item[\play] In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
+\item[\play]<3-> In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
 %Outlook
-\item[\play] Parallel system \then\
+\item[\play]<4-> Parallel system \then\
 \parbox[t]{0.6\textwidth}{general system layouts\\
 ($k$-out-of-$n$, series/parallel combinations)\\
 with \emph{multiple types of components}\\
 using the survival signature\\
 (Coolen \& Coolen-Maturi 2012)} %***diagram
-\item[\play] Nonparametric model\\ (drop Weibull assumption for component lifetimes)
-\item[\play] Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
-\item[\play] Use model for maintenance planning
 \end{itemize}
-}
-
-\frame{
+}};
+\end{tikzpicture}
 \begin{tikzpicture}
-[type1/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+[type1/.style={rectangle,draw,fill=tuepmswarmred!70,very thick,inner sep=0pt,minimum size=6mm},
  type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
- type3/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,fill=tuepmsyellow012!70,very thick,inner sep=0pt,minimum size=6mm},
  cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
  hv path/.style={thick, to path={-| (\tikztotarget)}},
  vh path/.style={thick, to path={|- (\tikztotarget)}}]
+\uncover<4>{%
 \coordinate (start) at (0,0);
+\node[type1] (s1) at (0.6, 0) {1};
 \coordinate (prllst) at (1.2,0);
-\node[type1] (s1) at (0.6, 0) {};
-\node[type1] (p1) at (1.8, 1.2) {};
-\node[type1] (p2) at (1.8,-1.2) {};
-\coordinate (midu) at (2.6, 1);
-\coordinate (midl) at (2.6,-1);
+\node[type2] (p1) at (1.8, 0.9) {2};
+\node[type2] (p2) at (1.8,-0.9) {2};
+\coordinate (midu) at (3.0, 0.6);
+\coordinate (midl) at (3.0,-0.6);
+\node[type3] (m1) at (2.5, 0) {3};
+\node[type3] (m2) at (3.5, 0) {3};
+\node[type2] (p3) at (4.2, 0.9) {2};
+\node[type2] (p4) at (4.2,-0.9) {2};
+\coordinate (prllen) at (4.8,0);
+\coordinate (end) at (5.1,0);
 \path (start)  edge          (s1)
-      (s1)     edge (prllst)
+      (s1)     edge          (prllst)
       (prllst) edge[vh path] (p1.west)
                edge[vh path] (p2.west)
       (midu)   edge[vh path] (p1.east)
-      (midl)   edge[vh path] (p2.east);
+               edge[hv path] (m1.north)
+               edge[hv path] (m2.north)
+               edge[vh path] (p3.west)
+      (midl)   edge[vh path] (p2.east)
+               edge[hv path] (m1.south)
+               edge[hv path] (m2.south)
+               edge[vh path] (p4.west)
+      (prllen) edge[vh path] (p3.east)
+               edge[vh path] (p4.east)
+               edge          (end);}
+\node at (3,0) {\parbox{\textwidth}{%
+\begin{itemize}
+\item[\play]<5-> Nonparametric model\\ (drop Weibull assumption for component lifetimes)
+\item[\play]<6-> Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
+\item[\play]<7-> Use model for maintenance planning
+\end{itemize}}};
 \end{tikzpicture}
 }
+
 
 
 %\nocite{1996:walley::idm, 2005:quaeghebeurcooman, Walter2009a}
