@@ -470,14 +470,62 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 }
 
 \frame{
-\frametitle{summary, outlook}
-
+\frametitle{Summary \& Outlook}
+%Summary
+\begin{itemize}
+\item[\play] Very limited data: Bayesian model with conjugate priors %for component reliability
+\item[\play] Set of system reliability functions %appropriately
+reflects uncertainties from limited data (censoring!) and vague expert information  
+\item[\play] In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
+%Outlook
+\item[\play] Parallel system \then\
+\parbox[t]{0.6\textwidth}{general system layouts\\
+($k$-out-of-$n$, series/parallel combinations)\\
+with \emph{multiple types of components}\\
+using the survival signature\\
+(Coolen \& Coolen-Maturi 2012)} %***diagram
+\item[\play] Nonparametric model\\ (drop Weibull assumption for component lifetimes)
+\item[\play] Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
+\item[\play] Use model for maintenance planning
+\end{itemize}
 }
 
 \frame{
-\frametitle{literature}
-
+\begin{tikzpicture}
+[type1/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={thick, to path={-| (\tikztotarget)}},
+ vh path/.style={thick, to path={|- (\tikztotarget)}}]
+\coordinate (start) at (0,0);
+\coordinate (prllst) at (1.2,0);
+\node[type1] (s1) at (0.6, 0) {};
+\node[type1] (p1) at (1.8, 1.2) {};
+\node[type1] (p2) at (1.8,-1.2) {};
+\coordinate (midu) at (2.6, 1);
+\coordinate (midl) at (2.6,-1);
+\path (start)  edge          (s1)
+      (s1)     edge (prllst)
+      (prllst) edge[vh path] (p1.west)
+               edge[vh path] (p2.west)
+      (midu)   edge[vh path] (p1.east)
+      (midl)   edge[vh path] (p2.east);
+\end{tikzpicture}
 }
+
+
+%\nocite{1996:walley::idm, 2005:quaeghebeurcooman, Walter2009a}
+
+\begin{frame}{References}
+%\begin{frame}[allowframebreaks]{References}
+%
+%  \bibliographystyle{plain}
+%  {\scriptsize
+%  \bibliography{../_diss/v1/bib/other-refs,../_diss/v1/bib/itip-refs} 
+%  }
+%\printbibliography[heading=none]
+\end{frame}
 
 \end{document}
 
