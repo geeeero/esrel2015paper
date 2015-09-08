@@ -377,8 +377,8 @@ where}%
 
 \frame{
 \frametitle{Imprecise / interval probability}
-\begin{itemize}
-\item Averaging property holds \emph{for all conjugate models} (!)\\
+\begin{itemize}[<+->]
+\item Averaging property holds \alert{\emph{for all conjugate models}} (!)\\
 \cyanalert{Can we mitigate this and still keep tractability?}
 \item Reliability function $R(t)$ is a collection of probability statements:\\
 %In the long run, what percentage of components survive past $t$?\\
@@ -387,7 +387,7 @@ The probability that the system survives past $t$.\\
 \item[\play] \textbf{Add \alert{imprecision} as new modelling dimension:\\
 \alert{Sets of priors} model uncertainty in probability statements\\
 and allow to better model partial or vague information on $\lambda$.}
-\item This can also be seen as systematic sensitivity analysis
+\item Can also be seen as systematic sensitivity analysis\\
 or robust Bayesian approach.
 \end{itemize}
 }
@@ -411,19 +411,20 @@ or robust Bayesian approach.
 \end{block}}
 \uncover<2->{%
 Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ set of priors\\[1ex]
+Sets of priors $\to$ sets of posteriors by updating element by element\\
+GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}\\[1ex]}
+\uncover<3->{%
 Walter \& Augustin (2009), Walter (2013): $\PZ = [\nzl, \nzu] \times [\yzl, \yzu]$\\
-allows meaningful reaction to prior-data conflict:
+gives tracktability \& meaningful reaction to prior-data conflict:
 \begin{itemize}
 \item larger set of posteriors %$\to$ larger intervals
 \item more imprecise / cautious probability statements
 \end{itemize}
-sets of priors $\to$ sets of posteriors by updating element by element\\
-GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 }
 }
 
 \frame{
-\frametitle{Sets of prior distributions: example}
+\frametitle{Sets of prior distributions: examples}
 \begin{tikzpicture}
 [pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
  cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
@@ -454,31 +455,38 @@ GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}
 \frame{
 \frametitle{System reliability}
 
+\uncover<1->{%
 \play\ Closed form for the system reliability:
 \begin{multline*}
 \Rsys(t \mid \vec{t}_m^\ell, \nz, \yz) \\
   = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, 
    \left( \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
                {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \right)^{\nz + m + 1}
-\end{multline*}
+\end{multline*}}
+\uncover<2->{%
 \play\ Lower / upper bound through optimization for each $t$:
 \begin{align*}
 \lRsys(t \mid \vec{t}_m^\ell, \PZ) &= \min_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzl) \\ 
 \uRsys(t \mid \vec{t}_m^\ell, \PZ) &= \max_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzu)
-\end{align*}
+\end{align*}}
 }
 
 \frame{
-\frametitle{system reliability graphs}
+\frametitle{System reliability: examples}
 \begin{tikzpicture}
 [pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
  cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
  redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
  redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
 \uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-1}};}
+\uncover<1-4>{\node at (2.5, 2.5) {\parbox{0.5\textwidth}{\color{tuered}\small $\ell=3$ components, $\nz \in [2, 5]$,\\
+                                                                              $\yz = \E[\lambda] \in [103, 154]$ (9--11 weeks)}};}
 \uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-2}};}
+\uncover<2-4>{\node at (3.5, 1.5) {\parbox{0.25\textwidth}{\color{tuecyan}\small $\mbf{t} = (10,11,11^+)$}};}
 \uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-3}};}
+\uncover<3-4>{\node at (3.5, 0.5) {\parbox{0.25\textwidth}{\color{tuepms137}\small $\mbf{t} = (1,2,2^+)$}};}
 \uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-4}};}
+\uncover<4-4>{\node at (3.5,-0.5) {\parbox{0.25\textwidth}{\color{tuepmsgreen}\small $\mbf{t} = (15^+,15^+,15^+)$}};}
 \end{tikzpicture}
 }
 
@@ -560,6 +568,11 @@ using the survival signature\\
 %  }
 %\printbibliography[heading=none]
 \end{frame}
+
+\frame{
+\frametitle{general systems via the survival signature}
+
+}
 
 \end{document}
 
