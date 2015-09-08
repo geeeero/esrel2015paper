@@ -55,13 +55,10 @@
 \usepackage{xcolor}
 \usepackage{url}
 
-%\usepackage[backend=bibtex,style=authoryear,dashed=false]{biblatex}
-%\addbibresource{../cv/eigene_141121.bib}
-%\addbibresource{../../../_diss/v1/bib/itip-refs.bib}
-%\addbibresource{../../../_diss/v1/bib/other-refs.bib}
-%\addbibresource{refs-eindhoven.bib}
+\usepackage[backend=bibtex,style=authoryear,dashed=false]{biblatex}
+\addbibresource{../esrel2015talkrefs.bib}
 %\renewcommand{\bibfont}{\normalfont\scriptsize}
-%\setlength{\bibhang}{3ex}
+\setlength{\bibhang}{3ex}
 
 \usepackage{hyperref}
 
@@ -420,11 +417,11 @@ or robust Bayesian approach.
 \end{block}}
 \uncover<2->{%
 Let parameters $(\nz, \yz)$ vary in a set $\PZ$ \then\ set of priors\\[1ex]
-Sets of priors $\to$ sets of posteriors by updating element by element\\
-GBR (Walley 1991) ensures \emph{coherence} {\small (a consistency property)}\\[1ex]}
+Sets of priors $\to$ sets of posteriors by updating element by element:\\
+GBR \parencite{1991:walley} ensures \emph{coherence} {\small (a consistency property)}\\[1ex]}
 \uncover<3->{%
-Walter \& Augustin (2009), Walter (2013): $\PZ = [\nzl, \nzu] \times [\yzl, \yzu]$\\
-gives tracktability \& meaningful reaction to prior-data conflict:
+\textcite{Walter2009a}, \textcite{diss}: $\PZ = [\nzl, \nzu] \times [\yzl, \yzu]$\\
+gives tractability \& meaningful reaction to prior-data conflict:
 \begin{itemize}
 \item larger set of posteriors %$\to$ larger intervals
 \item more imprecise / cautious probability statements
@@ -515,7 +512,8 @@ reflects uncertainties from limited data (censoring!) and vague expert informati
 ($k$-out-of-$n$, series/parallel combinations)\\
 with \emph{multiple types of components}\\
 using the survival signature\\
-(Coolen \& Coolen-Maturi 2012)} %***diagram
+\parencite{2012:survsign}}
+%(Coolen \& Coolen-Maturi 2012)} %***diagram
 \end{itemize}
 }};
 \end{tikzpicture}
@@ -575,13 +573,14 @@ using the survival signature\\
 %  {\scriptsize
 %  \bibliography{../_diss/v1/bib/other-refs,../_diss/v1/bib/itip-refs} 
 %  }
-%\printbibliography[heading=none]
+\printbibliography[heading=none]
 \end{frame}
 
 \frame{
 \frametitle{general systems via the survival signature}
 
 }
+
 
 \end{document}
 
