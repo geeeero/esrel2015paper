@@ -580,10 +580,18 @@ using the survival signature\\
 \frametitle{General systems via the survival signature}
 \begin{tikzpicture} % l b r t
 \uncover<1-2>{\node at (0,0) {\includegraphics[height=0.95\textheight]{../poster-system/poster-system}};}
-\uncover<2-3>{\node at (6,0) {\includegraphics[height=0.6\textheight,trim = 300 150 290 820, clip]{../poster-system/poster-system}};}
-\uncover<3->{\node at (0,0) {\includegraphics[width=0.5\textwidth,trim = 50 400 520 610, clip]{../poster-system/poster-system}};}
+\uncover<2-4>{\node at (6,1) {\includegraphics[height=0.6\textheight,trim = 300 150 290 820, clip]{../poster-system/poster-system}};}
+\uncover<3-4>{\node at (0,1.1) {\includegraphics[width=0.5\textwidth,trim = 50 400 520 610, clip]{../poster-system/poster-system}};}
+\uncover<4-4>{\node at (3,-2) %
+     {\parbox{\textwidth}{\begin{multline*}
+       \ul{P}\left(\Tsys > t \mid \{\nkz,\ykz, \mbf{t}^k_{e_k;n_k}\}{}^{1:K}\right)\\
+       = \min_{\nkzfun{1},\ldots,\nkzfun{K}}
+         \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,l_K)
+         \prod_{k=1}^K P(C^k_t = l_k\mid\nkz,\ykzl, \mbf{t}^k_{e_k;n_k})\end{multline*}}};}
 \end{tikzpicture}
 }
+
+
 
 %---- reset total frame number
 \addtocounter{framenumber}{-1} 
