@@ -557,7 +557,7 @@ using the survival signature\\
 \begin{itemize}
 \item[\play]<5-> Nonparametric model\\ (drop Weibull assumption for component lifetimes)
 \item[\play]<6-> Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
-\item[\play]<7-> Use model for maintenance planning
+\item[\play]<7-> Use model for maintenance planning %, design
 \end{itemize}}};
 \end{tikzpicture}
 }
@@ -577,10 +577,16 @@ using the survival signature\\
 \end{frame}
 
 \frame{
-\frametitle{general systems via the survival signature}
-
+\frametitle{General systems via the survival signature}
+\begin{tikzpicture} % l b r t
+\uncover<1-2>{\node at (0,0) {\includegraphics[height=0.95\textheight]{../poster-system/poster-system}};}
+\uncover<2-3>{\node at (6,0) {\includegraphics[height=0.6\textheight,trim = 300 150 290 820, clip]{../poster-system/poster-system}};}
+\uncover<3->{\node at (0,0) {\includegraphics[width=0.5\textwidth,trim = 50 400 520 610, clip]{../poster-system/poster-system}};}
+\end{tikzpicture}
 }
 
+%---- reset total frame number
+\addtocounter{framenumber}{-1} 
 
 \end{document}
 
