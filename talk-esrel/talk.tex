@@ -281,7 +281,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
  \end{itemize}
 \item[\play]<3-> cautious assumptions on component reliability:
  \begin{itemize}
- \item[] expert information,\\ e.g. from the component manufactor\\ \alert{which we don't trust entirely}
+ \item[] expert information,\\ e.g. from the component manufacturer\\ \alert{which we don't trust entirely}
  \end{itemize}
 \end{enumerate}
 \uncover<4->{How to combine these two information sources?}
@@ -304,9 +304,9 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \end{array}
 \end{align*}
 \uncover<4->{\begin{itemize}
-\item conjugacy holds also for censored observations
 \item makes learning about component reliability tractable,\\  %posterior distribution
       just update parameters:\quad $\alpha\uz \to \alpha\uell$, $\beta\uz \to \beta\uell$
+\item conjugacy holds also for censored observations
 \item closed form for system reliability function $\Rsys(t\mid\mbf{t})$
 \end{itemize}}
 }
@@ -388,7 +388,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \cyanalert{Can we mitigate this and still keep tractability?}
 \item Reliability function $R(t)$ is a collection of probability statements:\\
 %In the long run, what percentage of components survive past $t$?\\
-The probability that the system survives past $t$.\\
+$R(t) =$ probability that the system survives past $t$.\\
 \cyanalert{How can we express uncertainty\\ about these probability statements?}
 \item[\play] \textbf{Add \alert{imprecision} as new modelling dimension:\\
 \alert{Sets of priors} model uncertainty in probability statements\\
@@ -502,9 +502,9 @@ gives tractability \& meaningful reaction to prior-data conflict:
 \begin{tikzpicture}
 \node at (0,0) {\parbox{\textwidth}{%
 \begin{itemize}
-\item[\play]<1-> Very limited data: Bayesian model with conjugate priors %for component reliability
+\item[\play]<1-> Very limited data: Bayesian model with set of conjugate priors %for component reliability
 \item[\play]<2-> Set of system reliability functions %appropriately
-reflects uncertainties from limited data (censoring!) and vague expert information  
+reflects uncertainties from limited data (with censoring!) and vague expert information  
 \item[\play]<3-> In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
 %Outlook
 \item[\play]<4-> Parallel system \then\
