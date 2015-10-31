@@ -477,16 +477,58 @@ gives tractability \& meaningful reaction to prior-data conflict:
 [pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
  cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
  redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
- redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick}]
-\uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-1}};}
-\uncover<1-4>{\node at (2.5, 2.5) {\parbox{0.5\textwidth}{\color{tuered}\small $\ell=3$ components, $\nz \in [2, 5]$,\\
-                                                                              $\yz = \E[\lambda] \in [103, 154]$ (9--11 weeks)}};}
-\uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-2}};}
-\uncover<2-4>{\node at (3.5, 1.5) {\parbox{0.25\textwidth}{\color{tuecyan}\small $\mbf{t} = (10,11,11^+)$}};}
-\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-3}};}
-\uncover<3-4>{\node at (3.5, 0.5) {\parbox{0.25\textwidth}{\color{tuepms137}\small $\mbf{t} = (1,2,2^+)$}};}
-\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-4}};}
-\uncover<4-4>{\node at (3.5,-0.5) {\parbox{0.25\textwidth}{\color{tuepmsgreen}\small $\mbf{t} = (15^+,15^+,15^+)$}};}
+ redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick},
+ type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={to path={-| (\tikztotarget)},thick,rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},thick,rounded corners=0mm}]
+\uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-0}};}
+\uncover<1-1>{\node at (2.9, 2.3) {\parbox{0.5\textwidth}{\color{tuered}\small $\nz_1 \in [2, 10]$, $\E[T\mid\yz_1] \in [9, 11]$\\
+                                                                             $\nz_2 \in [2, 10]$, $\E[T\mid\yz_2] \in [4,\phantom{1}5]$\\
+                                                                             $\nz_3 \in [1,\phantom{1}5]$, $\E[T\mid\yz_3] \in [9, 11]$}};}
+\uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-1}};}
+\uncover<2-4>{\node at (2.9, 2.8) {\parbox{0.5\textwidth}{\color{tuecyan}\small $\vec{t}^1 = (5^+,5^+)$, $\vec{t}^2 = (4,5,5^+)$, $\vec{t}^3 = (5^+)$}};}
+%\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-3}};}
+%\uncover<3-4>{\node at (3.5, 0.5) {\parbox{0.25\textwidth}{\color{tuepms137}\small $\mbf{t} = (1,2,2^+)$}};}
+%\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-4}};}
+%\uncover<4-4>{\node at (3.5,-0.5) {\parbox{0.25\textwidth}{\color{tuepmsgreen}\small $\mbf{t} = (15^+,15^+,15^+)$}};}
+\fill (0,0) circle (3pt);
+\begin{scope}[xshift=2.2cm, yshift=0cm]
+\fill[red] (0,0) circle (3pt);
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 1) {1};
+\node[type2] (double2) at ( 1, 0) {2};
+\node[type2] (double3) at ( 1,-1) {2};
+\node[type1] (triple1) at ( 3, 1) {1};
+\node[type2] (triple2) at ( 3, 0) {2};
+\node[type3] (triple3) at ( 3,-1) {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge[thick]   (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+              edge[vh path] (double3.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge[vh path] (double3.east)
+              edge[thick]   (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge[thick]   (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge[thick]   (triple2.east)
+              edge[vh path] (triple3.east)
+              edge[thick]   (end);
+\uncover<2-2>{\node[cross] at ( 1, 0) {};}
+\uncover<2-2>{\node[cross] at ( 3, 0) {};}
+\end{scope}
+\end{scope}
 \end{tikzpicture}
 }
 
