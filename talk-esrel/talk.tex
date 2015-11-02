@@ -206,16 +206,16 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
 % ------------------------------------------------------------------------------
 
 
-\title{Robust Bayesian Estimation of System Reliability with Scarce and Surprising Data}
+\title{System Reliability Estimation\\ under Prior-Data Conflict}
 
-\author{Gero Walter\inst{1}, Andrew Graham\inst{2}, Frank Coolen\inst{2}}
+\author{Gero Walter\inst{1}, Frank Coolen\inst{2}, Simme Douwe Flapper\inst{1}}
 \institute{ \inst{1} Eindhoven University of Technology, Eindhoven, NL\\ 
             \inst{2} Durham University, Durham, UK \\[2ex]
             \url{g.m.walter@tue.nl} \\[2ex]
             \includegraphics[height=9mm]{logos/tuelogo} \quad
             \includegraphics[height=9mm]{logos/logounidurham-large} \quad
             \includegraphics[height=9mm]{logos/dinalog-hp} }
-\date{ESREL 2015}
+\date{2015-11-03}
 
 \begin{document}
 
@@ -318,14 +318,14 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
  p(\lambda) & \times & p_c(\vec{t} \mid \lambda) & \propto & p(\lambda \mid \vec{t}) \qquad\text{\cyanalert{\play\ Bayes' Rule}} \\}
 \uncover<3->{\downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
 \text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
-\text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\cyanalert{\play\ conjugacy}} \\[1ex]
-\lambda \sim \ig(\alpha\uz,\beta\uz) & & \vec{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\vec{t} \sim \ig(\alpha\uell,\beta\uell)}
+\text{prior}         & & \text{fixed shape $\kappa$}  & & \quad \text{posterior} \quad \text{\cyanalert{\play\ conjugacy}} \\[1ex]
+\lambda \sim \ig(\alpha\uz,\beta\uz) & & \vec{t}\mid\lambda \sim \wei_\kappa(\lambda) & & \lambda\mid\vec{t} \sim \ig(\alpha\un,\beta\un)}
 %{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
 \end{array}
 \end{align*}
 \uncover<4->{\begin{itemize}
 \item makes learning about component reliability tractable,\\  %posterior distribution
-      just update parameters:\quad $\alpha\uz \to \alpha\uell$, $\beta\uz \to \beta\uell$
+      just update parameters:\quad $\alpha\uz \to \alpha\un$, $\beta\uz \to \beta\un$
 \item conjugacy holds also for censored observations
 \item closed form for system reliability function $\Rsys(t\mid\vec{t})$
 \end{itemize}}
@@ -353,9 +353,9 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 %$\lambda \sim \ig(\nz+1,\nz\yz)$ and $\lambda\mid\mbf{t} \sim \ig(\nell+1,\nell\yell)$,
 %where}%
 %\begin{align*}
-\nell &= \nz + \ell\,, 
+\nn &= \nz + n\,, 
 &
-\yell &=  \frac{\nz}{\nz + \ell} \, \yz + \frac{\ell}{\nz + \ell} \cdot \frac{1}{\ell} \textstyle\sum_{j=1}^\ell t_j^k
+\yn &=  \frac{\nz}{\nz + n} \, \yz + \frac{n}{\nz + n} \cdot \frac{1}{n} \textstyle\sum_{j=1}^n t_j^\kappa
 \end{align*}
 }};}
 \uncover<3->{%
@@ -363,7 +363,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \draw [pfeil] (yz.north east) to [out= 30,in=260] (1.1,-0.95);
 \draw [pfeil] (yz.north west) to [out=130,in=240] (-1.5,0.4);}
 \uncover<4->{%
-\node[cyanrand] (yl) at (1.5,-2.4) {$\yell = \E[\lambda\mid\vec{t}]$};
+\node[cyanrand] (yl) at (1.5,-2.4) {$\yn = \E[\lambda\mid\vec{t}]$};
 \draw [pfeil] (yl.north) to [out=90,in=280] (-1.2,-0.95);}
 \uncover<5->{%
 \node[cyanrand] (ml) at ( 4.3,-2.4) {ML estimator $\hat{\lambda}$};
