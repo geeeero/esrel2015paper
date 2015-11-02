@@ -197,8 +197,8 @@
 \def\tnow{t_\text{now}}
 \def\tpnow{t^+_\text{now}}
 
-\newcommand{\comp}[1]{\raisebox{-2mm}{\tikz{\node[%type1
-rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm]{#1};}}}
+\newcommand{\comp}[1]{\raisebox{-1mm}{\tikz{\node[%type1
+rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=4mm]{#1};}}}
 
 \newcommand{\cyansec}[1]{\textcolor{tuecyan}{\large\bf #1}}
 \newcommand{\cyanalert}[1]{\textcolor{tuecyan}{#1}}
@@ -227,10 +227,10 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
 
 
 \frame{
-\frametitle{Setting: a one of a kind parallel system}
+\frametitle{Setting: a prototype system}
 
 \begin{columns}
-\begin{column}{0.2\textwidth}
+\begin{column}{0.25\textwidth}
 \begin{tikzpicture}
 [type1/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
  type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
@@ -238,32 +238,61 @@ rectangle,rounded corners=0mm,draw,fill=tuepmsgreen!70,thick,inner sep=0pt,minim
  cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
  hv path/.style={thick, to path={-| (\tikztotarget)}},
  vh path/.style={thick, to path={|- (\tikztotarget)}}]
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 1) {1};
+\node[type2] (double2) at ( 1, 0) {2};
+\node[type2] (double3) at ( 1,-1) {2};
+\node[type1] (triple1) at ( 3, 1) {1};
+\node[type2] (triple2) at ( 3, 0) {2};
+\node[type3] (triple3) at ( 3,-1) {3};
 \coordinate (start) at (0,0);
-\coordinate (prllst) at (0.3,0);
-\node[type1] (p1) at ( 1, 1.5) {};
-\node[type1] (p2) at ( 1, 0.5) {};
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge[thick]   (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+              edge[vh path] (double3.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge[vh path] (double3.east)
+              edge[thick]   (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge[thick]   (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge[thick]   (triple2.east)
+              edge[vh path] (triple3.east)
+              edge[thick]   (end);
+\end{scope}
+%\coordinate (start) at (0,0);
+%\coordinate (prllst) at (0.3,0);
+%\node[type1] (p1) at ( 1, 1.5) {};
+%\node[type1] (p2) at ( 1, 0.5) {};
 %\node[type1] (p3) at ( 1,-0.5) {};
-\node[inner sep=0pt,minimum size=6mm] (p3) at ( 1,-0.5) {$\vdots$};
-\node[type1] (p4) at ( 1,-1.5) {};
-\node at ($(p1.south east) + (0.1,-0.0)$) {$1$};
-\node at ($(p2.south east) + (0.1,-0.0)$) {$2$};
-\node at ($(p4.south east) + (0.1,-0.0)$) {$\ell$};
-\coordinate (prllen) at (1.7,0);
-\coordinate (end)   at (2,0);
-\path (start)  edge          (prllst)
-      (prllst) edge[vh path] (p1.west)
-               edge[vh path] (p2.west)
-               edge[vh path] (p3.west)
-               edge[vh path] (p4.west)
-      (prllen) edge[vh path] (p1.east)
-               edge[vh path] (p2.east)
-               edge[vh path] (p3.east)
-               edge[vh path] (p4.east)
-               edge          (end);
-\end{tikzpicture}\\
-($1$ out of $\ell$)
+%\node[inner sep=0pt,minimum size=6mm] (p3) at ( 1,-0.5) {$\vdots$};
+%\node[type1] (p4) at ( 1,-1.5) {};
+%\node at ($(p1.south east) + (0.1,-0.0)$) {$1$};
+%\node at ($(p2.south east) + (0.1,-0.0)$) {$2$};
+%\node at ($(p4.south east) + (0.1,-0.0)$) {$\ell$};
+%\coordinate (prllen) at (1.7,0);
+%\coordinate (end)   at (2,0);
+%\path (start)  edge          (prllst)
+%      (prllst) edge[vh path] (p1.west)
+%               edge[vh path] (p2.west)
+%               edge[vh path] (p3.west)
+%               edge[vh path] (p4.west)
+%      (prllen) edge[vh path] (p1.east)
+%               edge[vh path] (p2.east)
+%               edge[vh path] (p3.east)
+%               edge[vh path] (p4.east)
+%               edge          (end);
+\end{tikzpicture}%\\
+%($1$ out of $\ell$)
 \end{column}
-\begin{column}{0.8\textwidth}
+\begin{column}{0.75\textwidth}
 We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \begin{enumerate}
 \item[\play]<2-> system run until time $\tnow$:
@@ -272,7 +301,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
  \end{itemize}
 \item[\play]<3-> cautious assumptions on component reliability:
  \begin{itemize}
- \item[] expert information,\\ e.g. from the component manufacturer\\ \alert{which we don't trust entirely}
+ \item[] expert information,\\ e.g. from the component manufacturers\\ \alert{which we don't trust entirely}
  \end{itemize}
 \end{enumerate}
 \uncover<4->{How to combine these two information sources?}
@@ -286,11 +315,11 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \begin{array}{ccccl}
 \uncover<1->{\text{expert info}        & + & \text{data}       & \to & \text{complete picture} \\[1.5ex]}
 \uncover<2->{\text{prior distribution} & + & \text{likelihood} & \to & \text{posterior distribution} \\[1.5ex]
- p(\lambda) & \times & p_c(\mbf{t} \mid \lambda) & \propto & p(\lambda \mid \mbf{t}) \qquad\text{\cyanalert{\play\ Bayes' Rule}} \\}
+ p(\lambda) & \times & p_c(\vec{t} \mid \lambda) & \propto & p(\lambda \mid \vec{t}) \qquad\text{\cyanalert{\play\ Bayes' Rule}} \\}
 \uncover<3->{\downarrow & & \downarrow & & \hspace*{3ex} \downarrow \\
 \text{inverse Gamma} & & \text{Weibull with} & & \text{inverse Gamma} \\
 \text{prior}         & & \text{fixed shape $k$}  & & \quad \text{posterior} \quad \text{\cyanalert{\play\ conjugacy}} \\[1ex]
-\lambda \sim \ig(\alpha\uz,\beta\uz) & & \mbf{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\mbf{t} \sim \ig(\alpha\uell,\beta\uell)}
+\lambda \sim \ig(\alpha\uz,\beta\uz) & & \vec{t}\mid\lambda \sim \wei_k(\lambda) & & \lambda\mid\vec{t} \sim \ig(\alpha\uell,\beta\uell)}
 %{\textstyle \lambda \sim \ig(\nz\!+\!1,\nz\yz)}
 \end{array}
 \end{align*}
@@ -298,7 +327,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \item makes learning about component reliability tractable,\\  %posterior distribution
       just update parameters:\quad $\alpha\uz \to \alpha\uell$, $\beta\uz \to \beta\uell$
 \item conjugacy holds also for censored observations
-\item closed form for system reliability function $\Rsys(t\mid\mbf{t})$
+\item closed form for system reliability function $\Rsys(t\mid\vec{t})$
 \end{itemize}}
 }
 
@@ -334,7 +363,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \draw [pfeil] (yz.north east) to [out= 30,in=260] (1.1,-0.95);
 \draw [pfeil] (yz.north west) to [out=130,in=240] (-1.5,0.4);}
 \uncover<4->{%
-\node[cyanrand] (yl) at (1.5,-2.4) {$\yell = \E[\lambda\mid\mbf{t}]$};
+\node[cyanrand] (yl) at (1.5,-2.4) {$\yell = \E[\lambda\mid\vec{t}]$};
 \draw [pfeil] (yl.north) to [out=90,in=280] (-1.2,-0.95);}
 \uncover<5->{%
 \node[cyanrand] (ml) at ( 4.3,-2.4) {ML estimator $\hat{\lambda}$};
@@ -344,7 +373,7 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \draw [pfeil] (nz.north)      to [out=80,in=250] (-3.65,-0.95);
 \draw [pfeil] (nz.north west) to [out=95,in=240] (-4.8, 0.5);}
 \uncover<7->{%
-\node[redbox] (wavg) at (0,-3.5) {$\E[\lambda\mid\mbf{t}]$ is a weighted average of $\E[\lambda]$ and $\hat{\lambda}$!};}
+\node[redbox] (wavg) at (0,-3.5) {$\E[\lambda\mid\vec{t}]$ is a weighted average of $\E[\lambda]$ and $\hat{\lambda}$!};}
 \end{tikzpicture}
 }
 
@@ -360,14 +389,14 @@ We want to learn about the system reliability $\Rsys(t) = P(\Tsys > t)$ based on
 \uncover<2-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc2}};}
 \uncover<2-3>{\node at (-3.6,0) {$t_1 = 1$}; \node at (-3.6,-0.5) {$t_2 = 2$}; \node at (-3.6,-1) {$\hat{\lambda} = 2.5$}; }
 \uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc3}};}
-\uncover<3-3>{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 53$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
+\uncover<3-3>{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\vec{t}] = 53$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
 %
 \uncover<4->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc1}};}
 \uncover<4->{\node at (3,1) {\parbox{0.7\textwidth}{\color{tuered} $\yz = \E[\lambda] = 62$ (7 weeks), $\sd = 72$\\ $\nz = 2$}};}
 \uncover<5->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc2}};}
 \uncover<5->{\node at (-2.1,0) {$t_1 = 6$}; \node at (-2.1,-0.5) {$t_2 = 7$}; \node at (-2.1,-1) {$\hat{\lambda} = 42.5$}; }
 \uncover<6->{\node at (0,0) {\includegraphics[width=0.95\textwidth]{nopdc3}};}
-\uncover<6->{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\mbf{t}] = 52$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
+\uncover<6->{\node at (3,2.5) {\parbox{0.7\textwidth}{\color{tuecyan} $\yfun{2} = \E[\lambda\mid\vec{t}] = 52$ (6.4 weeks), $\sd = 61$\\ $\nfun{2} = 4$}};}
 \uncover<6->{\node at (2,1.8) {\color{tuecyan} \play\ \emph{almost the same as before!}};}
 \end{tikzpicture}
 }
@@ -436,7 +465,7 @@ gives tractability \& meaningful reaction to prior-data conflict:
 \uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc2}};}
 \uncover<2-3>{\node at (-2.8,0) {\parbox{0.2\textwidth}{\small $t_1 = 6$\\ $t_2 = 7$\\ $\hat{\lambda} = 42.5$}};}
 \uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{lucknopdc3}};}
-\uncover<3-3>{\node at (3.5,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [44, 70]$ (5.9--7.4 weeks),\\
+\uncover<3-3>{\node at (3.5,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\vec{t}] \in [44, 70]$ (5.9--7.4 weeks),\\
                                                                          $\nfun{2} \in [4, 7]$, $\sd \in [48, 76]$}};}
 \uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc1}};}
 \uncover<4-6>{\node at (3.9,-1) {\parbox{0.7\textwidth}{\color{tuered}\small $\yz = \E[\lambda] \in [81, 127]$ (8--10 weeks),\\
@@ -444,7 +473,7 @@ gives tractability \& meaningful reaction to prior-data conflict:
 \uncover<5-5>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc2}};}
 \uncover<5-6>{\node at (-2.8,0) {\parbox{0.2\textwidth}{\small $t_1 = 1$\\ $t_2 = 2$\\ $\hat{\lambda} = 2.5$}};}
 \uncover<6-6>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{luckpdc3}};}
-\uncover<6-6>{\node at (3.9,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\mbf{t}] \in [42, 92]$ (5.7--8.5 weeks),\\
+\uncover<6-6>{\node at (3.9,0.1) {\parbox{0.7\textwidth}{\color{tuecyan}\small $\yfun{2} = \E[\lambda\mid\vec{t}] \in [42, 92]$ (5.7--8.5 weeks),\\
                                                                          $\nfun{2} \in [4, 7]$, $\sd \in [48, 99]$}};}
 \uncover<7-7>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{pdc-nopdc}};}
 \uncover<7-7>{\node at (4.5, 0) {\parbox{0.7\textwidth}{\color{tuepms137} no conflict}};}
@@ -455,48 +484,50 @@ gives tractability \& meaningful reaction to prior-data conflict:
 \frame{
 \frametitle{System reliability}
 
-\uncover<1->{%
-\play\ Closed form for the system reliability:
-\begin{multline*}
-\Rsys(t \mid \vec{t}_m^\ell, \nz, \yz) \\
-  = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, 
-   \left( \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
-               {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \right)^{\nz + m + 1}
-\end{multline*}}
-\uncover<2->{%
-\play\ Lower / upper bound through optimization for each $t$:
-\begin{align*}
-\lRsys(t \mid \vec{t}_m^\ell, \PZ) &= \min_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzl) \\ 
-\uRsys(t \mid \vec{t}_m^\ell, \PZ) &= \max_{\nz \in [\nzl, \nzu]} \Rsys(t \mid \vec{t}_m^\ell, \nz, \yzu)
-\end{align*}}
-}
-
-\frame{
-\frametitle{System reliability: examples}
-\begin{tikzpicture}
-[pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
- cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
- redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
- redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick},
- type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
- type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
- type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
- cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
- hv path/.style={to path={-| (\tikztotarget)},thick,rounded corners=0mm},
- vh path/.style={to path={|- (\tikztotarget)},thick,rounded corners=0mm}]
-\uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-0}};}
-\uncover<1-1>{\node at (2.9, 2.3) {\parbox{0.5\textwidth}{\color{tuered}\small $\nz_1 \in [2, 10]$, $\E[T\mid\yz_1] \in [9, 11]$\\
-                                                                             $\nz_2 \in [2, 10]$, $\E[T\mid\yz_2] \in [4,\phantom{1}5]$\\
-                                                                             $\nz_3 \in [1,\phantom{1}5]$, $\E[T\mid\yz_3] \in [9, 11]$}};}
-\uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-1}};}
-\uncover<2-4>{\node at (2.9, 2.8) {\parbox{0.5\textwidth}{\color{tuecyan}\small $\vec{t}^1 = (5^+,5^+)$, $\vec{t}^2 = (4,5,5^+)$, $\vec{t}^3 = (5^+)$}};}
-%\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-3}};}
-%\uncover<3-4>{\node at (3.5, 0.5) {\parbox{0.25\textwidth}{\color{tuepms137}\small $\mbf{t} = (1,2,2^+)$}};}
-%\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{sysex1-4}};}
-%\uncover<4-4>{\node at (3.5,-0.5) {\parbox{0.25\textwidth}{\color{tuepmsgreen}\small $\mbf{t} = (15^+,15^+,15^+)$}};}
-\fill (0,0) circle (3pt);
-\begin{scope}[xshift=2.2cm, yshift=0cm]
-\fill[red] (0,0) circle (3pt);
+\play\ Closed form for the system reliability via the survival signature:\\[-2ex]
+\begin{tikzpicture} % l b r t
+[cyanbox/.style={rounded corners, text centered, fill=tuecyan!20, inner sep=5mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=2mm, very thick, font=\footnotesize},
+ type1/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+ hv path/.style={thick, to path={-| (\tikztotarget)}},
+ vh path/.style={thick, to path={|- (\tikztotarget)}},
+ pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm}]
+%\fill (0,0) circle (3pt);
+%\uncover<1-2>{\node at (0,0) {\includegraphics[height=0.95\textheight]{../poster-system/poster-system}};}
+\uncover<1-4>{\node at (0,0) %
+     {\parbox{\textwidth}{\begin{multline*}
+       P\left(\Tsys > t \mid \{\nkz,\ykz,\vec{t}^k\}^{1:K}\right)\\
+       = \sum_{l_1=0}^{n_1-e_1} \cdots \sum_{l_K=0}^{n_K-e_K} \Phi(l_1,\ldots,l_K)
+         \prod_{k=1}^K P(C^k_t = l_k\mid\nkz,\ykz,\vec{t}^k)\end{multline*}}};}
+%\uncover<2-2>{\node at (-3,-3) {\includegraphics[width=0.5\textwidth,trim = 50 400 520 610, clip]{../poster-system/poster-system}};}
+\uncover<2-4>{\node[cyanrand] (survsign) at (-3.1,-4)%
+     {\parbox[c]{0.51\textwidth}{Survival signature $\Phi(l_1,\ldots,l_K)$\\ \parencite{2012:survsign}\\
+       $= P(\text{system functions} \mid \{l_k \text{ \comp{k}'s function}\}^{1:K})$\\
+      \begin{tabular}{ccc|l}
+      $l_1$ & $l_2$ & $l_3$ & $\Phi$ \\
+      \hline
+      0 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 1 & 1 & 0.67 \\
+      0 & 2 & 0 & 0.67\rule[-2.2ex]{0ex}{1ex}%\phantom{\vdots}
+      \end{tabular} \hspace{1ex}
+      \begin{tabular}{ccc|l}
+      $l_1$ & $l_2$ & $l_3$ & $\Phi$ \\
+      \hline
+      0 & 2 & 1 & 1 \\
+      0 & 3 & 0 & 1 \\
+      0 & 3 & 1 & 1 \\
+      1 & 0 & 0 & 0 \\
+%      1 & 0 & 1 & 0.5 \\
+%      1 & 1 & 1 & 0.75 \\
+      \vdots & \vdots & \vdots & \vdots
+      \end{tabular} } };
+\draw [pfeil] (survsign.north) to [out=50,in=260] (0.3,-0.7);}
+\uncover<3>{%
+\begin{scope}[xshift=1cm,yshift=-3.5cm]
 \begin{scope}[scale=0.75]
 \node[type1] (double1) at ( 1, 1) {1};
 \node[type2] (double2) at ( 1, 0) {2};
@@ -525,8 +556,102 @@ gives tractability \& meaningful reaction to prior-data conflict:
               edge[thick]   (triple2.east)
               edge[vh path] (triple3.east)
               edge[thick]   (end);
-\uncover<2-2>{\node[cross] at ( 1, 0) {};}
-\uncover<2-2>{\node[cross] at ( 3, 0) {};}
+\end{scope}
+\end{scope}}
+\uncover<4>{\node[cyanrand] (postpred) at (3,-3.65)%
+     {\parbox[c]{0.43\textwidth}{Posterior predictive probability\\ that $l_k$ of the $n_k-e_k$ surviving \comp{k}'s\\
+                                function at time $t$:\\[1ex]
+                                ${ n_k - e_k \choose l_k} \int [P(t > T\mid T > \tnow, \lambda_k)]^{l_k}\\
+                                \hspace*{6.2ex}[P(t \leq T\mid T > \tnow, \lambda_k)]^{n_k-e_k-l_k}$\\
+                                \hspace*{10ex}$f_{\lambda_k\mid \cdots}(\lambda_k\mid\nkz,\ykz,\vec{t}^k)\, d\theta$\\[1ex]
+                                (integral can be solved analytically)}};
+\draw [pfeil] (postpred.north) to [out=60,in=270] (3.3,-0.7);}
+\end{tikzpicture}
+%\min_{\nkzfun{1},\ldots,\nkzfun{K}}
+%
+%\begin{multline*}
+%\Rsys(t \mid \vec{t}_m^\ell, \nz, \yz) \\
+%  = 1 - \sum_{i=0}^{\ell-m} (-1)^i {\ell-m \choose i} \, 
+%   \left( \frac{\nz \yz + (\ell-m)   t_\text{now}^k + \sum_{j=1}^{m} t_j^k}%
+%               {\nz \yz + (\ell-m-i) t_\text{now}^k + \sum_{j=1}^{m} t_j^k + i t^k} \right)^{\nz + m + 1}
+%\end{multline*}}
+}
+
+\frame{
+\frametitle{System reliability: bounds}
+
+\play\ Lower / upper bound through optimization for each $t$:
+\begin{align*}
+\lRsys\left(t \mid \{\PZ_k,\vec{t}^k\}^{1:K}\right)
+ &= \min_{\PZ_1,\ldots,\PZ_K} P\left(\Tsys > t \mid \{\nkz,\ykz,\vec{t}^k\}^{1:K}\right) \\ 
+\uncover<2->{%
+ &= \min_{\nz_1,\ldots,\nz_K} P\left(\Tsys > t \mid \{\nkz,\ykzl,\vec{t}^k\}^{1:K}\right)} \\ 
+\uncover<3->{%
+\uRsys\left(t \mid \{\PZ_k,\vec{t}^k\}^{1:K}\right)
+ &= \max_{\PZ_1,\ldots,\PZ_K} P\left(\Tsys > t \mid \{\nkz,\ykz,\vec{t}^k\}^{1:K}\right) \\ 
+ &= \max_{\nz_1,\ldots,\nz_K} P\left(\Tsys > t \mid \{\nkz,\ykzu,\vec{t}^k\}^{1:K}\right)} 
+\end{align*}
+}
+
+\frame{
+\frametitle{System reliability: examples}
+\begin{tikzpicture}
+[pfeil/.style={-latex', line width=1mm, color=tuered, shorten <=1mm},
+ cyanrand/.style={rounded corners, text centered, draw=tuecyan!50, inner sep=1mm, thick},
+ redbrace/.style={draw=tuered, decoration=brace, decorate, line width=0.8mm},
+ redbox/.style={text centered, draw=tuered, inner sep=1mm, very thick},
+ type1/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type2/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ type3/.style={rectangle,draw,rounded corners=0mm,fill=tuepmsgreen!70,thick,inner sep=0pt,minimum size=6mm},
+ cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+ hv path/.style={to path={-| (\tikztotarget)},thick,rounded corners=0mm},
+ vh path/.style={to path={|- (\tikztotarget)},thick,rounded corners=0mm}]
+\uncover<1-1>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-0}};}
+\uncover<1-1>{\node at (2.9, 2.3) {\parbox{0.5\textwidth}{\color{tuered}\small $\E[T\mid\yz_1] \in [9, 11]$, $\nz_1 \in [2, 10]$\\
+                                                                               $\E[T\mid\yz_2] \in [4,\phantom{1}5]$, $\nz_2 \in [2, 10]$\\
+                                                                               $\E[T\mid\yz_3] \in [9, 11]$, $\nz_3 \in [1,\phantom{1}5]$}};}
+\uncover<2-2>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-1}};}
+\uncover<2-4>{\node at (2.9, 2.8) {\parbox{0.5\textwidth}{\color{tuecyan}\small $\vec{t}^1 = (5^+,5^+)$, $\vec{t}^2 = (4,5,5^+)$, $\vec{t}^3 = 5^+$}};}
+\uncover<3-3>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-2}};}
+\uncover<3-4>{\node at (2.9, 2.3) {\parbox{0.5\textwidth}{\color{tuepms137}\small $\vec{t}^1 = (3,3^+)$, $\vec{t}^2 = (1,3^+,3^+)$, $\vec{t}^3 = 3^+$}};}
+\uncover<4-4>{\node at (0,0) {\includegraphics[width=0.95\textwidth]{fcesysex-3}};}
+\uncover<4-4>{\node at (2.9, 1.8) {\parbox{0.5\textwidth}{\color{tuepmsgreen}\small $\vec{t}^1 = (9^+,9^+)$, $\vec{t}^2 = (9,9^+,9^+)$, $\vec{t}^3 = 9^+$}};}
+%\fill (0,0) circle (3pt);
+\begin{scope}[xshift=2.2cm, yshift=0cm]
+%\fill[red] (0,0) circle (3pt);
+\begin{scope}[scale=0.75]
+\node[type1] (double1) at ( 1, 1) {1};
+\node[type2] (double2) at ( 1, 0) {2};
+\node[type2] (double3) at ( 1,-1) {2};
+\node[type1] (triple1) at ( 3, 1) {1};
+\node[type2] (triple2) at ( 3, 0) {2};
+\node[type3] (triple3) at ( 3,-1) {3};
+\coordinate (start) at (0,0);
+\coordinate (bifst) at (0.3,0);
+\coordinate (bifen) at (1.7,0);
+\coordinate (trist) at (2.3,0);
+\coordinate (trien) at (3.7,0);
+\coordinate (end)   at (4,0);
+\path (start) edge[thick]   (bifst)
+      (bifst) edge[vh path] (double1.west)
+              edge[vh path] (double2.west)
+              edge[vh path] (double3.west)
+      (bifen) edge[vh path] (double1.east)
+              edge[vh path] (double2.east)
+              edge[vh path] (double3.east)
+              edge[thick]   (trist)
+      (trist) edge[vh path] (triple1.west)
+              edge[thick]   (triple2.west)
+              edge[vh path] (triple3.west)
+      (trien) edge[vh path] (triple1.east)
+              edge[thick]   (triple2.east)
+              edge[vh path] (triple3.east)
+              edge[thick]   (end);
+\uncover<2>{\node[cross] at ( 1,  0) {};}
+\uncover<2>{\node[cross] at ( 3,  0) {};}
+\uncover<3>{\node[cross] at ( 1, -1) {};}
+\uncover<3>{\node[cross] at ( 3,  1) {};}
+\uncover<4>{\node[cross] at ( 3,  0) {};}
 \end{scope}
 \end{scope}
 \end{tikzpicture}
@@ -535,67 +660,72 @@ gives tractability \& meaningful reaction to prior-data conflict:
 \frame{
 \frametitle{Summary \& Outlook}
 %Summary
-\begin{tikzpicture}
-\node at (0,0) {\parbox{\textwidth}{%
+%\begin{tikzpicture}
+%\node at (0,0) {\parbox{\textwidth}{%
+\uncover<1->{%
+\textbf{Summary:}
 \begin{itemize}
-\item[\play]<1-> Very limited data: Bayesian model with set of conjugate priors %for component reliability
-\item[\play]<2-> Set of system reliability functions %appropriately
+\item[\play] Very limited data: Bayesian model with set of conjugate priors %for component reliability
+\item[\play] Set of system reliability functions %appropriately
 reflects uncertainties from limited data (with censoring!) and vague expert information  
-\item[\play]<3-> In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
+\item[\play] In particular, it reflects \emph{prior-data conflict} %between the two sources of information 
+\end{itemize}}
 %Outlook
-\item[\play]<4-> Parallel system \then\
-\parbox[t]{0.6\textwidth}{general system layouts\\
-($k$-out-of-$n$, series/parallel combinations)\\
-with \emph{multiple types of components}\\
-using the survival signature\\
-\parencite{2012:survsign}}
-%(Coolen \& Coolen-Maturi 2012)} %***diagram
-\end{itemize}
-}};
-\end{tikzpicture}
-\begin{tikzpicture}
-[type1/.style={rectangle,draw,fill=tuepmswarmred!70,very thick,inner sep=0pt,minimum size=6mm},
- type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
- type3/.style={rectangle,draw,fill=tuepmsyellow012!70,very thick,inner sep=0pt,minimum size=6mm},
- cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
- hv path/.style={thick, to path={-| (\tikztotarget)}},
- vh path/.style={thick, to path={|- (\tikztotarget)}}]
-\uncover<4>{%
-\coordinate (start) at (0,0);
-\node[type1] (s1) at (0.6, 0) {1};
-\coordinate (prllst) at (1.2,0);
-\node[type2] (p1) at (1.8, 0.9) {2};
-\node[type2] (p2) at (1.8,-0.9) {2};
-\coordinate (midu) at (3.0, 0.6);
-\coordinate (midl) at (3.0,-0.6);
-\node[type3] (m1) at (2.5, 0) {3};
-\node[type3] (m2) at (3.5, 0) {3};
-\node[type2] (p3) at (4.2, 0.9) {2};
-\node[type2] (p4) at (4.2,-0.9) {2};
-\coordinate (prllen) at (4.8,0);
-\coordinate (end) at (5.1,0);
-\path (start)  edge          (s1)
-      (s1)     edge          (prllst)
-      (prllst) edge[vh path] (p1.west)
-               edge[vh path] (p2.west)
-      (midu)   edge[vh path] (p1.east)
-               edge[hv path] (m1.north)
-               edge[hv path] (m2.north)
-               edge[vh path] (p3.west)
-      (midl)   edge[vh path] (p2.east)
-               edge[hv path] (m1.south)
-               edge[hv path] (m2.south)
-               edge[vh path] (p4.west)
-      (prllen) edge[vh path] (p3.east)
-               edge[vh path] (p4.east)
-               edge          (end);}
-\node at (3,0) {\parbox{\textwidth}{%
+%\item[\play]<4-> Parallel system \then\
+%\parbox[t]{0.6\textwidth}{general system layouts\\
+%($k$-out-of-$n$, series/parallel combinations)\\
+%with \emph{multiple types of components}\\
+%using the survival signature\\
+%\parencite{2012:survsign}}
+%%(Coolen \& Coolen-Maturi 2012)} %***diagram
+%\end{itemize}
+%}};
+%\end{tikzpicture}
+%\begin{tikzpicture}
+%[type1/.style={rectangle,draw,fill=tuepmswarmred!70,very thick,inner sep=0pt,minimum size=6mm},
+% type2/.style={rectangle,draw,fill=tuepmsgreen!70,very thick,inner sep=0pt,minimum size=6mm},
+% type3/.style={rectangle,draw,fill=tuepmsyellow012!70,very thick,inner sep=0pt,minimum size=6mm},
+% cross/.style={cross out,draw=red,very thick,minimum width=7mm, minimum height=5mm},
+% hv path/.style={thick, to path={-| (\tikztotarget)}},
+% vh path/.style={thick, to path={|- (\tikztotarget)}}]
+%\uncover<4>{%
+%\coordinate (start) at (0,0);
+%\node[type1] (s1) at (0.6, 0) {1};
+%\coordinate (prllst) at (1.2,0);
+%\node[type2] (p1) at (1.8, 0.9) {2};
+%\node[type2] (p2) at (1.8,-0.9) {2};
+%\coordinate (midu) at (3.0, 0.6);
+%\coordinate (midl) at (3.0,-0.6);
+%\node[type3] (m1) at (2.5, 0) {3};
+%\node[type3] (m2) at (3.5, 0) {3};
+%\node[type2] (p3) at (4.2, 0.9) {2};
+%\node[type2] (p4) at (4.2,-0.9) {2};
+%\coordinate (prllen) at (4.8,0);
+%\coordinate (end) at (5.1,0);
+%\path (start)  edge          (s1)
+%      (s1)     edge          (prllst)
+%      (prllst) edge[vh path] (p1.west)
+%               edge[vh path] (p2.west)
+%      (midu)   edge[vh path] (p1.east)
+%               edge[hv path] (m1.north)
+%               edge[hv path] (m2.north)
+%               edge[vh path] (p3.west)
+%      (midl)   edge[vh path] (p2.east)
+%               edge[hv path] (m1.south)
+%               edge[hv path] (m2.south)
+%               edge[vh path] (p4.west)
+%      (prllen) edge[vh path] (p3.east)
+%               edge[vh path] (p4.east)
+%               edge          (end);}
+%\node at (3,0) {\parbox{\textwidth}{%
+\uncover<2->{%
+\textbf{Next steps:}
 \begin{itemize}
-\item[\play]<5-> Nonparametric model\\ (drop Weibull assumption for component lifetimes)
-\item[\play]<6-> Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
-\item[\play]<7-> Use model for maintenance planning %, design
-\end{itemize}}};
-\end{tikzpicture}
+\item[\play] Nonparametric model\\ (drop Weibull assumption for component lifetimes)
+\item[\play] Allow dependence between components\\ (common-cause failure, \ldots) %or more explicit dependence
+\item[\play] Use model for maintenance planning %, design
+\end{itemize}}%};
+%\end{tikzpicture}
 }
 
 
@@ -611,6 +741,8 @@ using the survival signature\\
 %  }
 \printbibliography[heading=none]
 \end{frame}
+
+\end{document}
 
 \frame{
 \frametitle{General systems via the survival signature}
@@ -632,7 +764,6 @@ using the survival signature\\
 %---- reset total frame number
 \addtocounter{framenumber}{-1} 
 
-\end{document}
 
 
 
